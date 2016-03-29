@@ -168,7 +168,7 @@
         }, 1000);
     };
 	
-    var function receive_handler(data) {
+    function receive_handler(data) {
         console.log('Received: ' + data.byteLength);
         //Se não tem dados ou recebeu a mensagem completa
         if(!rawData)
