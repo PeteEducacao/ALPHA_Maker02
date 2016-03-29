@@ -1,5 +1,30 @@
 (function(ext) {
     var device = null;
+	
+	// Extension API interactions
+    var potentialDevices = [];
+    ext._deviceConnected = function(dev) {
+        potentialDevices.push(dev);
+
+        if (!device) {
+            tryNextDevice();
+        }
+    }
+	
+	var poller = null;
+    var watchdog = null;
+    function tryNextDevice() {
+        // If potentialDevices is empty, device will be undefined.
+        // That will get us back here next time a device is connected.
+        device = potentialDevices.shift();
+        if (!device) return;
+
+        device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
+		device.send("ping ping");
+    };
+}
+/*(function(ext) {
+    var device = null;
     var rawData = null;
 
     // Sensor states:
@@ -194,4 +219,4 @@
         url: '/info/help/studio/tips/ext/PicoBoard/'
     };
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
-})({});
+})({});*/
