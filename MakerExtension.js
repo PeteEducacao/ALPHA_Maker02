@@ -11,7 +11,7 @@
         }
     }
 	
-	var poller = null;
+    var poller = null;
     var watchdog = null;
     function tryNextDevice() {
         // If potentialDevices is empty, device will be undefined.
@@ -22,7 +22,22 @@
         device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
 		device.send("ping ping");
     };
-}
+    var descriptor = {
+        blocks: [
+            ['h', 'when %m.booleanSensor',         'whenSensorConnected', 'button pressed'],
+            ['h', 'when %m.sensor %m.lessMore %n', 'whenSensorPass',      'slider', '>', 50],
+            ['b', 'sensor %m.booleanSensor?',      'sensorPressed',       'button pressed'],
+            ['r', '%m.sensor sensor value',        'sensor',              'slider']
+        ],
+        menus: {
+            booleanSensor: ['button pressed', 'A connected', 'B connected', 'C connected', 'D connected'],
+            sensor: ['slider', 'light', 'sound', 'resistance-A', 'resistance-B', 'resistance-C', 'resistance-D'],
+            lessMore: ['>', '<']
+        },
+        url: '/info/help/studio/tips/ext/PicoBoard/'
+    };
+    ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
+})({});
 /*(function(ext) {
     var device = null;
     var rawData = null;
