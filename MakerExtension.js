@@ -139,27 +139,19 @@
         if (!device) return;
 
         device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
-        device.set_receive_handler(function(data) {
-            console.log('Received: ' + data.byteLength);
-            //Se não tem dados ou recebeu a mensagem completa
-            if(!rawData)
-                //Cria o vetor e inicia com os dados
-                rawData = new Uint8Array(data);
-            //Se recebeu mais uma parte
-            else
-                //Concatena
-                rawData = appendBuffer(rawData, data);
-
-            processData();
-        });
+        device.set_receive_handler(receive_handler);
 
         // Tell the PicoBoard to send a input data every 50ms
         var pingCmd = new Uint8Array(1);
         pingCmd[0] = 1;
+        console.log('Starting pooler1');
         poller = setInterval(function() {
             device.send(pingCmd.buffer);
         }, 50);
         watchdog = setTimeout(function() {
+            console.log('Watchdog triggered');
+            clearTimeout(watchdog);
+            watchdog = null;
             // This device didn't get good data in time, so give up on it. Clean up and then move on.
             // If we get good data then we'll terminate this watchdog.
             clearInterval(poller);
@@ -168,8 +160,21 @@
             device.close();
             device = null;
             tryNextDevice();
-        }, 1000);
+        }, 3000);
     };
+    function receive_handler(data) {
+        console.log('Received: ' + data.byteLength);
+        //Se não tem dados ou recebeu a mensagem completa
+        if(!rawData)
+            //Cria o vetor e inicia com os dados
+            rawData = new Uint8Array(data);
+        //Se recebeu mais uma parte
+        else
+            //Concatena
+            rawData = appendBuffer(rawData, data);
+
+        processData();
+    }
 
     ext._deviceRemoved = function(dev) {
         if(device != dev) return;
