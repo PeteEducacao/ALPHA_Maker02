@@ -62,7 +62,7 @@
     function processData() {
         var bytes = new Uint8Array(rawData);
         
-        if(bytes[0] == 1){
+        if(bytes[0] == 2){
             // Seems to be a valid PicoBoard.
             clearTimeout(watchdog);
             watchdog = null;
