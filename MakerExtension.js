@@ -61,8 +61,16 @@
     var inputArray = [];
     function processData() {
         var bytes = new Uint8Array(rawData);
+        
+        if(bytes[0] == 1){
+            // Seems to be a valid PicoBoard.
+            clearTimeout(watchdog);
+            watchdog = null;
+        }
+        
+        rawData = null;
 
-        inputArray[15] = 0;
+        /*inputArray[15] = 0;
 
         // TODO: make this robust against misaligned packets.
         // Right now there's no guarantee that our 18 bytes start at the beginning of a message.
@@ -101,7 +109,7 @@
         }
 
         //console.log(inputs);
-        rawData = null;
+        rawData = null;*/
     }
 
 
@@ -131,16 +139,18 @@
         if (!device) return;
 
         device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
-        device.send("ping pong");
         device.set_receive_handler(function(data) {
-            //console.log('Received: ' + data.byteLength);
-            if(!rawData || rawData.byteLength == 18) rawData = new Uint8Array(data);
-            else rawData = appendBuffer(rawData, data);
+            console.log('Received: ' + data.byteLength);
+            //Se não tem dados ou recebeu a mensagem completa
+            if(!rawData)
+                //Cria o vetor e inicia com os dados
+                rawData = new Uint8Array(data);
+            //Se recebeu mais uma parte
+            else
+                //Concatena
+                rawData = appendBuffer(rawData, data);
 
-            if(rawData.byteLength >= 18) {
-                //console.log(rawData);
-                processData();
-                //device.send(pingCmd.buffer);
+            processData();
             }
         });
 
