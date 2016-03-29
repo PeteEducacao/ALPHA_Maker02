@@ -151,7 +151,6 @@
                 rawData = appendBuffer(rawData, data);
 
             processData();
-            }
         });
 
         // Tell the PicoBoard to send a input data every 50ms
