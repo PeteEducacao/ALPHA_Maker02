@@ -136,22 +136,27 @@
         // If potentialDevices is empty, device will be undefined.
         // That will get us back here next time a device is connected.
         device = potentialDevices.shift();
-        if (!device) return;
-
-        device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
+        if (device) {
+            device.open({ stopBits: 0, bitRate: 38400, ctsFlowControl: 0 }, deviceOpened);
+        }
+	}
+	
+	function deviceOpened(dev) {
+        if (!dev) {
+            // Opening the port failed.
+            tryNextDevice();
+            return;
+        }
+		
         device.set_receive_handler(receive_handler);
 
         // Tell the PicoBoard to send a input data every 50ms
         var pingCmd = new Uint8Array(1);
         pingCmd[0] = 1;
-        console.log('Starting pooler1');
         poller = setInterval(function() {
             device.send(pingCmd.buffer);
         }, 50);
         watchdog = setTimeout(function() {
-            console.log('Watchdog triggered');
-            clearTimeout(watchdog);
-            watchdog = null;
             // This device didn't get good data in time, so give up on it. Clean up and then move on.
             // If we get good data then we'll terminate this watchdog.
             clearInterval(poller);
@@ -160,9 +165,10 @@
             device.close();
             device = null;
             tryNextDevice();
-        }, 3000);
+        }, 1000);
     };
-    function receive_handler(data) {
+	
+    var function receive_handler(data) {
         console.log('Received: ' + data.byteLength);
         //Se não tem dados ou recebeu a mensagem completa
         if(!rawData)
