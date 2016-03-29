@@ -1,45 +1,5 @@
 (function(ext) {
     var device = null;
-	
-	// Extension API interactions
-    var potentialDevices = [];
-    ext._deviceConnected = function(dev) {
-        potentialDevices.push(dev);
-
-        if (!device) {
-            tryNextDevice();
-        }
-    }
-	
-    var poller = null;
-    var watchdog = null;
-    function tryNextDevice() {
-        // If potentialDevices is empty, device will be undefined.
-        // That will get us back here next time a device is connected.
-        device = potentialDevices.shift();
-        if (!device) return;
-
-        device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
-		device.send("ping ping");
-    };
-    var descriptor = {
-        blocks: [
-            ['h', 'when %m.booleanSensor',         'whenSensorConnected', 'button pressed'],
-            ['h', 'when %m.sensor %m.lessMore %n', 'whenSensorPass',      'slider', '>', 50],
-            ['b', 'sensor %m.booleanSensor?',      'sensorPressed',       'button pressed'],
-            ['r', '%m.sensor sensor value',        'sensor',              'slider']
-        ],
-        menus: {
-            booleanSensor: ['button pressed', 'A connected', 'B connected', 'C connected', 'D connected'],
-            sensor: ['slider', 'light', 'sound', 'resistance-A', 'resistance-B', 'resistance-C', 'resistance-D'],
-            lessMore: ['>', '<']
-        },
-        url: '/info/help/studio/tips/ext/PicoBoard/'
-    };
-    ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
-})({});
-/*(function(ext) {
-    var device = null;
     var rawData = null;
 
     // Sensor states:
@@ -171,6 +131,7 @@
         if (!device) return;
 
         device.open({ stopBits: 0, bitRate: 38400, ctsFlowControl: 0 });
+        device.send("ping pong");
         device.set_receive_handler(function(data) {
             //console.log('Received: ' + data.byteLength);
             if(!rawData || rawData.byteLength == 18) rawData = new Uint8Array(data);
@@ -234,4 +195,4 @@
         url: '/info/help/studio/tips/ext/PicoBoard/'
     };
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
-})({});*/
+})({});
