@@ -130,7 +130,7 @@
         device = potentialDevices.shift();
         if (!device) return;
 
-        device.open({ stopBits: 0, bitRate: 38400, ctsFlowControl: 0 });
+        device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
         device.send("ping pong");
         device.set_receive_handler(function(data) {
             //console.log('Received: ' + data.byteLength);
@@ -159,7 +159,7 @@
             device.close();
             device = null;
             tryNextDevice();
-        }, 250);
+        }, 1000);
     };
 
     ext._deviceRemoved = function(dev) {
