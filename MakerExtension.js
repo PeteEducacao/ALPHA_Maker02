@@ -137,7 +137,7 @@
         // That will get us back here next time a device is connected.
         device = potentialDevices.shift();
         if (device) {
-            device.open({ stopBits: 0, bitRate: 38400, ctsFlowControl: 0 }, deviceOpened);
+            device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 }, deviceOpened);
         }
 	}
 	
@@ -155,7 +155,7 @@
         pingCmd[0] = 1;
         poller = setInterval(function() {
             device.send(pingCmd.buffer);
-        }, 50);
+        }, 100);
         watchdog = setTimeout(function() {
             // This device didn't get good data in time, so give up on it. Clean up and then move on.
             // If we get good data then we'll terminate this watchdog.
