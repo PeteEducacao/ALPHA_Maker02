@@ -90,15 +90,15 @@
 		watchdog = null;
 		clearInterval(poller);
 		poller = null;
-		console.log('bingo!');
 		
 		var startAcquisition =  new Uint8Array(5);
-		startAcquisiton[0] = 77; //M
-		startAcquisiton[1] = 115; //s
-		startAcquisiton[2] = 49; //1
-		startAcquisiton[3] = 48; //0
-		startAcquisiton[4] = 13; //\r
+		startAcquisition[0] = 77; //M
+		startAcquisition[1] = 115; //s
+		startAcquisition[2] = 49; //1
+		startAcquisition[3] = 48; //0
+		startAcquisition[4] = 13; //\r
 		
+		console.log('Starting acquisition');
 		device.send(startAcquisition.buffer);
             
 		comPoller = setTimeout(function() {
@@ -106,7 +106,7 @@
 			resend[0] = 77; //M
 			resend[1] = 86; //V
 			resend[2] = 13; //\r
-			console.log('Sending Mn'); //Aqui 6
+			console.log('Requesting values'); //Aqui 6
 			device.send(resend.buffer);
 		}, 200);
         
