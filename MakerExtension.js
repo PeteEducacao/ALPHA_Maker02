@@ -81,6 +81,7 @@
         
         if (watchdog) {
         	if(checkMaker(bytes)){
+        		console.log('Found Maker')
 	        	rawData = null;
 	        	
 			// Reconhece como sendo uma Maker
@@ -111,12 +112,11 @@
 		        
 		        	active = true;
 				comWatchdog = setTimeout(function() {
+					console.log('comWatchdog active: ' + active);
 					if(active)
 						active = false
 					else {
-						console.log('comWatchdog triggered'); //Aqui 7
-						// This device didn't get good data in time, so give up on it. Clean up and then move on.
-						// If we get good data then we'll terminate this watchdog.
+						console.log('comWatchdog triggered');
 						clearInterval(comPoller);
 						comPoller = null;
 						device.set_receive_handler(null);
@@ -139,7 +139,6 @@
     
     function decodeMessage(bytes){
     	var data = String.fromCharCode.apply(null, bytes);
-	console.log('Data: ' + data);
 	var A_index = data.indexOf('A');
 	var B_index = data.indexOf('B');
 	var C_index = data.indexOf('C');
