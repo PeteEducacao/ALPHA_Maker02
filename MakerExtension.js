@@ -111,14 +111,19 @@
 				}, 200);
 		        
 		        	active = true;
-				comWatchdog = setTimeout(function() {
+				comWatchdog = setInterval(function() {
 					console.log('comWatchdog active: ' + active);
 					if(active)
 						active = false
 					else {
 						console.log('comWatchdog triggered');
+						
 						clearInterval(comPoller);
 						comPoller = null;
+						
+						clearInterval(comWatchdog);
+						comWatchdog = null;
+						
 						device.set_receive_handler(null);
 						device.close();
 						device = null;
