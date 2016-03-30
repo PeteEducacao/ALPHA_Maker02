@@ -187,21 +187,15 @@
         // If potentialDevices is empty, device will be undefined.
         // That will get us back here next time a device is connected.
         device = potentialDevices.shift();
-        console.log('Aqui 3. ');
         if (!device) return;
-        console.log('Aqui 4. ');
         device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
         
         device.set_receive_handler(function(data) {
-            console.log('Aqui: 5');
-            console.log('Recebi: ' + data.byteLength);
             if(!rawData || rawData.byteLength == 2) rawData = new Uint8Array(data);
             else rawData = appendBuffer(rawData, data);
 
             if(rawData.byteLength >= 2) {
-                console.log('rawData '+ rawData);
                 processData();
-                //device.send(pingCmd.buffer);
             }
         });
 
