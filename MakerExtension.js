@@ -101,7 +101,7 @@
 		console.log('Starting acquisition');
 		device.send(startAcquisition.buffer);
             
-		comPoller = setTimeout(function() {
+		comPoller = setInterval(function() {
 			var resend =  new Uint8Array(3);
 			resend[0] = 77; //M
 			resend[1] = 86; //V
