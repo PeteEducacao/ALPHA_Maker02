@@ -1,134 +1,178 @@
 (function(ext) {
     var device = null;
     var rawData = null;
-
-    // Sensor states:
-    var channels = {
-        slider: 7,
-        light: 5,
-        sound: 6,
-        button: 3,
-        'resistance-A': 4,
-        'resistance-B': 2,
-        'resistance-C': 1,
-        'resistance-D': 0
-    };
-    var inputs = {
-        slider: 0,
-        light: 0,
-        sound: 0,
-        button: 0,
-        'resistance-A': 0,
-        'resistance-B': 0,
-        'resistance-C': 0,
-        'resistance-D': 0
-    };
-
-    ext.resetAll = function(){};
-
-    // Hats / triggers
-    ext.whenSensorConnected = function(which) {
-        return getSensorPressed(which);
-    };
-
-    ext.whenSensorPass = function(which, sign, level) {
-        if (sign == '<') return getSensor(which) < level;
-        return getSensor(which) > level;
-    };
-
-    // Reporters
-    ext.sensorPressed = function(which) {
-        return getSensorPressed(which);
-    };
-
-    ext.sensor = function(which) { return getSensor(which); };
-
-    // Private logic
-    function getSensorPressed(which) {
-        if (device == null) return false;
-        if (which == 'button pressed' && getSensor('button') < 1) return true;
-        if (which == 'A connected' && getSensor('resistance-A') < 10) return true;
-        if (which == 'B connected' && getSensor('resistance-B') < 10) return true;
-        if (which == 'C connected' && getSensor('resistance-C') < 10) return true;
-        if (which == 'D connected' && getSensor('resistance-D') < 10) return true;
-        return false;
-    }
-
-    function getSensor(which) {
-        return inputs[which];
-    }
-
-    var inputArray = [];
-    function processData() {
-        var bytes = new Uint8Array(rawData);
-        
-        if(bytes[0] == 2){
-            // Seems to be a valid PicoBoard.
-            clearTimeout(watchdog);
-            watchdog = null;
-        }
-        
-        rawData = null;
-
-        /*inputArray[15] = 0;
-
-        // TODO: make this robust against misaligned packets.
-        // Right now there's no guarantee that our 18 bytes start at the beginning of a message.
-        // Maybe we should treat the data as a stream of 2-byte packets instead of 18-byte packets.
-        // That way we could just check the high bit of each byte to verify that we're aligned.
-        for(var i=0; i<9; ++i) {
-            var hb = bytes[i*2] & 127;
-            var channel = hb >> 3;
-            var lb = bytes[i*2+1] & 127;
-            inputArray[channel] = ((hb & 7) << 7) + lb;
-        }
-
-        if (watchdog && (inputArray[15] == 0x04)) {
-            // Seems to be a valid PicoBoard.
-            clearTimeout(watchdog);
-            watchdog = null;
-        }
-
-        for(var name in inputs) {
-            var v = inputArray[channels[name]];
-            if(name == 'light') {
-                v = (v < 25) ? 100 - v : Math.round((1023 - v) * (75 / 998));
-            }
-            else if(name == 'sound') {
-                //empirically tested noise sensor floor
-                v = Math.max(0, v - 18)
-                v =  (v < 50) ? v / 2 :
-                    //noise ceiling
-                    25 + Math.min(75, Math.round((v - 50) * (75 / 580)));
-            }
-            else {
-                v = (100 * v) / 1023;
-            }
-
-            inputs[name] = v;
-        }
-
-        //console.log(inputs);
-        rawData = null;*/
-    }
-
-
+    var notifyConnection = false;
+    
+    var active = true;
+    var comWatchdog = null;
+    var comPoller = null;
+    
+     ext.resetAll = function(){};
+     
+    // Configure serial baudrate = 9600, parity=none, stopbits=1, databits=8
+    
     function appendBuffer( buffer1, buffer2 ) {
         var tmp = new Uint8Array( buffer1.byteLength + buffer2.byteLength );
         tmp.set( new Uint8Array( buffer1 ), 0 );
         tmp.set( new Uint8Array( buffer2 ), buffer1.byteLength );
         return tmp.buffer;
     }
-
-    // Extension API interactions
+    
+    //************************************************************
+    //   BLOCOS
+    
+    ext.MakerConectada = function() {
+        if (notifyConnection) return true;
+            return false;
+    };
+    
+    
+    ext.wait_random = function(callback) {
+        wait = Math.random();
+        console.log('Waiting for ' + wait + ' seconds');
+        window.setTimeout(function() {
+            callback();
+        }, wait*1000);
+    };
+    
+  
+    //*************************************************************
+    
+    
+    
+    
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
         potentialDevices.push(dev);
-
+        console.log('Aqui 1. ');
         if (!device) {
+            console.log('Aqui 2. ');
             tryNextDevice();
         }
     }
+
+    function checkMaker(bytes){
+        var data = String.fromCharCode.apply(null, bytes);
+        console.log('Data: ' + data);
+        var t_index = data.indexOf('t');
+        var l_index = data.indexOf('l');
+        if(t_index >= 0 && l_index >= 0){
+            t_index ++;
+            l_index ++;
+            var kernelVersion = data.substring(t_index, t_index + 4);
+            var legalVersion = data.substring(l_index, l_index + 4);
+
+            console.log('Kernel: ' + kernelVersion);
+            console.log('Legal: ' + legalVersion);
+
+            if(kernelVersion >= 106 && legalVersion >= 108) {
+                notifyConnection = true;
+                return true;
+            }    
+        }
+        return false;
+    }
+
+
+    
+    var inputArray = [];
+    function processData() {
+        var bytes = new Uint8Array(rawData);
+
+        console.log('Aqui 8. ');
+        console.log('bytes[0] ' + bytes[0]);
+        
+
+        if (watchdog && (checkMaker(bytes))) {
+        	rawData = null;
+		// Reconhece como sendo uma Maker
+		clearTimeout(watchdog);
+		watchdog = null;
+		clearInterval(poller);
+		poller = null;
+		console.log('bingo!');
+		
+		var startAcquisition =  new Uint8Array(5);
+		startAcquisiton[0] = 77; //M
+		startAcquisiton[1] = 115; //s
+		startAcquisiton[2] = 49; //1
+		startAcquisiton[3] = 48; //0
+		startAcquisiton[4] = 13; //\r
+		
+		device.send(startAcquisition.buffer);
+            
+		comPoller = setTimeout(function() {
+			var resend =  new Uint8Array(3);
+			resend[0] = 77; //M
+			resend[1] = 86; //V
+			resend[2] = 13; //\r
+			console.log('Sending Mn'); //Aqui 6
+			device.send(resend.buffer);
+		}, 200);
+        
+        	active = true;
+		comWatchdog = setTimeout(function() {
+			if(active)
+				active = false
+			else {
+				console.log('comWatchdog triggered'); //Aqui 7
+				// This device didn't get good data in time, so give up on it. Clean up and then move on.
+				// If we get good data then we'll terminate this watchdog.
+				clearInterval(comPoller);
+				comPoller = null;
+				device.set_receive_handler(null);
+				device.close();
+				device = null;
+				tryNextDevice();
+			}
+		}, 1000);
+        }
+        
+        if(comPoller && comWatchdog){
+        	if(decodeMessage(bytes))
+        		rawData = null;
+        }
+    }
+    
+    function decodeMessage(bytes){
+    	var data = String.fromCharCode.apply(null, bytes);
+	console.log('Data: ' + data);
+	var A_index = data.indexOf('A');
+	var B_index = data.indexOf('B');
+	var C_index = data.indexOf('C');
+	var D_index = data.indexOf('D');
+	if(A_index >= 0 && B_index >= 0 && C_index >= 0 && D_index >= 0){
+		var index;
+		A_index ++;
+		B_index ++;
+		C_index ++;
+		D_index ++;
+		
+		//Get S1
+		index = data.indexOf('\r', A_index);
+		var valA = data.substring(A_index, index);
+		
+		//Get S2
+		index = data.indexOf('\r', B_index);
+		var valB = data.substring(B_index, index);
+		
+		//Get S3
+		index = data.indexOf('\r', C_index);
+		var valC = data.substring(C_index, index);
+		
+		//Get S4
+		index = data.indexOf('\r', D_index);
+		var valD = data.substring(D_index, index);
+	
+		console.log('A: ' + valA);
+		console.log('B: ' + valB);
+		console.log('C: ' + valC);
+		console.log('D: ' + valD);
+		return true;
+	}
+	return false;
+    }
+
 
     var poller = null;
     var watchdog = null;
@@ -136,27 +180,37 @@
         // If potentialDevices is empty, device will be undefined.
         // That will get us back here next time a device is connected.
         device = potentialDevices.shift();
-        if (device) {
-            device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 }, deviceOpened);
-        }
-	}
-	
-	function deviceOpened(dev) {
-        if (!dev) {
-            // Opening the port failed.
-            tryNextDevice();
-            return;
-        }
-		
-        device.set_receive_handler(receive_handler);
+        console.log('Aqui 3. ');
+        if (!device) return;
+        console.log('Aqui 4. ');
+        device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
+        
+        device.set_receive_handler(function(data) {
+            console.log('Aqui: 5');
+            console.log('Recebi: ' + data.byteLength);
+            if(!rawData || rawData.byteLength == 2) rawData = new Uint8Array(data);
+            else rawData = appendBuffer(rawData, data);
 
-        // Tell the PicoBoard to send a input data every 50ms
-        var pingCmd = new Uint8Array(1);
-        pingCmd[0] = 1;
-        poller = setInterval(function() {
+            if(rawData.byteLength >= 2) {
+                console.log('rawData '+ rawData);
+                processData();
+                //device.send(pingCmd.buffer);
+            }
+        });
+
+        // Envia Mn
+        var pingCmd = new Uint8Array(3);
+        pingCmd[0]= 77;  //'M';
+        pingCmd[1]= 110; //'n';
+        pingCmd[2] = 13;
+        //poller = setInterval(function() {
+        poller = setTimeout(function() {
+            console.log('Sending Mn'); //Aqui 6
             device.send(pingCmd.buffer);
-        }, 100);
+        }, 500);
+        
         watchdog = setTimeout(function() {
+            console.log('Watchdog triggered'); //Aqui 7
             // This device didn't get good data in time, so give up on it. Clean up and then move on.
             // If we get good data then we'll terminate this watchdog.
             clearInterval(poller);
@@ -165,27 +219,16 @@
             device.close();
             device = null;
             tryNextDevice();
-        }, 1000);
+        }, 5000);
     };
-	
-    function receive_handler(data) {
-        console.log('Received: ' + data.byteLength);
-        //Se não tem dados ou recebeu a mensagem completa
-        if(!rawData)
-            //Cria o vetor e inicia com os dados
-            rawData = new Uint8Array(data);
-        //Se recebeu mais uma parte
-        else
-            //Concatena
-            rawData = appendBuffer(rawData, data);
 
-        processData();
-    }
-
+    //*************************************************************
     ext._deviceRemoved = function(dev) {
+        console.log('_deviceRemoved');
         if(device != dev) return;
         if(poller) poller = clearInterval(poller);
         device = null;
+        notifyConnection = false;
     };
 
     ext._shutdown = function() {
@@ -195,24 +238,26 @@
     };
 
     ext._getStatus = function() {
-        if(!device) return {status: 1, msg: 'PicoBoard disconnected'};
-        if(watchdog) return {status: 1, msg: 'Probing for PicoBoard'};
-        return {status: 2, msg: 'PicoBoard connected'};
+        console.log('_getStatus');
+        if(!device) return {status: 0, msg: 'Maker desconectado'};
+        if(watchdog) return {status: 1, msg: 'Procurando pela Maker'};
+        return {status: 2, msg: 'Maker conectada'};
     }
 
+    //************************************************************
+    // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['h', 'when %m.booleanSensor',         'whenSensorConnected', 'button pressed'],
-            ['h', 'when %m.sensor %m.lessMore %n', 'whenSensorPass',      'slider', '>', 50],
-            ['b', 'sensor %m.booleanSensor?',      'sensorPressed',       'button pressed'],
-            ['r', '%m.sensor sensor value',        'sensor',              'slider']
+                ['h', 'when ALPHA Maker is connected', 'MakerConectada'],
+                ['w', 'wait for random time', 'wait_random'],
+                [' ', 'Synchronous wait for random time', 'wait_random2'],
         ],
         menus: {
             booleanSensor: ['button pressed', 'A connected', 'B connected', 'C connected', 'D connected'],
             sensor: ['slider', 'light', 'sound', 'resistance-A', 'resistance-B', 'resistance-C', 'resistance-D'],
             lessMore: ['>', '<']
         },
-        url: '/info/help/studio/tips/ext/PicoBoard/'
     };
+    console.log('TESTE ');
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
 })({});
