@@ -78,59 +78,62 @@
     var inputArray = [];
     function processData() {
         var bytes = new Uint8Array(rawData);
-
-        console.log('Aqui 8. ');
-        console.log('bytes[0] ' + bytes[0]);
         
-
-        if (watchdog && (checkMaker(bytes))) {
-        	rawData = null;
-		// Reconhece como sendo uma Maker
-		clearTimeout(watchdog);
-		watchdog = null;
-		clearInterval(poller);
-		poller = null;
-		
-		var startAcquisition =  new Uint8Array(5);
-		startAcquisition[0] = 77; //M
-		startAcquisition[1] = 115; //s
-		startAcquisition[2] = 49; //1
-		startAcquisition[3] = 48; //0
-		startAcquisition[4] = 13; //\r
-		
-		console.log('Starting acquisition');
-		device.send(startAcquisition.buffer);
-            
-		comPoller = setInterval(function() {
-			var resend =  new Uint8Array(3);
-			resend[0] = 77; //M
-			resend[1] = 86; //V
-			resend[2] = 13; //\r
-			console.log('Requesting values'); //Aqui 6
-			device.send(resend.buffer);
-		}, 200);
-        
-        	active = true;
-		comWatchdog = setTimeout(function() {
-			if(active)
-				active = false
-			else {
-				console.log('comWatchdog triggered'); //Aqui 7
-				// This device didn't get good data in time, so give up on it. Clean up and then move on.
-				// If we get good data then we'll terminate this watchdog.
-				clearInterval(comPoller);
-				comPoller = null;
-				device.set_receive_handler(null);
-				device.close();
-				device = null;
-				tryNextDevice();
+        if (watchdog) {
+        	if(checkMaker(bytes)){
+	        	rawData = null;
+	        	
+			// Reconhece como sendo uma Maker
+			clearTimeout(watchdog);
+			watchdog = null;
+			clearInterval(poller);
+			poller = null;
+			
+			if(!comPoller && !comWatchdog){
+				var startAcquisition =  new Uint8Array(5);
+				startAcquisition[0] = 77; //M
+				startAcquisition[1] = 115; //s
+				startAcquisition[2] = 49; //1
+				startAcquisition[3] = 48; //0
+				startAcquisition[4] = 13; //\r
+				
+				console.log('Starting acquisition');
+				device.send(startAcquisition.buffer);
+		            
+				comPoller = setInterval(function() {
+					var resend =  new Uint8Array(3);
+					resend[0] = 77; //M
+					resend[1] = 86; //V
+					resend[2] = 13; //\r
+					console.log('Requesting values'); //Aqui 6
+					device.send(resend.buffer);
+				}, 200);
+		        
+		        	active = true;
+				comWatchdog = setTimeout(function() {
+					if(active)
+						active = false
+					else {
+						console.log('comWatchdog triggered'); //Aqui 7
+						// This device didn't get good data in time, so give up on it. Clean up and then move on.
+						// If we get good data then we'll terminate this watchdog.
+						clearInterval(comPoller);
+						comPoller = null;
+						device.set_receive_handler(null);
+						device.close();
+						device = null;
+						tryNextDevice();
+					}
+				}, 1000);
 			}
-		}, 1000);
+        	}
         }
         
         if(comPoller && comWatchdog){
-        	if(decodeMessage(bytes))
+        	if(decodeMessage(bytes)){
         		rawData = null;
+        		active = true;
+        	}
         }
     }
     
