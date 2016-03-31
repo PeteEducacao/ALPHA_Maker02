@@ -404,18 +404,18 @@
 };
 	
 	  var menus = {
-	  	en: [
+	  	en: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['forward', 'backward', 'stop']
-		]
-		pt: [
+	  	},
+		pt: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare']
-		]
+		}
 	  };
     var descriptor = {
         blocks: blocks[lang],
