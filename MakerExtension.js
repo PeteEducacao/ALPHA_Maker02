@@ -65,6 +65,7 @@
     	if(servo == 'SV2'){
 		sendServo[1] = 112; //p
     	}
+    	console.log("ServoMsg: " + sendServo.buffer);
 	device.send(sendServo.buffer);
     };
     
