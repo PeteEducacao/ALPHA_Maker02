@@ -16,7 +16,7 @@
     var valD = 0;
     var idD = 0;
     
-     ext.resetAll = function(){};
+    ext.resetAll = function(){};
      
     // Configure serial baudrate = 9600, parity=none, stopbits=1, databits=8
     
@@ -131,15 +131,6 @@
 	
 	device.send(sendMute.buffer);
     }
-    
-    ext.wait_random = function(callback) {
-        wait = Math.random();
-        console.log('Waiting for ' + wait + ' seconds');
-        window.setTimeout(function() {
-            callback();
-        }, wait*1000);
-    };
-    
   
     //*************************************************************
    
@@ -351,22 +342,42 @@
     //*************************************************************
     ext._deviceRemoved = function(dev) {
         console.log('_deviceRemoved');
-        if(device != dev) return;
-        if(poller) poller = clearInterval(poller);
+        if(device != dev)
+        	return;
+        if(poller)
+        	poller = clearInterval(poller);
+        if(comPoller)
+        	comPoller = clearInterval(comPoller);
+        if(comWatchdog)
+        	comWatchdog = clearInterval(comWatchdog);
         device = null;
         notifyConnection = false;
     };
 
     ext._shutdown = function() {
-        if(device) device.close();
-        if(poller) poller = clearInterval(poller);
+        if(device){
+        	device.close();
+        	
+	    	var sendFinish =  new Uint8Array(3);
+		sendFinish[0] = 77; //M
+	    	sendFinish[1] = 102; //f
+		sendFinish[2] = 13; //\r
+		
+		device.send(sendFinish.buffer);
+        }
+        if(poller)
+        	poller = clearInterval(poller);
+        if(comPoller)
+        	comPoller = clearInterval(comPoller);
+        if(comWatchdog)
+        	comWatchdog = clearInterval(comWatchdog);
         device = null;
     };
 
     ext._getStatus = function() {
-        if(!device) return {status: 0, msg: 'Maker desconectado'};
-        if(watchdog) return {status: 1, msg: 'Procurando pela Maker'};
-        return {status: 2, msg: 'Maker conectada'};
+        if(!device) return {status: 0, msg: 'Maker disconnected'};
+        if(watchdog) return {status: 1, msg: 'Searching for Maker'};
+        return {status: 2, msg: 'Maker connected'};
     }
 
     //************************************************************
