@@ -356,14 +356,13 @@
 
     ext._shutdown = function() {
         if(device){
-        	device.close();
-        	
 	    	var sendFinish =  new Uint8Array(3);
 		sendFinish[0] = 77; //M
 	    	sendFinish[1] = 102; //f
 		sendFinish[2] = 13; //\r
-		
 		device.send(sendFinish.buffer);
+		
+        	device.close();
         }
         if(poller)
         	poller = clearInterval(poller);
