@@ -268,7 +268,7 @@
     var descriptor = {
         blocks: [
                 ['h', 'when ALPHA Maker is connected', 'MakerConectada'],
-                ['r', 'Read Sensor %m.sensor', 'readSensor', 'S1']
+                ['r', 'Read Sensor %m.sensor', 'readSensor', 'S1'],
                 ['w', 'wait for random time', 'wait_random'],
                 [' ', 'Synchronous wait for random time', 'wait_random2'],
         ],
