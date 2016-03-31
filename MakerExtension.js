@@ -8,9 +8,13 @@
     var comPoller = null;
     
     var valA = 0;
+    var idA = 0;
     var valB = 0;
+    var idB = 0;
     var valC = 0;
+    var idC = 0;
     var valD = 0;
+    var idD = 0;
     
      ext.resetAll = function(){};
      
@@ -162,37 +166,60 @@
     
     function decodeMessage(bytes){
     	var data = String.fromCharCode.apply(null, bytes);
-	var A_index = data.indexOf('A');
-	var B_index = data.indexOf('B');
-	var C_index = data.indexOf('C');
-	var D_index = data.indexOf('D');
-	if(A_index >= 0 && B_index >= 0 && C_index >= 0 && D_index >= 0){
+    	//IDs
+	var idA_index = data.indexOf('A');
+	var idB_index = data.indexOf('B');
+	var idC_index = data.indexOf('C');
+	var idD_index = data.indexOf('D');
+	
+	var valA_index = data.indexOf('a');
+	var valB_index = data.indexOf('b');
+	var valC_index = data.indexOf('c');
+	var valD_index = data.indexOf('d');
+	if(idA_index >= 0 && idB_index >= 0 && idC_index >= 0 && idD_index >= 0 && valA_index >= 0 && valB_index >= 0 && valC_index >= 0 && valD_index >= 0){
 		var index;
-		A_index ++;
-		B_index ++;
-		C_index ++;
-		D_index ++;
+		idA_index ++;
+		idB_index ++;
+		idC_index ++;
+		idD_index ++;
+		
+		valA_index ++;
+		valB_index ++;
+		valC_index ++;
+		valD_index ++;
 		
 		//Get S1
-		index = data.indexOf('\r', A_index);
-		valA = data.substring(A_index, index);
+		index = data.indexOf('\r', idA_index);
+		idA = data.substring(idA_index, index);
+		index = data.indexOf('\r', valA_index);
+		valA = data.substring(valA_index, index);
 		
 		//Get S2
-		index = data.indexOf('\r', B_index);
-		valB = data.substring(B_index, index);
+		index = data.indexOf('\r', idB_index);
+		idB = data.substring(idB_index, index);
+		index = data.indexOf('\r', valB_index);
+		valB = data.substring(valB_index, index);
 		
 		//Get S3
-		index = data.indexOf('\r', C_index);
-		valC = data.substring(C_index, index);
+		index = data.indexOf('\r', idC_index);
+		idC = data.substring(idC_index, index);
+		index = data.indexOf('\r', valC_index);
+		valC = data.substring(valC_index, index);
 		
 		//Get S4
-		index = data.indexOf('\r', D_index);
-		valD = data.substring(D_index, index);
+		index = data.indexOf('\r', idD_index);
+		idD = data.substring(idD_index, index);
+		index = data.indexOf('\r', valD_index);
+		valD = data.substring(valD_index, index);
 	
-		console.log('A: ' + valA);
-		console.log('B: ' + valB);
-		console.log('C: ' + valC);
-		console.log('D: ' + valD);
+		console.log('A: ' + idA);
+		console.log('B: ' + idB);
+		console.log('C: ' + idC);
+		console.log('D: ' + idD);
+		console.log('a: ' + valA);
+		console.log('b: ' + valB);
+		console.log('c: ' + valC);
+		console.log('d: ' + valD);
 		return true;
 	}
 	return false;
