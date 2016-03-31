@@ -55,9 +55,9 @@
     	var sendServo =  new Uint8Array(7);
 	sendServo[0] = 77; //M
 	sendServo[2] = 13; //\r
-	sendServo[3] = angle / 100;
-	sendServo[4] = (angle % 100) / 10;
-	sendServo[5] = angle % 10;
+	sendServo[3] = angle / 100 + 48;
+	sendServo[4] = (angle % 100) / 10 + 48;
+	sendServo[5] = angle % 10 + 48;
 	sendServo[6] = 13; //\r
     	if(servo == 'SV1'){
 		sendServo[1] = 111; //o
