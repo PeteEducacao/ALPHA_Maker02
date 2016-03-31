@@ -195,12 +195,9 @@
 				
 					active = true;
 					comWatchdog = setInterval(function(){
-						console.log('comWatchdog active: ' + active);
 						if(active)
 							active = false
 						else{
-							console.log('comWatchdog triggered');
-							
 							clearInterval(comPoller);
 							comPoller = null;
 							
