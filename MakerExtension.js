@@ -385,7 +385,7 @@
 			['-'],
 			['r', 'Read sensor %m.sensor', 'readSensor', 'S1'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Motor %m.motor %m.directions[lang] %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Play sound %n Hz', 'playSound', '1000'],
 			[' ', 'Mute', 'mute']
 		],
@@ -394,7 +394,7 @@
 			['-'],
 			['r', 'Ler Sensor %m.sensor', 'readSensor', 'S1'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Motor %m.motor %m.directions[lang] %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
 			[' ', 'Mudo', 'mute']
 		]
