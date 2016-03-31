@@ -131,8 +131,8 @@
 		potentialDevices.push(dev);
 		console.log('Aqui 1. ');
 		if(!device){
-				console.log('Aqui 2. ');
-				tryNextDevice();
+			console.log('Aqui 2. ');
+			tryNextDevice();
 		}
 	}
 
