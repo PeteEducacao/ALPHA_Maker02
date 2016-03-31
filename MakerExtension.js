@@ -75,14 +75,14 @@
 		sendMotor[2] = 13; //\r
 		sendMotor[6] = 13; //\r
 			
-			if(power < 0)
-				power = 0;
-			if(power > 100)
-				power = 100;
-			if(direction == 'backward')
-				power = power + 128;
-			if(direction == 'stop')
-				power = 0;
+		if(power < 0)
+			power = 0;
+		if(power > 100)
+			power = 100;
+		if(direction == menus[lang]['directions'][1])
+			power = power + 128;
+		if(direction == menus[lang]['directions'][2])
+			power = 0;
 		sendMotor[3] = power / 100 + 48;
 		sendMotor[4] = (power % 100) / 10 + 48;
 		sendMotor[5] = power % 10 + 48;
@@ -394,7 +394,7 @@
 			['-'],
 			['r', 'Ler Sensor %m.sensor', 'readSensor', 'S1'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
 			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
 			[' ', 'Mudo', 'mute']
 		]
