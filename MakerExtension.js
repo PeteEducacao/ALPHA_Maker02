@@ -52,7 +52,7 @@
     };
     
     ext.setServo = function(servo, angle) {
-    	var sendServo =  new Uint8Array(5);
+    	var sendServo =  new Uint8Array(7);
 	sendServo[0] = 77; //M
 	sendServo[2] = 13; //\r
 	sendServo[3] = angle / 100;
