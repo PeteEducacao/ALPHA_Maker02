@@ -381,7 +381,15 @@
 
     //************************************************************
     // Block and block menu descriptions
-    
+    // Check for GET param 'lang'
+  var paramString = window.location.search.replace(/^\?|\/$/g, '');
+  var vars = paramString.split("&");
+  var lang = 'en';
+  for (var i=0; i<vars.length; i++) {
+    var pair = vars[i].split('=');
+    if (pair.length > 1 && pair[0]=='lang')
+      lang = pair[1];
+  }
     var blocks = {
 	en: [
                 ['h', 'When ALPHA Maker is connected', 'MakerConectada'],
