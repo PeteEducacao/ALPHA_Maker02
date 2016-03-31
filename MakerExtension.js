@@ -85,9 +85,10 @@
     		power = 0;
     	if(power > 100)
     		power = 100;
-    	if(direction == 'backward'){
+    	if(direction == 'backward')
     		power = power + 128;
-    	}
+    	if(direction == 'stop')
+    		power = 0;
 	sendMotor[3] = power / 100 + 48;
 	sendMotor[4] = (power % 100) / 10 + 48;
 	sendMotor[5] = power % 10 + 48;
@@ -102,6 +103,29 @@
 	device.send(sendMotor.buffer);
     };
     
+    ext.playSound = function(frequency) {
+    	var sendSound =  new Uint8Array(8);
+	sendSound[0] = 77; //M
+    	sendSound[1] = 77; //M
+	sendSound[2] = 13; //\r
+	sendSound[7] = 13; //\r
+    	
+	sendSound[3] = power / 1000 + 48;
+	sendSound[4] = (power % 1000) / 100 + 48;
+	sendSound[5] = (power % 100) / 10 + 48;
+	sendSound[6] = power % 10 + 48;
+	
+	device.send(sendSound.buffer);
+    }
+    
+    ext.mute = function() {
+    	var sendMute =  new Uint8Array(3);
+	sendMute[0] = 77; //M
+    	sendMute[1] = 109; //m
+	sendMute[2] = 13; //\r
+	
+	device.send(sendMute.buffer);
+    }
     
     ext.wait_random = function(callback) {
         wait = Math.random();
@@ -349,14 +373,14 @@
                 ['r', 'Read Sensor %m.sensor', 'readSensor', 'S1'],
                 [' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
                 [' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
-                ['w', 'wait for random time', 'wait_random'],
-                [' ', 'Synchronous wait for random time', 'wait_random2'],
+                [' ', 'Play sound %n Hz', 'playSound', '1000'],
+                [' ', 'Mute', 'mute'],
         ],
         menus: {
             sensor: ['S1', 'S2', 'S3', 'S4'],
             servo: ['SV1', 'SV2'],
             motor: ['ME', 'MD'],
-            directions: ['forward', 'backward']
+            directions: ['forward', 'backward', 'stop']
         },
     };
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
