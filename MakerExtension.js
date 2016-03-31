@@ -104,16 +104,17 @@
     };
     
     ext.playSound = function(frequency) {
-    	var sendSound =  new Uint8Array(8);
+    	var sendSound =  new Uint8Array(9);
 	sendSound[0] = 77; //M
     	sendSound[1] = 77; //M
 	sendSound[2] = 13; //\r
-	sendSound[7] = 13; //\r
+	sendSound[8] = 13; //\r
     	
-	sendSound[3] = power / 1000 + 48;
-	sendSound[4] = (power % 1000) / 100 + 48;
-	sendSound[5] = (power % 100) / 10 + 48;
-	sendSound[6] = power % 10 + 48;
+	sendSound[3] = frequency / 10000 + 48;
+	sendSound[4] = (frequency % 10000) / 1000 + 48;
+	sendSound[5] = (frequency % 1000) / 100 + 48;
+	sendSound[6] = (frequency % 100) / 10 + 48;
+	sendSound[7] = frequency % 10 + 48;
 	
 	device.send(sendSound.buffer);
     }
@@ -287,14 +288,14 @@
 		index = data.indexOf('\r', valD_index);
 		valD = data.substring(valD_index, index);
 	
-		console.log('A: ' + idA);
+		/*console.log('A: ' + idA);
 		console.log('B: ' + idB);
 		console.log('C: ' + idC);
 		console.log('D: ' + idD);
 		console.log('a: ' + valA);
 		console.log('b: ' + valB);
 		console.log('c: ' + valC);
-		console.log('d: ' + valD);
+		console.log('d: ' + valD);*/
 		return true;
 	}
 	return false;
@@ -359,7 +360,6 @@
     };
 
     ext._getStatus = function() {
-        console.log('_getStatus');
         if(!device) return {status: 0, msg: 'Maker desconectado'};
         if(watchdog) return {status: 1, msg: 'Procurando pela Maker'};
         return {status: 2, msg: 'Maker conectada'};
