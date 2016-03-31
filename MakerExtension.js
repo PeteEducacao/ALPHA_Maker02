@@ -7,6 +7,11 @@
     var comWatchdog = null;
     var comPoller = null;
     
+    var valA = 0;
+    var valB = 0;
+    var valC = 0;
+    var valD = 0;
+    
      ext.resetAll = function(){};
      
     // Configure serial baudrate = 9600, parity=none, stopbits=1, databits=8
@@ -26,6 +31,22 @@
             return false;
     };
     
+    ext.readSensor = function(sensor) {
+    	if(sensor == 'S1'){
+    		return valA;
+    	}
+    	if(sensor == 'S2'){
+    		return valB;
+    	}
+    	if(sensor == 'S3'){
+    		return valC;
+    	}
+    	if(sensor == 'S4'){
+    		return valD;
+    	}
+    	return 0;
+    };
+    
     
     ext.wait_random = function(callback) {
         wait = Math.random();
@@ -37,10 +58,7 @@
     
   
     //*************************************************************
-    
-    
-    
-    
+   
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
         potentialDevices.push(dev);
@@ -157,19 +175,19 @@
 		
 		//Get S1
 		index = data.indexOf('\r', A_index);
-		var valA = data.substring(A_index, index);
+		valA = data.substring(A_index, index);
 		
 		//Get S2
 		index = data.indexOf('\r', B_index);
-		var valB = data.substring(B_index, index);
+		valB = data.substring(B_index, index);
 		
 		//Get S3
 		index = data.indexOf('\r', C_index);
-		var valC = data.substring(C_index, index);
+		valC = data.substring(C_index, index);
 		
 		//Get S4
 		index = data.indexOf('\r', D_index);
-		var valD = data.substring(D_index, index);
+		valD = data.substring(D_index, index);
 	
 		console.log('A: ' + valA);
 		console.log('B: ' + valB);
@@ -250,15 +268,13 @@
     var descriptor = {
         blocks: [
                 ['h', 'when ALPHA Maker is connected', 'MakerConectada'],
+                ['r', 'Read Sensor %m.sensor', 'readSensor', 'S1']
                 ['w', 'wait for random time', 'wait_random'],
                 [' ', 'Synchronous wait for random time', 'wait_random2'],
         ],
         menus: {
-            booleanSensor: ['button pressed', 'A connected', 'B connected', 'C connected', 'D connected'],
-            sensor: ['slider', 'light', 'sound', 'resistance-A', 'resistance-B', 'resistance-C', 'resistance-D'],
-            lessMore: ['>', '<']
+            sensor: ['S1', 'S2', 'S3', 'S4']
         },
     };
-    console.log('TESTE ');
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
 })({});
