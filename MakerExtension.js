@@ -65,7 +65,7 @@
     	if(servo == 'SV2'){
 		sendServo[1] = 112; //p
     	}
-    	console.log("ServoMsg: " + String.fromCharCode.apply(null, sendServo);
+    	console.log("ServoMsg: " + String.fromCharCode.apply(null, sendServo));
 	device.send(sendServo.buffer);
     };
     
