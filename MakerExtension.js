@@ -385,7 +385,7 @@
 			['-'],
 			['r', 'Read sensor %m.sensor', 'readSensor', 'S1'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions[lang] %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Play sound %n Hz', 'playSound', '1000'],
 			[' ', 'Mute', 'mute']
 		],
@@ -394,20 +394,20 @@
 			['-'],
 			['r', 'Ler Sensor %m.sensor', 'readSensor', 'S1'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions[lang] %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
 			[' ', 'Mudo', 'mute']
 		]
 	};
 	
 	var menus = {
-		en:{
+		en: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['forward', 'backward', 'stop']
 		},
-		pt:{
+		pt: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
