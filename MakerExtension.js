@@ -382,19 +382,40 @@
     //************************************************************
     // Block and block menu descriptions
     var descriptor = {
-        blocks: [
-                ['h', 'when ALPHA Maker is connected', 'MakerConectada'],
-                ['r', 'Read Sensor %m.sensor', 'readSensor', 'S1'],
-                [' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-                [' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
-                [' ', 'Play sound %n Hz', 'playSound', '1000'],
-                [' ', 'Mute', 'mute'],
-        ],
+        blocks: {
+        	en: [
+	                ['h', 'When ALPHA Maker is connected', 'MakerConectada'],
+	                ['-'],
+	                ['r', 'Read sensor %m.sensor', 'readSensor', 'S1'],
+	                [' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
+	                [' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+	                [' ', 'Play sound %n Hz', 'playSound', '1000'],
+	                [' ', 'Mute', 'mute']
+		],
+		pt: [
+	                ['h', 'Quando ALPHA Maker for conectada', 'MakerConectada'],
+	                ['-'],
+	                ['r', 'Ler Sensor %m.sensor', 'readSensor', 'S1'],
+	                [' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
+	                [' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+	                [' ', 'Tocar som %n Hz', 'playSound', '1000'],
+	                [' ', 'Mudo', 'mute']
+		]
+        },
         menus: {
-            sensor: ['S1', 'S2', 'S3', 'S4'],
-            servo: ['SV1', 'SV2'],
-            motor: ['ME', 'MD'],
-            directions: ['forward', 'backward', 'stop']
+        	en: [
+			sensor: ['S1', 'S2', 'S3', 'S4'],
+			servo: ['SV1', 'SV2'],
+			motor: ['ME', 'MD'],
+			directions: ['forward', 'backward', 'stop']
+		]
+		pt: [
+			sensor: ['S1', 'S2', 'S3', 'S4'],
+			servo: ['SV1', 'SV2'],
+			motor: ['ME', 'MD'],
+			directions: ['frente', 'ré', 'pare']
+		]
+		
         },
     };
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
