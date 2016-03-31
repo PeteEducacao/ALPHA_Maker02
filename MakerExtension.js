@@ -110,6 +110,10 @@
 	sendSound[2] = 13; //\r
 	sendSound[8] = 13; //\r
     	
+    	if(frequency < 0)
+    		frequency = 0;
+    	if(frequency > 10000)
+    		frequency = 10000;
 	sendSound[3] = frequency / 10000 + 48;
 	sendSound[4] = (frequency % 10000) / 1000 + 48;
 	sendSound[5] = (frequency % 1000) / 100 + 48;
