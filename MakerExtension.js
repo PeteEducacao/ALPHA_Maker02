@@ -51,6 +51,23 @@
     	return 0;
     };
     
+    ext.setServo = function(servo, angle) {
+    	var sendServo =  new Uint8Array(5);
+	sendServo[0] = 77; //M
+	sendServo[2] = 13; //\r
+	sendServo[3] = angle / 100;
+	sendServo[4] = (angle % 100) / 10;
+	sendServo[5] = angle % 10;
+	sendServo[6] = 13; //\r
+    	if(servo == 'SV1'){
+		sendServo[1] = 111; //o
+    	}
+    	if(servo == 'SV2'){
+		sendServo[1] = 112; //p
+    	}
+	device.send(sendServo.buffer);
+    };
+    
     
     ext.wait_random = function(callback) {
         wait = Math.random();
@@ -296,11 +313,13 @@
         blocks: [
                 ['h', 'when ALPHA Maker is connected', 'MakerConectada'],
                 ['r', 'Read Sensor %m.sensor', 'readSensor', 'S1'],
+                [' ', 'Servo %m.servo %n°', 'setServo', 'SV1', '0'],
                 ['w', 'wait for random time', 'wait_random'],
                 [' ', 'Synchronous wait for random time', 'wait_random2'],
         ],
         menus: {
-            sensor: ['S1', 'S2', 'S3', 'S4']
+            sensor: ['S1', 'S2', 'S3', 'S4'],
+            servo: ['SV1', 'SV2']
         },
     };
     ScratchExtensions.register('ALPHA Maker', descriptor, ext, {type: 'serial'});
