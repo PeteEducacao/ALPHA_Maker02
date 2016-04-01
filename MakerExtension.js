@@ -123,6 +123,26 @@
 		
 		device.send(sendMute.buffer);
 	}
+	
+	function convertToOhm(val){
+		return Math.round(100000 * (1023 - val) / val);
+	}
+	
+	function convertToCelsius(val){
+		return Math.round((3970 / (Math.log(-(110 / 111 * (val - 1023)) / val) + 3970 / 298.15)) - 273.15);
+	}
+		
+	function convertToVolts(val){
+		return Math.round((6.47959 - (val * 5 / 294)) * 10) / 10;
+	}
+	
+	function convertToLux(val){
+		return Math.round(50 * val / (2700000 / 127 *0.00076725))/10;
+	}
+	
+	function convertToDb(val){
+		return Math.round(10 * ((0.0491 * val) + 40)) / 10;
+	}
 
 	 //*************************************************************
 	
