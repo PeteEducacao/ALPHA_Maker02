@@ -462,7 +462,7 @@
 		},
 		pt: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
-			types: ['Digital', 'Luz (Lux)', 'Som (Db)', 'Temperatura (°C)', 'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)'],
+			types: ['Digital', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)', 'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare']
