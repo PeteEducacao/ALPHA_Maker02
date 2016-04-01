@@ -31,19 +31,43 @@
 		return false;
 	}
 	 
-	ext.readSensor = function(sensor){
+	ext.readSensor = function(sensor, type){
+		var retVal;
 	 	if(sensor == 'S1'){
-	 		return valA;
+	 		retVal = valA;
 	 	}
 	 	if(sensor == 'S2'){
-	 		return valB;
+	 		retVal = valB;
 	 	}
 	 	if(sensor == 'S3'){
-	 		return valC;
+	 		retVal = valC;
 	 	}
 	 	if(sensor == 'S4'){
-	 		return valD;
+	 		retVal = valD;
 	 	}
+	 	
+	 	//['Digital', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
+	 	//Digital
+	 	if(type == direction == menus[lang]['types'][0])
+	 		return retVal
+	 	//Light
+	 	if(type == direction == menus[lang]['types'][1])
+	 		return convertToLux(retVal);
+	 	//Sound
+	 	if(type == direction == menus[lang]['types'][2])
+	 		return convertToDb(retVal);
+	 	//Temperature
+	 	if(type == direction == menus[lang]['types'][3])
+	 		return convertToCelsius(retVal);
+	 	//Resistance
+	 	if(type == direction == menus[lang]['types'][4])
+	 		return convertToOhm(retVal);
+	 	//Voltage
+	 	if(type == direction == menus[lang]['types'][5])
+	 		return convertToVolts(retVal);
+	 	//Distance
+	 	if(type == direction == menus[lang]['types'][6])
+	 		return convertToCentimeters(retVal);
 	 	return 0;
 	}
 	 
@@ -142,6 +166,10 @@
 	
 	function convertToDb(val){
 		return Math.round(10 * ((0.0491 * val) + 40)) / 10;
+	}
+	
+	function convertToCentimiters(val){
+		return val * 0.2;
 	}
 
 	 //*************************************************************
@@ -403,7 +431,7 @@
 		en: [
 			['h', 'When ALPHA Maker is connected', 'MakerConectada'],
 			['-'],
-			['r', 'Read sensor %m.sensor', 'readSensor', 'S1'],
+			['r', 'Read sensor %m.sensor as %m.types', 'readSensor', 'S1', 'Digital'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Play sound %n Hz', 'playSound', '1000'],
@@ -412,7 +440,7 @@
 		pt: [
 			['h', 'Quando ALPHA Maker for conectada', 'MakerConectada'],
 			['-'],
-			['r', 'Ler Sensor %m.sensor', 'readSensor', 'S1'],
+			['r', 'Ler Sensor %m.sensor como %m.types', 'readSensor', 'S1', 'Digital'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
 			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
@@ -423,12 +451,14 @@
 	var menus = {
 		en: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
+			types: ['Digital', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['forward', 'backward', 'stop']
 		},
 		pt: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
+			types: ['Digital', 'Luz', 'Som', 'Temperatura', 'Resistência', 'Tensão', 'Distância'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare']
