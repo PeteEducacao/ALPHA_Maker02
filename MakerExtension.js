@@ -168,7 +168,7 @@
 		return Math.round(10 * ((0.0491 * val) + 40)) / 10;
 	}
 	
-	function convertToCentimiters(val){
+	function convertToCentimeters(val){
 		return Math.round(val * 0.2);
 	}
 
