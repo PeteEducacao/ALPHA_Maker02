@@ -48,25 +48,25 @@
 	 	
 	 	//['Digital', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
 	 	//Digital
-	 	if(type == direction == menus[lang]['types'][0])
+	 	if(type == menus[lang]['types'][0])
 	 		return retVal
 	 	//Light
-	 	if(type == direction == menus[lang]['types'][1])
+	 	if(type == menus[lang]['types'][1])
 	 		return convertToLux(retVal);
 	 	//Sound
-	 	if(type == direction == menus[lang]['types'][2])
+	 	if(type == menus[lang]['types'][2])
 	 		return convertToDb(retVal);
 	 	//Temperature
-	 	if(type == direction == menus[lang]['types'][3])
+	 	if(type == menus[lang]['types'][3])
 	 		return convertToCelsius(retVal);
 	 	//Resistance
-	 	if(type == direction == menus[lang]['types'][4])
+	 	if(type == menus[lang]['types'][4])
 	 		return convertToOhm(retVal);
 	 	//Voltage
-	 	if(type == direction == menus[lang]['types'][5])
+	 	if(type == menus[lang]['types'][5])
 	 		return convertToVolts(retVal);
 	 	//Distance
-	 	if(type == direction == menus[lang]['types'][6])
+	 	if(type == menus[lang]['types'][6])
 	 		return convertToCentimeters(retVal);
 	 	return 0;
 	}
