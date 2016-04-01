@@ -149,6 +149,10 @@
 	}
 	
 	function convertToOhm(val){
+		if(val < 10)
+			val = 0;
+		if(val > 1012)
+			val = 1023;
 		return Math.round(100000 * (1023 - val) / val);
 	}
 	
@@ -451,14 +455,14 @@
 	var menus = {
 		en: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
-			types: ['Digital', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance'],
+			types: ['Digital', 'Light (Lux)', 'Sound (dB)', 'Temperature (°C)', 'Resistance (Ohm)', 'Voltage (V)', 'Distance (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['forward', 'backward', 'stop']
 		},
 		pt: {
 			sensor: ['S1', 'S2', 'S3', 'S4'],
-			types: ['Digital', 'Luz', 'Som', 'Temperatura', 'Resistência', 'Tensão', 'Distância'],
+			types: ['Digital', 'Luz (Lux)', 'Som (Db)', 'Temperatura (°C)', 'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare']
