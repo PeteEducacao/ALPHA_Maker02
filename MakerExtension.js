@@ -169,7 +169,7 @@
 	}
 	
 	function convertToCentimiters(val){
-		return val * 0.2;
+		return Math.round(val * 0.2);
 	}
 
 	 //*************************************************************
