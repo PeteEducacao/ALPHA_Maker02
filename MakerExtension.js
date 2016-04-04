@@ -168,7 +168,7 @@
 	}
 	
 	function convertToLux(val){
-		return Math.round(50 * val / (2700000 / 127 *0.00076725))/10;
+		return Math.round(50 * val / (2700000 / 127 *0.00076725)) / 10;
 	}
 	
 	function convertToDb(val){
@@ -191,9 +191,7 @@
 	var potentialDevices = [];
 	ext._deviceConnected = function(dev){
 		potentialDevices.push(dev);
-		console.log('Aqui 1. ');
 		if(!device){
-			console.log('Aqui 2. ');
 			tryNextDevice();
 		}
 	}
@@ -350,8 +348,9 @@
 		//If potentialDevices is empty, device will be undefined.
 		//That will get us back here next time a device is connected.
 		device = potentialDevices.shift();
-		if(!device) return;
-		device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
+		if(!device)
+			return;
+		device.open({stopBits: 0, bitRate: 9600, ctsFlowControl: 0});
 		
 		device.set_receive_handler(function(data){
 			if(!rawData)
@@ -363,18 +362,17 @@
 		});
 
 		//Envia Mn
-		var pingCmd = new Uint8Array(3);
-		pingCmd[0]= 77;//'M';
-		pingCmd[1]= 110; //'n';
-		pingCmd[2] = 13;
-		//poller = setInterval(function(){
+		var getDeviceInformation = new Uint8Array(3);
+		getDeviceInformation[0]= 77; //M;
+		getDeviceInformation[1]= 110; //n;
+		getDeviceInformation[2] = 13; //\r
 		poller = setTimeout(function(){
-			console.log('Sending Mn'); //Aqui 6
-			device.send(pingCmd.buffer);
+			console.log('Sending Mn');
+			device.send(getDeviceInformation.buffer);
 		}, 500);
 		
 		watchdog = setTimeout(function(){
-			console.log('Watchdog triggered'); //Aqui 7
+			console.log('Watchdog triggered');
 			//This device didn't get good data in time, so give up on it. Clean up and then move on.
 			//If we get good data then we'll terminate this watchdog.
 			clearInterval(poller);
