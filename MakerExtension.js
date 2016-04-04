@@ -163,7 +163,7 @@
 		device.send(sendSound.buffer);
 	}
 	
-	ext.playNote = function(note, time, callback){
+	ext.playNoteTime = function(note, time, callback){
 		ext.playNote(note);
 		window.setTimeout(function(){
 			ext.mute();
