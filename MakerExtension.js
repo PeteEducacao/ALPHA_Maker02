@@ -250,7 +250,6 @@
 						resend[0] = 77; //M
 						resend[1] = 86; //V
 						resend[2] = 13; //\r
-						console.log('Requesting values'); //Aqui 6
 						device.send(resend.buffer);
 					}, 100);
 				
