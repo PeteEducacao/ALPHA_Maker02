@@ -7,66 +7,68 @@
 	var comWatchdog = null;
 	var comPoller = null;
 	 
-	var valA = 0;
-	var idA = 0;
-	var valB = 0;
-	var idB = 0;
-	var valC = 0;
-	var idC = 0;
-	var valD = 0;
-	var idD = 0;
+	var valA = 0, idA = 0, selectedSensorA;
+	var valB = 0, idB = 0, selectedSensorB;
+	var valC = 0, idC = 0, selectedSensorC;
+	var valD = 0, idD = 0, selectedSensorD;
 	 
 	ext.resetAll = function(){}
-	 
-	function appendBuffer(buffer1, buffer2){
-		var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
-		tmp.set(new Uint8Array(buffer1), 0);
-		tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
-		return tmp.buffer;
+	
+	ext.connectSensor = function(sensor, port){
+		if(port == 'S1'){
+			selectedSensorA = sensor;
+		}
+		if(port == 'S2'){
+			selectedSensorB = sensor;
+		}
+		if(port == 'S3'){
+			selectedSensorC = sensor;
+		}
+		if(port == 'S4'){
+			selectedSensorD = sensor;
+		}
 	}
 	 
-	ext.MakerConectada = function(){
-		if(notifyConnection)
-			return true;
-		return false;
-	}
-	 
-	ext.readSensor = function(sensor, type){
-		var retVal;
-	 	if(sensor == 'S1'){
+	ext.readPort = function(port){
+		var retVal, selectedSensor;
+	 	if(port == 'S1'){
 	 		retVal = valA;
+	 		selectedSensor = selectedSensorA;
 	 	}
-	 	if(sensor == 'S2'){
+	 	if(port == 'S2'){
 	 		retVal = valB;
+	 		selectedSensor = selectedSensorB;
 	 	}
-	 	if(sensor == 'S3'){
+	 	if(port == 'S3'){
 	 		retVal = valC;
+	 		selectedSensor = selectedSensorC;
 	 	}
-	 	if(sensor == 'S4'){
+	 	if(port == 'S4'){
 	 		retVal = valD;
+	 		selectedSensor = selectedSensorD;
 	 	}
 	 	
 	 	//['Digital', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
 	 	//Digital
-	 	if(type == menus[lang]['types'][0])
+	 	if(selectedSensor == menus[lang]['sensors'][0])
 	 		return retVal
 	 	//Light
-	 	if(type == menus[lang]['types'][1])
+	 	if(selectedSensor == menus[lang]['sensors'][1])
 	 		return convertToLux(retVal);
 	 	//Sound
-	 	if(type == menus[lang]['types'][2])
+	 	if(selectedSensor == menus[lang]['sensors'][2])
 	 		return convertToDb(retVal);
 	 	//Temperature
-	 	if(type == menus[lang]['types'][3])
+	 	if(selectedSensor == menus[lang]['sensors'][3])
 	 		return convertToCelsius(retVal);
 	 	//Resistance
-	 	if(type == menus[lang]['types'][4])
+	 	if(selectedSensor == menus[lang]['sensors'][4])
 	 		return convertToOhm(retVal);
 	 	//Voltage
-	 	if(type == menus[lang]['types'][5])
+	 	if(selectedSensor == menus[lang]['sensors'][5])
 	 		return convertToVolts(retVal);
 	 	//Distance
-	 	if(type == menus[lang]['types'][6])
+	 	if(selectedSensor == menus[lang]['sensors'][6])
 	 		return convertToCentimeters(retVal);
 	 	return 0;
 	}
@@ -177,6 +179,13 @@
 	}
 
 	 //*************************************************************
+	 
+	function appendBuffer(buffer1, buffer2){
+		var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+		tmp.set(new Uint8Array(buffer1), 0);
+		tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
+		return tmp.buffer;
+	}
 	
 	 var potentialDevices = [];
 	 ext._deviceConnected = function(dev){
@@ -433,18 +442,18 @@
 	}
 	var blocks = {
 		en: [
-			['h', 'When ALPHA Maker is connected', 'MakerConectada'],
+			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
+			['r', 'Read port %m.ports', 'readPort', 'S1'],
 			['-'],
-			['r', 'Read sensor %m.sensor as %m.types', 'readSensor', 'S1', 'Digital'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Play sound %n Hz', 'playSound', '1000'],
 			[' ', 'Mute', 'mute']
 		],
 		pt: [
-			['h', 'Quando ALPHA Maker for conectada', 'MakerConectada'],
+			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
+			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 			['-'],
-			['r', 'Ler Sensor %m.sensor como %m.types', 'readSensor', 'S1', 'Digital'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
 			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
@@ -454,15 +463,15 @@
 	
 	var menus = {
 		en: {
-			sensor: ['S1', 'S2', 'S3', 'S4'],
-			types: ['Digital', 'Light (Lux)', 'Sound (dB)', 'Temperature (°C)', 'Resistance (Ohm)', 'Voltage (V)', 'Distance (cm)'],
+			ports: ['S1', 'S2', 'S3', 'S4'],
+			sensors: ['Digital Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)', 'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)', 'Distance Sensor (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['forward', 'backward', 'stop']
 		},
 		pt: {
-			sensor: ['S1', 'S2', 'S3', 'S4'],
-			types: ['Digital', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)', 'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)'],
+			ports: ['S1', 'S2', 'S3', 'S4'],
+			sensors: ['Sensor Digital', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare']
