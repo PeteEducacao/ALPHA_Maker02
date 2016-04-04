@@ -75,7 +75,7 @@
 	}
 	 
 	ext.setServo = function(servo, angle){
-	 	var sendServo =new Uint8Array(7);
+	 	var sendServo = new Uint8Array(7);
 		sendServo[0] = 77; //M
 		sendServo[2] = 13; //\r
 		sendServo[6] = 13; //\r
@@ -97,7 +97,7 @@
 	}
 	 
 	ext.setMotor = function(motor, direction, power){
-	 	var sendMotor =new Uint8Array(7);
+	 	var sendMotor = new Uint8Array(7);
 		sendMotor[0] = 77; //M
 		sendMotor[2] = 13; //\r
 		sendMotor[6] = 13; //\r
@@ -123,7 +123,7 @@
 	}
 		 
 	ext.playSound = function(frequency){
-		var sendSound =new Uint8Array(9);
+		var sendSound = new Uint8Array(9);
 		sendSound[0] = 77; //M
 		sendSound[1] = 77; //M
 		sendSound[2] = 13; //\r
@@ -143,7 +143,7 @@
 	}
 		 
 	ext.mute = function(){
-		var sendMute =new Uint8Array(3);
+		var sendMute = new Uint8Array(3);
 		sendMute[0] = 77; //M
 		sendMute[1] = 109; //m
 		sendMute[2] = 13; //\r
@@ -188,8 +188,8 @@
 		return tmp.buffer;
 	}
 	
-	 var potentialDevices = [];
-	 ext._deviceConnected = function(dev){
+	var potentialDevices = [];
+	ext._deviceConnected = function(dev){
 		potentialDevices.push(dev);
 		console.log('Aqui 1. ');
 		if(!device){
@@ -226,7 +226,6 @@
 		
 		if(watchdog){
 			if(checkMaker(bytes)){
-				console.log('Found Maker')
 				rawData = null;
 				
 				//Reconhece como sendo uma Maker
@@ -236,7 +235,7 @@
 				poller = null;
 				
 				if(!comPoller && !comWatchdog){
-					var startAcquisition =new Uint8Array(5);
+					var startAcquisition = new Uint8Array(5);
 					startAcquisition[0] = 77; //M
 					startAcquisition[1] = 115; //s
 					startAcquisition[2] = 49; //1
@@ -356,12 +355,12 @@
 		device.open({ stopBits: 0, bitRate: 9600, ctsFlowControl: 0 });
 		
 		device.set_receive_handler(function(data){
-			if(!rawData || rawData.byteLength == 2) rawData = new Uint8Array(data);
-			else rawData = appendBuffer(rawData, data);
+			if(!rawData)
+				rawData = new Uint8Array(data);
+			else
+				rawData = appendBuffer(rawData, data);
 
-			if(rawData.byteLength >= 2){
-				 processData();
-			}
+			processData();
 		});
 
 		//Envia Mn
@@ -430,17 +429,18 @@
 		return{status: 2, msg: 'Maker connected'};
 	}
 
-	 //************************************************************
-	 //Block and block menu descriptions
-	 //Check for GET param 'lang'
 	var paramString = window.location.search.replace(/^\?|\/$/g, '');
 	var vars = paramString.split("&");
 	var lang = 'en';
+	//Check for GET param 'lang'
 	for (var i = 0; i < vars.length; i++){
 		var pair = vars[i].split('=');
 		if(pair.length > 1 && pair[0] == 'lang')
 			lang = pair[1];
 	}
+	
+	//************************************************************
+	//Block and block menu descriptions
 	var blocks = {
 		en: [
 			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
