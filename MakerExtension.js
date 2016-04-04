@@ -122,22 +122,43 @@
 		device.send(sendMotor.buffer);
 	}
 		 
-	ext.playSound = function(frequency){
-		var sendSound = new Uint8Array(9);
+	ext.playNote = function(note){
+		var sendSound = new Uint8Array(7);
 		sendSound[0] = 77; //M
 		sendSound[1] = 77; //M
 		sendSound[2] = 13; //\r
-		sendSound[8] = 13; //\r
+		sendSound[6] = 13; //\r
+		
+		var frequency;
+		
+		if(note == menus[lang]['notes'][0])
+			frequency = 118;
+		if(note == menus[lang]['notes'][1])
+			frequency = 112;
+		if(note == menus[lang]['notes'][2])
+			frequency = 105;
+		if(note == menus[lang]['notes'][3])
+			frequency = 99;
+		if(note == menus[lang]['notes'][4])
+			frequency = 94;
+		if(note == menus[lang]['notes'][5])
+			frequency = 88;
+		if(note == menus[lang]['notes'][6])
+			frequency = 83;
+		if(note == menus[lang]['notes'][7])
+			frequency = 79;
+		if(note == menus[lang]['notes'][8])
+			frequency = 74;
+		if(note == menus[lang]['notes'][9])
+			frequency = 70;
+		if(note == menus[lang]['notes'][10])
+			frequency = 66;
+		if(note == menus[lang]['notes'][11])
+			frequency = 62;
 			
-		if(frequency < 0)
-			frequency = 0;
-		if(frequency > 10000)
-			frequency = 10000;
-		sendSound[3] = frequency / 10000 + 48;
-		sendSound[4] = (frequency % 10000) / 1000 + 48;
-		sendSound[5] = (frequency % 1000) / 100 + 48;
-		sendSound[6] = (frequency % 100) / 10 + 48;
-		sendSound[7] = frequency % 10 + 48;
+		sendSound[3] = frequency / 100 + 48;
+		sendSound[4] = (frequency % 100) / 10 + 48;
+		sendSound[5] = frequency % 10 + 48;
 		
 		device.send(sendSound.buffer);
 	}
@@ -444,18 +465,18 @@
 			['r', 'Read port %m.ports', 'readPort', 'S1'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0']/*,
-			[' ', 'Play sound %n Hz', 'playSound', '1000'],
-			[' ', 'Mute', 'mute']*/
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Play note %m.notes', 'playNote', 'C'],
+			[' ', 'Mute', 'mute']
 		],
 		pt: [
 			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
 			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0']/*,
-			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
-			[' ', 'Mudo', 'mute']*/
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
+			[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
+			[' ', 'Mudo', 'mute']
 		]
 	};
 	
@@ -465,14 +486,16 @@
 			sensors: ['Digital Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)', 'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)', 'Distance Sensor (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
-			directions: ['forward', 'backward', 'stop']
+			directions: ['forward', 'backward', 'stop'],
+			notes: ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 		},
 		pt: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
 			sensors: ['Sensor Digital', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
-			directions: ['frente', 'ré', 'pare']
+			directions: ['frente', 'ré', 'pare'],
+			notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'La', 'Síb', 'Si']
 		}
 	};
 	var descriptor = {
