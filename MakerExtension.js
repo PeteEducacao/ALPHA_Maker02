@@ -269,7 +269,7 @@
 							device = null;
 							tryNextDevice();
 						}
-					}, 1000);
+					}, 3000);
 				}
 			}
 		}
