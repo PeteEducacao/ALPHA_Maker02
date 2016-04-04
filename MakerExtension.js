@@ -162,6 +162,14 @@
 		
 		device.send(sendSound.buffer);
 	}
+	
+	ext.playNote = function(note, time, callback){
+		ext.playNote(note);
+		window.setTimeout(function(){
+			ext.mute();
+			callback();
+		}, time*1000);
+	}
 		 
 	ext.mute = function(){
 		var sendMute = new Uint8Array(3);
@@ -467,6 +475,7 @@
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
 			[' ', 'Play note %m.notes', 'playNote', 'C'],
+			['w', 'Play note %m.notes for %n seconds', 'playNoteTime', 'C', '1'],
 			[' ', 'Mute', 'mute']
 		],
 		pt: [
@@ -476,6 +485,7 @@
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
 			[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
+			['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
 			[' ', 'Mudo', 'mute']
 		]
 	};
