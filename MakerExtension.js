@@ -444,18 +444,18 @@
 			['r', 'Read port %m.ports', 'readPort', 'S1'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0']/*,
 			[' ', 'Play sound %n Hz', 'playSound', '1000'],
-			[' ', 'Mute', 'mute']
+			[' ', 'Mute', 'mute']*/
 		],
 		pt: [
 			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
 			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
+			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0']/*,
 			[' ', 'Tocar som %n Hz', 'playSound', '1000'],
-			[' ', 'Mudo', 'mute']
+			[' ', 'Mudo', 'mute']*/
 		]
 	};
 	
