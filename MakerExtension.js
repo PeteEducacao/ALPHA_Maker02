@@ -474,8 +474,8 @@
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
-			[' ', 'Play note %m.notes', 'playNote', 'C'],
 			['w', 'Play note %m.notes for %n seconds', 'playNoteTime', 'C', '1'],
+			[' ', 'Play note %m.notes', 'playNote', 'C'],
 			[' ', 'Mute', 'mute']
 		],
 		pt: [
@@ -484,8 +484,8 @@
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
-			[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
 			['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
+			[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
 			[' ', 'Mudo', 'mute']
 		]
 	};
