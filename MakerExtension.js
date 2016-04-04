@@ -7,10 +7,10 @@
 	var comWatchdog = null;
 	var comPoller = null;
 	 
-	var valA = 0, idA = 0, selectedSensorA;
-	var valB = 0, idB = 0, selectedSensorB;
-	var valC = 0, idC = 0, selectedSensorC;
-	var valD = 0, idD = 0, selectedSensorD;
+	var valA = 0, idA = 0, selectedSensorA = 0;
+	var valB = 0, idB = 0, selectedSensorB = 0;
+	var valC = 0, idC = 0, selectedSensorC = 0;
+	var valD = 0, idD = 0, selectedSensorD = 0;
 	 
 	ext.resetAll = function(){}
 	
@@ -70,7 +70,8 @@
 	 	//Distance
 	 	if(selectedSensor == menus[lang]['sensors'][6])
 	 		return convertToCentimeters(retVal);
-	 	return 0;
+
+	 	return retVal;
 	}
 	 
 	ext.setServo = function(servo, angle){
@@ -404,7 +405,7 @@
 
 	ext._shutdown = function(){
 		if(device){
-		 	var sendFinish =new Uint8Array(3);
+		 	var sendFinish = new Uint8Array(3);
 			sendFinish[0] = 77; //M
 		 	sendFinish[1] = 102; //f
 			sendFinish[2] = 13; //\r
