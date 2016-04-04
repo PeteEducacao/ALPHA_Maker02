@@ -252,7 +252,7 @@
 						resend[2] = 13; //\r
 						console.log('Requesting values'); //Aqui 6
 						device.send(resend.buffer);
-					}, 200);
+					}, 100);
 				
 					active = true;
 					comWatchdog = setInterval(function(){
