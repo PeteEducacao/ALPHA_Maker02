@@ -532,7 +532,7 @@
 		pt: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
 			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
-			colors: ['Azul', 'Vermelho', 'Amarelo', 'Verde', 'Branco', 'Preto', 'Indefinido']
+			colors: ['Azul', 'Vermelho', 'Amarelo', 'Verde', 'Branco', 'Preto', 'Indefinido'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare'],
