@@ -7,45 +7,45 @@
 	var comWatchdog = null;
 	var comPoller = null;
 	 
-	var valA = 0, idA = 0, selectedSensorA = 0;
-	var valB = 0, idB = 0, selectedSensorB = 0;
-	var valC = 0, idC = 0, selectedSensorC = 0;
-	var valD = 0, idD = 0, selectedSensorD = 0;
+	var valS1 = 0, idS1 = 0, selectedSensorS1 = 0;
+	var valS2 = 0, idS2 = 0, selectedSensorS2 = 0;
+	var valS3 = 0, idS3 = 0, selectedSensorS3 = 0;
+	var valS4 = 0, idS4 = 0, selectedSensorS4 = 0;
 	 
 	ext.resetAll = function(){}
 	
 	ext.connectSensor = function(sensor, port){
 		if(port == 'S1'){
-			selectedSensorA = sensor;
+			selectedSensorS1 = sensor;
 		}
 		if(port == 'S2'){
-			selectedSensorB = sensor;
+			selectedSensorS2 = sensor;
 		}
 		if(port == 'S3'){
-			selectedSensorC = sensor;
+			selectedSensorS3 = sensor;
 		}
 		if(port == 'S4'){
-			selectedSensorD = sensor;
+			selectedSensorS4 = sensor;
 		}
 	}
 	 
 	ext.readPort = function(port){
 		var retVal, selectedSensor;
 	 	if(port == 'S1'){
-	 		retVal = valA;
-	 		selectedSensor = selectedSensorA;
+	 		retVal = valS1;
+	 		selectedSensor = selectedSensorS1;
 	 	}
 	 	if(port == 'S2'){
-	 		retVal = valB;
-	 		selectedSensor = selectedSensorB;
+	 		retVal = valS2;
+	 		selectedSensor = selectedSensorS2;
 	 	}
 	 	if(port == 'S3'){
-	 		retVal = valC;
-	 		selectedSensor = selectedSensorC;
+	 		retVal = valS3;
+	 		selectedSensor = selectedSensorS3;
 	 	}
 	 	if(port == 'S4'){
-	 		retVal = valD;
-	 		selectedSensor = selectedSensorD;
+	 		retVal = valS4;
+	 		selectedSensor = selectedSensorS4;
 	 	}
 	 	
 	 	//['Digital', 'Color', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
@@ -337,59 +337,59 @@
 	function decodeMessage(bytes){
 	 	var data = String.fromCharCode.apply(null, bytes);
 	 	//IDs
-		var idA_index = data.indexOf('A');
-		var idB_index = data.indexOf('B');
-		var idC_index = data.indexOf('C');
-		var idD_index = data.indexOf('D');
+		var idS1_index = data.indexOf('A');
+		var idS2_index = data.indexOf('B');
+		var idS3_index = data.indexOf('C');
+		var idS4_index = data.indexOf('D');
 		
-		var valA_index = data.indexOf('a');
-		var valB_index = data.indexOf('b');
-		var valC_index = data.indexOf('c');
-		var valD_index = data.indexOf('d');
-		if(idA_index >= 0 && idB_index >= 0 && idC_index >= 0 && idD_index >= 0 && valA_index >= 0 && valB_index >= 0 && valC_index >= 0 && valD_index >= 0){
+		var valS1_index = data.indexOf('a');
+		var valS2_index = data.indexOf('b');
+		var valS3_index = data.indexOf('c');
+		var valS4_index = data.indexOf('d');
+		if(idS1_index >= 0 && idS2_index >= 0 && idS3_index >= 0 && idS4_index >= 0 && valS1_index >= 0 && valS2_index >= 0 && valS3_index >= 0 && valS4_index >= 0){
 			var index;
-			idA_index ++;
-			idB_index ++;
-			idC_index ++;
-			idD_index ++;
+			idS1_index ++;
+			idS2_index ++;
+			idS3_index ++;
+			idS4_index ++;
 			
-			valA_index ++;
-			valB_index ++;
-			valC_index ++;
-			valD_index ++;
+			valS1_index ++;
+			valS2_index ++;
+			valS3_index ++;
+			valS4_index ++;
 			
 			//Get S1
-			index = data.indexOf('\r', idA_index);
-			idA = data.substring(idA_index, index);
-			index = data.indexOf('\r', valA_index);
-			valA = data.substring(valA_index, index);
+			index = data.indexOf('\r', idS1_index);
+			idS1 = data.substring(idS1_index, index);
+			index = data.indexOf('\r', valS1_index);
+			valS1 = data.substring(valS1_index, index);
 			
 			//Get S2
-			index = data.indexOf('\r', idB_index);
-			idB = data.substring(idB_index, index);
-			index = data.indexOf('\r', valB_index);
-			valB = data.substring(valB_index, index);
+			index = data.indexOf('\r', idS2_index);
+			idS2 = data.substring(idS2_index, index);
+			index = data.indexOf('\r', valS2_index);
+			valS2 = data.substring(valS2_index, index);
 			
 			//Get S3
-			index = data.indexOf('\r', idC_index);
-			idC = data.substring(idC_index, index);
-			index = data.indexOf('\r', valC_index);
-			valC = data.substring(valC_index, index);
+			index = data.indexOf('\r', idS3_index);
+			idS3 = data.substring(idS3_index, index);
+			index = data.indexOf('\r', valS3_index);
+			valS3 = data.substring(valS3_index, index);
 			
 			//Get S4
-			index = data.indexOf('\r', idD_index);
-			idD = data.substring(idD_index, index);
-			index = data.indexOf('\r', valD_index);
-			valD = data.substring(valD_index, index);
+			index = data.indexOf('\r', idS4_index);
+			idS4 = data.substring(idS4_index, index);
+			index = data.indexOf('\r', valS4_index);
+			valS4 = data.substring(valS4_index, index);
 		
-			/*console.log('A: ' + idA);
-			console.log('B: ' + idB);
-			console.log('C: ' + idC);
-			console.log('D: ' + idD);
-			console.log('a: ' + valA);
-			console.log('b: ' + valB);
-			console.log('c: ' + valC);
-			console.log('d: ' + valD);*/
+			/*console.log('A: ' + idS1);
+			console.log('B: ' + idS2);
+			console.log('C: ' + idS3);
+			console.log('D: ' + idS4);
+			console.log('a: ' + valS1);
+			console.log('b: ' + valS2);
+			console.log('c: ' + valS3);
+			console.log('d: ' + valS4);*/
 			return true;
 		}
 		return false;
@@ -532,7 +532,7 @@
 		pt: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
 			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
-			colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
+			colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'IndefinidS1'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare'],
