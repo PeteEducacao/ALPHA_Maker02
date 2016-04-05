@@ -548,7 +548,9 @@
 	var menus = {
 		/*en: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
-			sensors: ['Digital Sensor', 'Color Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)', 'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)', 'Distance Sensor (cm)'],
+			sensors: ['Digital Sensor', 'Color Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)',
+				'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)',
+				'Distance Sensor (cm)'],
 			colors: ['Blue', 'Red', 'Yellow', 'Green', 'White', 'Black', 'Undefined'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
@@ -557,7 +559,9 @@
 		},*/
 		pt: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
-			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
+			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)',
+				'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)',
+				'Sensor de Distância (cm)'],
 			colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
