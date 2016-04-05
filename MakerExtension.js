@@ -505,7 +505,7 @@
 		return{status: 2, msg: 'Maker connected'};
 	}
 
-	var paramString = window.location.search.replace(/^\?|\/$/g, '');
+	/*var paramString = window.location.search.replace(/^\?|\/$/g, '');
 	var vars = paramString.split("&");
 	var lang = 'en';
 	//Check for GET param 'lang'
@@ -513,12 +513,12 @@
 		var pair = vars[i].split('=');
 		if(pair.length > 1 && pair[0] == 'lang')
 			lang = pair[1];
-	}
+	}*/
 	
 	//************************************************************
 	//Block and block menu descriptions
-	var blocks = {
-		en: [
+	var blocks = [
+		/*en: [
 			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
 			['r', 'Read port %m.ports', 'readPort', 'S1'],
 			['r', 'Color %m.colors', 'getColor', 'Blue'],
@@ -530,7 +530,7 @@
 			[' ', 'Play note %m.notes', 'playNote', 'C'],
 			[' ', 'Mute', 'mute']
 		],
-		pt: [
+		pt: [*/
 			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
 			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 			['r', 'Cor %m.colors', 'getColor', 'Azul'],
@@ -541,11 +541,11 @@
 			['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
 			[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
 			[' ', 'Mudo', 'mute']
-		]
-	};
+		//]
+	];
 	
 	var menus = {
-		en: {
+		/*en: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
 			sensors: ['Digital Sensor', 'Color Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)', 'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)', 'Distance Sensor (cm)'],
 			colors: ['Blue', 'Red', 'Yellow', 'Green', 'White', 'Black', 'Undefined'],
@@ -554,7 +554,7 @@
 			directions: ['forward', 'backward', 'stop'],
 			notes: ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 		},
-		pt: {
+		pt: {*/
 			ports: ['S1', 'S2', 'S3', 'S4'],
 			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
 			colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
@@ -562,11 +562,11 @@
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare'],
 			notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
-		}
+		//}
 	};
 	var descriptor = {
-		blocks: blocks[lang],
-		menus: menus[lang]
+		blocks: blocks,//[lang],
+		menus: menus//[lang]
 	};
 	ScratchExtensions.register('ALPHA Maker', descriptor, ext,{type: 'serial'});
 })({});
