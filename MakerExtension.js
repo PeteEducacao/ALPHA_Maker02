@@ -77,7 +77,7 @@
 	 	return retVal;
 	}
 	
-	ext.colors(color){
+	ext.getColor(color){
 		return color;
 	}
 	 
@@ -496,7 +496,7 @@
 		en: [
 			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
 			['r', 'Read port %m.ports', 'readPort', 'S1'],
-			['r', 'Clor %m.colors', 'colors', 'Blue'],
+			['r', 'Clor %m.colors', 'getColor', 'Blue'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
@@ -508,7 +508,7 @@
 		pt: [
 			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
 			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
-			['r', 'Cor %m.colors', 'colors', 'Azul'],
+			['r', 'Cor %m.colors', 'getColor', 'Azul'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
