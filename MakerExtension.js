@@ -48,30 +48,37 @@
 	 		selectedSensor = selectedSensorD;
 	 	}
 	 	
-	 	//['Digital', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
+	 	//['Digital', 'Color', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
 	 	//Digital
 	 	if(selectedSensor == menus[lang]['sensors'][0])
 	 		return retVal
-	 	//Light
+	 	//Color
 	 	if(selectedSensor == menus[lang]['sensors'][1])
+	 		return convertToColor(retVal);
+	 	//Light
+	 	if(selectedSensor == menus[lang]['sensors'][2])
 	 		return convertToLux(retVal);
 	 	//Sound
-	 	if(selectedSensor == menus[lang]['sensors'][2])
+	 	if(selectedSensor == menus[lang]['sensors'][3])
 	 		return convertToDb(retVal);
 	 	//Temperature
-	 	if(selectedSensor == menus[lang]['sensors'][3])
+	 	if(selectedSensor == menus[lang]['sensors'][4])
 	 		return convertToCelsius(retVal);
 	 	//Resistance
-	 	if(selectedSensor == menus[lang]['sensors'][4])
+	 	if(selectedSensor == menus[lang]['sensors'][5])
 	 		return convertToOhm(retVal);
 	 	//Voltage
-	 	if(selectedSensor == menus[lang]['sensors'][5])
+	 	if(selectedSensor == menus[lang]['sensors'][6])
 	 		return convertToVolts(retVal);
 	 	//Distance
-	 	if(selectedSensor == menus[lang]['sensors'][6])
+	 	if(selectedSensor == menus[lang]['sensors'][7])
 	 		return convertToCentimeters(retVal);
 
 	 	return retVal;
+	}
+	
+	ext.colors(color){
+		return color;
 	}
 	 
 	ext.setServo = function(servo, angle){
@@ -178,6 +185,24 @@
 		sendMute[2] = 13; //\r
 		
 		device.send(sendMute.buffer);
+	}
+	
+	function convertToColor(val){
+		//'Blue', 'Red', 'Yellow', 'Green', 'White', 'Black', 'Undefined'
+		if(val <= 160)
+			return menus[lang]['colors'][0];
+		if(val > 160 && val <= 328)
+			return menus[lang]['colors'][1];
+		if(val > 328 && val <= 460)
+			return menus[lang]['colors'][2];
+		if(val > 460 && val <= 608)
+			return menus[lang]['colors'][3];
+		if(val > 608 && val <= 788)
+			return menus[lang]['colors'][4];
+		if(val > 788 && val <= 908)
+			return menus[lang]['colors'][5];
+		if(val > 908)
+			return menus[lang]['colors'][6];
 	}
 	
 	function convertToOhm(val){
@@ -471,6 +496,7 @@
 		en: [
 			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
 			['r', 'Read port %m.ports', 'readPort', 'S1'],
+			['r', 'Clor %m.colors', 'colors', 'Blue'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
@@ -482,6 +508,7 @@
 		pt: [
 			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
 			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
+			['r', 'Cor %m.colors', 'colors', 'Azul'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
@@ -495,7 +522,8 @@
 	var menus = {
 		en: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
-			sensors: ['Digital Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)', 'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)', 'Distance Sensor (cm)'],
+			sensors: ['Digital Sensor', 'Color Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)', 'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)', 'Distance Sensor (cm)'],
+			colors: ['Blue', 'Red', 'Yellow', 'Green', 'White', 'Black', 'Undefined'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['forward', 'backward', 'stop'],
@@ -503,7 +531,8 @@
 		},
 		pt: {
 			ports: ['S1', 'S2', 'S3', 'S4'],
-			sensors: ['Sensor Digital', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
+			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)', 'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)', 'Sensor de Distância (cm)'],
+			colors: ['Azul', 'Vermelho', 'Amarelo', 'Verde', 'Branco', 'Preto', 'Indefinido']
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
 			directions: ['frente', 'ré', 'pare'],
