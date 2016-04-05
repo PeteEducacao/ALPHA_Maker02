@@ -496,7 +496,7 @@
 		en: [
 			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
 			['r', 'Read port %m.ports', 'readPort', 'S1'],
-			['r', 'Clor %m.colors', 'getColor', 'Blue'],
+			['r', 'Color %m.colors', 'getColor', 'Blue'],
 			['-'],
 			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
