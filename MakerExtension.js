@@ -77,7 +77,7 @@
 	 	return retVal;
 	}
 	
-	ext.getColor(color){
+	ext.getColor = function(color){
 		return color;
 	}
 	 
