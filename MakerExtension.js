@@ -75,6 +75,9 @@
 	 	//Distance
 	 	if(selectedSensor == menus[lang]['sensors'][7])
 	 		return convertToCentimeters(retVal);
+	 	//Distance Sharp
+	 	if(selectedSensor == menus[lang]['sensors'][8])
+	 		return convertToCentimetersSharp(retVal);
 
 	 	return retVal;
 	}
@@ -248,6 +251,10 @@
 	//Convert the value to cm
 	function convertToCentimeters(val){
 		return Math.round(val * 0.2);
+	}
+	
+	function convertToCentimetersSharp(val){
+		return 1 / (0.000225194 * val - 0.0077244);
 	}
 
 	//************************************************************* 
@@ -561,7 +568,7 @@
 			ports: ['S1', 'S2', 'S3', 'S4'],
 			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)',
 				'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)',
-				'Sensor de Distância (cm)'],
+				'Sensor de Distância (cm)', 'Sensor Sharp (cm)'],
 			colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 			servo: ['SV1', 'SV2'],
 			motor: ['ME', 'MD'],
