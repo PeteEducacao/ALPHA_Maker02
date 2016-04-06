@@ -254,7 +254,9 @@
 	}
 	
 	function convertToCentimetersSharp(val){
-		return 1 / (0.000225194 * val - 0.0077244);
+		if(val < 85)
+			val = 85;
+		return Math.round (1 / (0.000225194 * val - 0.0077244));
 	}
 
 	//************************************************************* 
