@@ -606,7 +606,7 @@
 			'Sensor de Distância (cm)', 'Sensor Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		eventOptions: ['Habilitar', 'Desabilitar'],
-		eventType: ['<', '<=', '=', '>', '>='],
+		eventTypes: ['<', '<=', '=', '>', '>='],
 		servo: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
 		directions: ['frente', 'ré', 'pare'],
