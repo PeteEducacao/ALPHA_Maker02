@@ -130,9 +130,6 @@
 	
 	ext.eventS1 = function(){
 		if(eventS1Active){
-			var intS1 = parseInt(valS1);
-			console.log('S1: ' + intS1 + ', Test: ' + eventS1Type + ', EventVal: ' + eventS1Value);
-			//<
 			if(eventS1Type == menus['eventTypes'][0] && intS1 < eventS1Value)
 				return true;
 			if(eventS1Type == menus['eventTypes'][1] && intS1 <= eventS1Value)
@@ -147,9 +144,53 @@
 		return false;
 	}
 	
-	ext.eventS2 = function(){}
-	ext.eventS3 = function(){}
-	ext.eventS4 = function(){}
+	ext.eventS2 = function(){
+		if(eventS2Active){
+			if(eventS2Type == menus['eventTypes'][0] && intS2 < eventS2Value)
+				return true;
+			if(eventS2Type == menus['eventTypes'][1] && intS2 <= eventS2Value)
+				return true;
+			if(eventS2Type == menus['eventTypes'][2] && intS2 == eventS2Value)
+				return true;
+			if(eventS2Type == menus['eventTypes'][3] && intS2 > eventS2Value)
+				return true;
+			if(eventS2Type == menus['eventTypes'][4] && intS2 >= eventS2Value)
+				return true;
+		}
+		return false;
+	}
+	
+	ext.eventS3 = function(){
+		if(eventS3Active){
+			if(eventS3Type == menus['eventTypes'][0] && intS3 < eventS3Value)
+				return true;
+			if(eventS3Type == menus['eventTypes'][1] && intS3 <= eventS3Value)
+				return true;
+			if(eventS3Type == menus['eventTypes'][2] && intS3 == eventS3Value)
+				return true;
+			if(eventS3Type == menus['eventTypes'][3] && intS3 > eventS3Value)
+				return true;
+			if(eventS3Type == menus['eventTypes'][4] && intS3 >= eventS3Value)
+				return true;
+		}
+		return false;
+	}
+	
+	ext.eventS4 = function(){
+		if(eventS4Active){
+			if(eventS4Type == menus['eventTypes'][0] && intS4 < eventS4Value)
+				return true;
+			if(eventS4Type == menus['eventTypes'][1] && intS4 <= eventS4Value)
+				return true;
+			if(eventS4Type == menus['eventTypes'][2] && intS4 == eventS4Value)
+				return true;
+			if(eventS4Type == menus['eventTypes'][3] && intS4 > eventS4Value)
+				return true;
+			if(eventS4Type == menus['eventTypes'][4] && intS4 >= eventS4Value)
+				return true;
+		}
+		return false;
+	}
 	 
 	//Control the servos angle
 	ext.setServo = function(servo, angle){
