@@ -130,15 +130,21 @@
 	
 	ext.eventS1 = function(){
 		if(eventS1Active){
-			if(eventS1Type == menus['eventTypes'][0] && valS1 < eventS1Value)
+			var vS1 = valS1;
+			
+			//If is a Color Sensor
+			if(selectedSensorS1 == menus['sensors'][1])
+	 			vS1 = convertToColor(valS1);
+
+			if(eventS1Type == menus['eventTypes'][0] && vS1 < eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][1] && valS1 <= eventS1Value)
+			if(eventS1Type == menus['eventTypes'][1] && vS1 <= eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][2] && valS1 == eventS1Value)
+			if(eventS1Type == menus['eventTypes'][2] && vS1 == eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][3] && valS1 > eventS1Value)
+			if(eventS1Type == menus['eventTypes'][3] && vS1 > eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][4] && valS1 >= eventS1Value)
+			if(eventS1Type == menus['eventTypes'][4] && vS1 >= eventS1Value)
 				return true;
 		}
 		return false;
@@ -146,15 +152,21 @@
 	
 	ext.eventS2 = function(){
 		if(eventS2Active){
-			if(eventS2Type == menus['eventTypes'][0] && valS2 < eventS2Value)
+			var vS2 = valS2;
+			
+			//If is a Color Sensor
+			if(selectedSensorS2 == menus['sensors'][1])
+	 			vS2 = convertToColor(valS2);
+	 			
+			if(eventS2Type == menus['eventTypes'][0] && vS2 < eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][1] && valS2 <= eventS2Value)
+			if(eventS2Type == menus['eventTypes'][1] && vS2 <= eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][2] && valS2 == eventS2Value)
+			if(eventS2Type == menus['eventTypes'][2] && vS2 == eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][3] && valS2 > eventS2Value)
+			if(eventS2Type == menus['eventTypes'][3] && vS2 > eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][4] && valS2 >= eventS2Value)
+			if(eventS2Type == menus['eventTypes'][4] && vS2 >= eventS2Value)
 				return true;
 		}
 		return false;
@@ -162,15 +174,21 @@
 	
 	ext.eventS3 = function(){
 		if(eventS3Active){
-			if(eventS3Type == menus['eventTypes'][0] && valS3 < eventS3Value)
+			var vS3 = valS3;
+			
+			//If is a Color Sensor
+			if(selectedSensorS3 == menus['sensors'][1])
+	 			vS3 = convertToColor(valS3);
+
+			if(eventS3Type == menus['eventTypes'][0] && vS3 < eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][1] && valS3 <= eventS3Value)
+			if(eventS3Type == menus['eventTypes'][1] && vS3 <= eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][2] && valS3 == eventS3Value)
+			if(eventS3Type == menus['eventTypes'][2] && vS3 == eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][3] && valS3 > eventS3Value)
+			if(eventS3Type == menus['eventTypes'][3] && vS3 > eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][4] && valS3 >= eventS3Value)
+			if(eventS3Type == menus['eventTypes'][4] && vS3 >= eventS3Value)
 				return true;
 		}
 		return false;
@@ -178,15 +196,21 @@
 	
 	ext.eventS4 = function(){
 		if(eventS4Active){
-			if(eventS4Type == menus['eventTypes'][0] && valS4 < eventS4Value)
+			var vS4 = valS4;
+			
+			//If is a Color Sensor
+			if(selectedSensorS4 == menus['sensors'][1])
+	 			vS4 = convertToColor(valS4);
+
+			if(eventS4Type == menus['eventTypes'][0] && vS4 < eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][1] && valS4 <= eventS4Value)
+			if(eventS4Type == menus['eventTypes'][1] && vS4 <= eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][2] && valS4 == eventS4Value)
+			if(eventS4Type == menus['eventTypes'][2] && vS4 == eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][3] && valS4 > eventS4Value)
+			if(eventS4Type == menus['eventTypes'][3] && vS4 > eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][4] && valS4 >= eventS4Value)
+			if(eventS4Type == menus['eventTypes'][4] && vS4 >= eventS4Value)
 				return true;
 		}
 		return false;
