@@ -95,6 +95,7 @@
 		//Enable
 		if(option == menus['eventOptions'][0]){
 			if(port == menus['ports'][0]){
+				console.log('Event S1 set');
 				eventS1Active = true;
 				eventS1Type = type;
 				eventS1Value = value;
@@ -128,7 +129,9 @@
 	}
 	
 	ext.eventS1 = function(){
+		console.log('Event S1 checking');
 		if(eventS1Active){
+			console.log('Event S1 active. checking comparison');
 			//<
 			if(eventS1Type == menus['eventTypes'][0] && valS1 < eventS1Value)
 				return true;
