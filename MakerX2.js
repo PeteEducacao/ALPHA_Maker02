@@ -34,70 +34,63 @@
 				selectedSensorS4 = sensor;
 				break;
 		}
-		/*if(port == 'S1'){
-			selectedSensorS1 = sensor;
-		}
-		if(port == 'S2'){
-			selectedSensorS2 = sensor;
-		}
-		if(port == 'S3'){
-			selectedSensorS3 = sensor;
-		}
-		if(port == 'S4'){
-			selectedSensorS4 = sensor;
-		}*/
 	}
 	
 	//Read the port, automatically convert the value using the selected sensor
 	ext.readPort = function(port){
 		var retVal, selectedSensor;
-	 	if(port == 'S1'){
-	 		retVal = valS1;
-	 		selectedSensor = selectedSensorS1;
-	 	}
-	 	if(port == 'S2'){
-	 		retVal = valS2;
-	 		selectedSensor = selectedSensorS2;
-	 	}
-	 	if(port == 'S3'){
-	 		retVal = valS3;
-	 		selectedSensor = selectedSensorS3;
-	 	}
-	 	if(port == 'S4'){
-	 		retVal = valS4;
-	 		selectedSensor = selectedSensorS4;
+		
+		switch(port){
+			case 'S1':
+		 		retVal = valS1;
+		 		selectedSensor = selectedSensorS1;
+				break;
+			case 'S2':
+		 		retVal = valS2;
+		 		selectedSensor = selectedSensorS2;
+				break;
+			case 'S3':
+		 		retVal = valS3;
+		 		selectedSensor = selectedSensorS3;
+				break;
+			case 'S4':
+		 		retVal = valS4;
+		 		selectedSensor = selectedSensorS4;
+	 			break;
 	 	}
 	 	
 	 	//['Digital', 'Color', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
-	 	//Digital
-	 	if(selectedSensor == menus['sensors'][0])
-	 		return retVal
-	 	//Color
-	 	if(selectedSensor == menus['sensors'][1])
-	 		return convertToColor(retVal);
-	 	//Light
-	 	if(selectedSensor == menus['sensors'][2])
-	 		return convertToLux(retVal);
-	 	//Sound
-	 	if(selectedSensor == menus['sensors'][3])
-	 		return convertToDb(retVal);
-	 	//Temperature
-	 	if(selectedSensor == menus['sensors'][4])
-	 		return convertToCelsius(retVal);
-	 	//Resistance
-	 	if(selectedSensor == menus['sensors'][5])
-	 		return convertToOhm(retVal);
-	 	//Voltage
-	 	if(selectedSensor == menus['sensors'][6])
-	 		return convertToVolts(retVal);
-	 	//Distance
-	 	if(selectedSensor == menus['sensors'][7])
-	 		return convertToCentimeters(retVal);
-	 	//Distance Sharp
-	 	if(selectedSensor == menus['sensors'][8])
-	 		return convertToCentimetersSharp(retVal);
-
-	 	return retVal;
+	 	switch(selectedSensor){
+	 		//Digital
+		 	case menus['sensors'][0]:
+		 		return retVal
+		 	//Color
+		 	case menus['sensors'][1]:
+		 		return convertToColor(retVal);
+		 	//Light
+		 	case menus['sensors'][2]:
+		 		return convertToLux(retVal);
+		 	//Sound
+		 	case menus['sensors'][3]:
+		 		return convertToDb(retVal);
+		 	//Temperature
+		 	case menus['sensors'][4]:
+		 		return convertToCelsius(retVal);
+		 	//Resistance
+		 	case menus['sensors'][5]:
+		 		return convertToOhm(retVal);
+		 	//Voltage
+		 	case menus['sensors'][6]:
+		 		return convertToVolts(retVal);
+		 	//Distance
+		 	case menus['sensors'][7]:
+		 		return convertToCentimeters(retVal);
+		 	//Distance Sharp
+		 	case menus['sensors'][8]:
+		 		return convertToCentimetersSharp(retVal);
+		 	default:
+		 		return retVal;
+	 	}
 	}
 	
 	//Returns a color to use when comparing
@@ -108,43 +101,50 @@
 	ext.setEvent = function(option, port, type, value){
 		//Enable
 		if(option == menus['eventOptions'][0]){
-			if(port == menus['ports'][0]){
-				console.log('Event S1 set');
-				eventS1Active = true;
-				eventS1Type = type;
-				eventS1Value = value;
-			}
-			if(port == menus['ports'][1]){
-				eventS2Active = true;
-				eventS2Type = type;
-				eventS2Value = value;
-			}
-			if(port == menus['ports'][2]){
-				eventS3Active = true;
-				eventS3Type = type;
-				eventS3Value = value;
-			}
-			if(port == menus['ports'][3]){
-				eventS4Active = true;
-				eventS4Type = type;
-				eventS4Value = value;
+			switch(port){
+				case menus['ports'][0]:
+					eventS1Active = true;
+					eventS1Type = type;
+					eventS1Value = value;
+					break;
+				case menus['ports'][1]:
+					eventS2Active = true;
+					eventS2Type = type;
+					eventS2Value = value;
+					break;
+				case menus['ports'][2]:
+					eventS3Active = true;
+					eventS3Type = type;
+					eventS3Value = value;
+					break;
+				case menus['ports'][3]:
+					eventS4Active = true;
+					eventS4Type = type;
+					eventS4Value = value;
+					break;
 			}
 		}
 		else{
-			if(port == menus['ports'][0])
-				eventS1Active = false;
-			if(port == menus['ports'][1])
-				eventS2Active = false;
-			if(port == menus['ports'][2])
-				eventS3Active = false;
-			if(port == menus['ports'][3])
-				eventS4Active = false;
+			switch(port){
+				case menus['ports'][0]:
+					eventS1Active = false;
+					break;
+				case menus['ports'][1]:
+					eventS2Active = false;
+					break;
+				case menus['ports'][2]:
+					eventS3Active = false;
+					break;
+				case menus['ports'][3]:
+					eventS4Active = false;
+					break;
+			}
 		}
 	}
 	
 	ext.eventS1 = function(){
 		if(eventS1Active){
-			var vS1 = ext.readPort('S1');
+			var vS1 = ext.readPort(menus['ports'][0]);
 			
 			if(eventS1Type == menus['eventTypes'][0] && vS1 < eventS1Value)
 				return true;
@@ -164,7 +164,7 @@
 	
 	ext.eventS2 = function(){
 		if(eventS2Active){
-			var vS2 = ext.readPort('S2');
+			var vS2 = ext.readPort(menus['ports'][1]);
 	 			
 			if(eventS2Type == menus['eventTypes'][0] && vS2 < eventS2Value)
 				return true;
@@ -184,7 +184,7 @@
 	
 	ext.eventS3 = function(){
 		if(eventS3Active){
-			var vS3 = ext.readPort('S3');
+			var vS3 = ext.readPort(menus['ports'][2]);
 
 			if(eventS3Type == menus['eventTypes'][0] && vS3 < eventS3Value)
 				return true;
@@ -204,7 +204,7 @@
 	
 	ext.eventS4 = function(){
 		if(eventS4Active){
-			var vS4 = ext.readPort('S4');
+			var vS4 = ext.readPort(menus['ports'][3]);
 
 			if(eventS4Type == menus['eventTypes'][0] && vS4 < eventS4Value)
 				return true;
@@ -237,9 +237,9 @@
 		sendServo[4] = (angle % 100) / 10 + 48;
 		sendServo[5] = angle % 10 + 48;
 		
-		if(servo == 'SV1')
+		if(servo == menus['servo'][0])
 			sendServo[1] = 111; //o
-		if(servo == 'SV2')
+		if(servo == menus['servo'][1])
 			sendServo[1] = 112; //p
 			
 		device.send(sendServo.buffer);
@@ -264,9 +264,9 @@
 		sendMotor[4] = (power % 100) / 10 + 48;
 		sendMotor[5] = power % 10 + 48;
 			
-		if(motor == "ME")
+		if(motor == menus['motor'][0])
 			sendMotor[1] = 101 //e
-		if(motor == "MD")
+		if(motor == menus['motor'][1])
 			sendMotor[1] = 100 //d
 		
 		device.send(sendMotor.buffer);
@@ -291,30 +291,46 @@
 		
 		var value;
 		
-		if(note == menus['notes'][0])
-			value = 118;
-		if(note == menus['notes'][1])
-			value = 112;
-		if(note == menus['notes'][2])
-			value = 105;
-		if(note == menus['notes'][3])
-			value = 99;
-		if(note == menus['notes'][4])
-			value = 94;
-		if(note == menus['notes'][5])
-			value = 88;
-		if(note == menus['notes'][6])
-			value = 83;
-		if(note == menus['notes'][7])
-			value = 79;
-		if(note == menus['notes'][8])
-			value = 74;
-		if(note == menus['notes'][9])
-			value = 70;
-		if(note == menus['notes'][10])
-			value = 66;
-		if(note == menus['notes'][11])
-			value = 62;
+		switch(note){
+			case menus['notes'][0]:
+				value = 118;
+				break;
+			case menus['notes'][1]:
+				value = 112;
+				break;
+			case menus['notes'][2]:
+				value = 105;
+				break;
+			case menus['notes'][3]:
+				value = 99;
+				break;
+			case menus['notes'][4]:
+				value = 94;
+				break;
+			case menus['notes'][5]:
+				value = 88;
+				break;
+			case menus['notes'][6]:
+				value = 83;
+				break;
+			case menus['notes'][7]:
+				value = 79;
+				break;
+			case menus['notes'][8]:
+				value = 74;
+				break;
+			case menus['notes'][9]:
+				value = 70;
+				break;
+			case menus['notes'][10]:
+				value = 66;
+				break;
+			case menus['notes'][11]:
+				value = 62;
+				break;
+			default:
+				value = 118
+		}
 			
 		sendSound[3] = value / 100 + 48;
 		sendSound[4] = (value % 100) / 10 + 48;
