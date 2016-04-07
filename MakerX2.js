@@ -222,8 +222,47 @@
 		return false;
 	}
 	
-	ext.eventTest = function(port){
-		console.log('Got: ' + port);
+	ext.event = function(port){
+		var value = ext.readPort(port);
+		var eventActive, eventType, eventValue;
+		
+		switch(port){
+			case menus['ports'][0]:
+				eventActive = eventS1Active;
+				eventType = eventS1Type;
+				eventValue = eventS1Value;
+				break;
+			case menus['ports'][1]:
+				eventActive = eventS2Active;
+				eventType = eventS2Type;
+				eventValue = eventS2Value;
+				break;
+			case menus['ports'][2]:
+				eventActive = eventS3Active;
+				eventType = eventS3Type;
+				eventValue = eventS3Value;
+				break;
+			case menus['ports'][3]:
+				eventActive = eventS4Active;
+				eventType = eventS4Type;
+				eventValue = eventS4Value;
+				break;
+		}
+		if(eventActive){
+			if(eventType == menus['eventTypes'][0] && value < eventValue)
+				return true;
+			if(eventType == menus['eventTypes'][1] && value <= eventValue)
+				return true;
+			if(eventType == menus['eventTypes'][2] && value > eventValue)
+				return true;
+			if(eventType == menus['eventTypes'][3] && value >= eventValue)
+				return true;
+			if(eventType == menus['eventTypes'][4] && value == eventValue)
+				return true;
+			if(eventType == menus['eventTypes'][5] && value != eventValue)
+				return true;
+		}
+		return false;
 	}
 	 
 	//Control the servos angle
@@ -677,11 +716,11 @@
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
 		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
-		['h', 'Evento S1', 'eventS1'],
+		/*['h', 'Evento S1', 'eventS1'],
 		['h', 'Evento S2', 'eventS2'],
 		['h', 'Evento S3', 'eventS3'],
-		['h', 'Evento S4', 'eventS4'],
-		['h', 'Teste %m.ports', 'eventTest', 'S1'],
+		['h', 'Evento S4', 'eventS4'],*/
+		['h', 'Evento %m.ports', 'event', 'S1'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
