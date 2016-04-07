@@ -131,16 +131,15 @@
 		if(eventS1Active){
 			//<
 			if(eventS1Type == menus['eventTypes'][0] && valS1 < eventS1Value)
-					return true;
+				return true;
 			if(eventS1Type == menus['eventTypes'][1] && valS1 <= eventS1Value)
-					return true;
+				return true;
 			if(eventS1Type == menus['eventTypes'][2] && valS1 == eventS1Value)
-					return true;
+				return true;
 			if(eventS1Type == menus['eventTypes'][3] && valS1 > eventS1Value)
-					return true;
+				return true;
 			if(eventS1Type == menus['eventTypes'][4] && valS1 >= eventS1Value)
-					return true;
-			}
+				return true;
 		}
 		return false;
 	}
