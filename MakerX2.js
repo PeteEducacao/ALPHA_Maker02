@@ -626,7 +626,7 @@
 		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
-		[' ', '%m.eventOptions evento %m.ports %m.eventType %n', 'setEvent', 'Habilitar', 'S1', '=', '0'],
+		[' ', '%m.eventOptions evento %m.ports %m.eventType %s', 'setEvent', 'Habilitar', 'S1', '=', '0'],
 		['h', 'Evento S1', 'eventS1'],
 		['h', 'Evento S2', 'eventS2'],
 		['h', 'Evento S3', 'eventS3'],
