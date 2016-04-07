@@ -130,17 +130,18 @@
 	
 	ext.eventS1 = function(){
 		if(eventS1Active){
-			console.log('S1: ' + valS1 + ', Test: ' + eventS1Type + ', EventVal: ' + eventS1Value);
+			var intS1 = parseInt(valS1);
+			console.log('S1: ' + intS1 + ', Test: ' + eventS1Type + ', EventVal: ' + eventS1Value);
 			//<
-			if(eventS1Type == menus['eventTypes'][0] && valS1 < eventS1Value)
+			if(eventS1Type == menus['eventTypes'][0] && intS1 < eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][1] && valS1 <= eventS1Value)
+			if(eventS1Type == menus['eventTypes'][1] && intS1 <= eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][2] && valS1 == eventS1Value)
+			if(eventS1Type == menus['eventTypes'][2] && intS1 == eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][3] && valS1 > eventS1Value)
+			if(eventS1Type == menus['eventTypes'][3] && intS1 > eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][4] && valS1 >= eventS1Value)
+			if(eventS1Type == menus['eventTypes'][4] && intS1 >= eventS1Value)
 				return true;
 		}
 		return false;
