@@ -52,31 +52,31 @@
 	 	
 	 	//['Digital', 'Color', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
 	 	//Digital
-	 	if(selectedSensor == menus[lang]['sensors'][0])
+	 	if(selectedSensor == menus['sensors'][0])
 	 		return retVal
 	 	//Color
-	 	if(selectedSensor == menus[lang]['sensors'][1])
+	 	if(selectedSensor == menus['sensors'][1])
 	 		return convertToColor(retVal);
 	 	//Light
-	 	if(selectedSensor == menus[lang]['sensors'][2])
+	 	if(selectedSensor == menus['sensors'][2])
 	 		return convertToLux(retVal);
 	 	//Sound
-	 	if(selectedSensor == menus[lang]['sensors'][3])
+	 	if(selectedSensor == menus['sensors'][3])
 	 		return convertToDb(retVal);
 	 	//Temperature
-	 	if(selectedSensor == menus[lang]['sensors'][4])
+	 	if(selectedSensor == menus['sensors'][4])
 	 		return convertToCelsius(retVal);
 	 	//Resistance
-	 	if(selectedSensor == menus[lang]['sensors'][5])
+	 	if(selectedSensor == menus['sensors'][5])
 	 		return convertToOhm(retVal);
 	 	//Voltage
-	 	if(selectedSensor == menus[lang]['sensors'][6])
+	 	if(selectedSensor == menus['sensors'][6])
 	 		return convertToVolts(retVal);
 	 	//Distance
-	 	if(selectedSensor == menus[lang]['sensors'][7])
+	 	if(selectedSensor == menus['sensors'][7])
 	 		return convertToCentimeters(retVal);
 	 	//Distance Sharp
-	 	if(selectedSensor == menus[lang]['sensors'][8])
+	 	if(selectedSensor == menus['sensors'][8])
 	 		return convertToCentimetersSharp(retVal);
 
 	 	return retVal;
@@ -121,9 +121,9 @@
 			power = 0;
 		if(power > 100)
 			power = 100;
-		if(direction == menus[lang]['directions'][1])
+		if(direction == menus['directions'][1])
 			power = power + 128;
-		if(direction == menus[lang]['directions'][2])
+		if(direction == menus['directions'][2])
 			power = 0;
 		sendMotor[3] = power / 100 + 48;
 		sendMotor[4] = (power % 100) / 10 + 48;
@@ -156,29 +156,29 @@
 		
 		var value;
 		
-		if(note == menus[lang]['notes'][0])
+		if(note == menus['notes'][0])
 			value = 118;
-		if(note == menus[lang]['notes'][1])
+		if(note == menus['notes'][1])
 			value = 112;
-		if(note == menus[lang]['notes'][2])
+		if(note == menus['notes'][2])
 			value = 105;
-		if(note == menus[lang]['notes'][3])
+		if(note == menus['notes'][3])
 			value = 99;
-		if(note == menus[lang]['notes'][4])
+		if(note == menus['notes'][4])
 			value = 94;
-		if(note == menus[lang]['notes'][5])
+		if(note == menus['notes'][5])
 			value = 88;
-		if(note == menus[lang]['notes'][6])
+		if(note == menus['notes'][6])
 			value = 83;
-		if(note == menus[lang]['notes'][7])
+		if(note == menus['notes'][7])
 			value = 79;
-		if(note == menus[lang]['notes'][8])
+		if(note == menus['notes'][8])
 			value = 74;
-		if(note == menus[lang]['notes'][9])
+		if(note == menus['notes'][9])
 			value = 70;
-		if(note == menus[lang]['notes'][10])
+		if(note == menus['notes'][10])
 			value = 66;
-		if(note == menus[lang]['notes'][11])
+		if(note == menus['notes'][11])
 			value = 62;
 			
 		sendSound[3] = value / 100 + 48;
@@ -204,19 +204,19 @@
 	function convertToColor(val){
 		//'Blue', 'Red', 'Yellow', 'Green', 'White', 'Black', 'Undefined'
 		if(val <= 160)
-			return menus[lang]['colors'][0];
+			return menus['colors'][0];
 		if(val > 160 && val <= 328)
-			return menus[lang]['colors'][1];
+			return menus['colors'][1];
 		if(val > 328 && val <= 460)
-			return menus[lang]['colors'][2];
+			return menus['colors'][2];
 		if(val > 460 && val <= 608)
-			return menus[lang]['colors'][3];
+			return menus['colors'][3];
 		if(val > 608 && val <= 788)
-			return menus[lang]['colors'][4];
+			return menus['colors'][4];
 		if(val > 788 && val <= 908)
-			return menus[lang]['colors'][5];
+			return menus['colors'][5];
 		if(val > 908)
-			return menus[lang]['colors'][6];
+			return menus['colors'][6];
 	}
 	
 	//Convert the value to Ohms
@@ -513,74 +513,36 @@
 			return{status: 1, msg: 'Searching for Maker'};
 		return{status: 2, msg: 'Maker connected'};
 	}
-
-	/*var paramString = window.location.search.replace(/^\?|\/$/g, '');
-	var vars = paramString.split("&");
-	var lang = 'en';
-	//Check for GET param 'lang'
-	for (var i = 0; i < vars.length; i++){
-		var pair = vars[i].split('=');
-		if(pair.length > 1 && pair[0] == 'lang')
-			lang = pair[1];
-	}*/
-	var lang = 'pt';
 	
 	//************************************************************
 	//Block and block menu descriptions
-	var blocks = {
-		/*en: [
-			[' ', 'Connect %m.sensors to port %m.ports', 'connectSensor', 'Digital Sensor', 'S1'],
-			['r', 'Read port %m.ports', 'readPort', 'S1'],
-			['r', 'Color %m.colors', 'getColor', 'Blue'],
-			['-'],
-			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'forward', '0'],
-			['-'],
-			['w', 'Play note %m.notes for %n seconds', 'playNoteTime', 'C', '1'],
-			[' ', 'Play note %m.notes', 'playNote', 'C'],
-			[' ', 'Mute', 'mute']
-		],*/
-		pt: [
-			[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
-			['r', 'Ler porta %m.ports', 'readPort', 'S1'],
-			['r', 'Cor %m.colors', 'getColor', 'Azul'],
-			['-'],
-			[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-			[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
-			['-'],
-			['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
-			[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
-			[' ', 'Mudo', 'mute']
-		]
+	var blocks = [
+		[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
+		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
+		['r', 'Cor %m.colors', 'getColor', 'Azul'],
+		['-'],
+		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
+		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
+		['-'],
+		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
+		[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
+		[' ', 'Mudo', 'mute']
 	};
 	
 	var menus = {
-		/*en: {
-			ports: ['S1', 'S2', 'S3', 'S4'],
-			sensors: ['Digital Sensor', 'Color Sensor', 'Light Sensor (Lux)', 'Sound Sensor (dB)',
-				'Temperature Sensor (°C)', 'Resistance Sensor (Ohm)', 'Voltage Sensor (V)',
-				'Distance Sensor (cm)'],
-			colors: ['Blue', 'Red', 'Yellow', 'Green', 'White', 'Black', 'Undefined'],
-			servo: ['SV1', 'SV2'],
-			motor: ['ME', 'MD'],
-			directions: ['forward', 'backward', 'stop'],
-			notes: ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
-		},*/
-		pt: {
-			ports: ['S1', 'S2', 'S3', 'S4'],
-			sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)',
-				'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)',
-				'Sensor de Distância (cm)', 'Sensor Sharp (cm)'],
-			colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
-			servo: ['SV1', 'SV2'],
-			motor: ['ME', 'MD'],
-			directions: ['frente', 'ré', 'pare'],
-			notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
-		}
+		ports: ['S1', 'S2', 'S3', 'S4'],
+		sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)',
+			'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)',
+			'Sensor de Distância (cm)', 'Sensor Sharp (cm)'],
+		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
+		servo: ['SV1', 'SV2'],
+		motor: ['ME', 'MD'],
+		directions: ['frente', 'ré', 'pare'],
+		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
 	};
 	var descriptor = {
-		blocks: blocks[lang],
-		menus: menus[lang]
+		blocks: blocks,
+		menus: menus
 	};
 	ScratchExtensions.register('ALPHA Maker', descriptor, ext,{type: 'serial'});
 })({});
