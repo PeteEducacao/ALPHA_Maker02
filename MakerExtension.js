@@ -527,7 +527,7 @@
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
 		[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
 		[' ', 'Mudo', 'mute']
-	};
+	];
 	
 	var menus = {
 		ports: ['S1', 'S2', 'S3', 'S4'],
