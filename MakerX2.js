@@ -129,9 +129,8 @@
 	}
 	
 	ext.eventS1 = function(){
-		console.log('Event S1 checking');
 		if(eventS1Active){
-			console.log('Event S1 active. checking comparison');
+			console.log('S1: ' + valS1 + ', Test: ' + eventS1Type + ', EventVal: ' + eventS1Value);
 			//<
 			if(eventS1Type == menus['eventTypes'][0] && valS1 < eventS1Value)
 				return true;
