@@ -20,7 +20,21 @@
 	
 	//Connecting a sensor to a port
 	ext.connectSensor = function(sensor, port){
-		if(port == 'S1'){
+		switch(port){
+			case 'S1':
+				selectedSensorS1 = sensor;
+				break;
+			case 'S2':
+				selectedSensorS2 = sensor;
+				break;
+			case 'S3':
+				selectedSensorS3 = sensor;
+				break;
+			case 'S4':
+				selectedSensorS4 = sensor;
+				break;
+		}
+		/*if(port == 'S1'){
 			selectedSensorS1 = sensor;
 		}
 		if(port == 'S2'){
@@ -31,7 +45,7 @@
 		}
 		if(port == 'S4'){
 			selectedSensorS4 = sensor;
-		}
+		}*/
 	}
 	
 	//Read the port, automatically convert the value using the selected sensor
