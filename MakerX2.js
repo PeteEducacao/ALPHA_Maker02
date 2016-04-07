@@ -221,6 +221,10 @@
 		}
 		return false;
 	}
+	
+	ext.eventTest = function(port){
+		console.log('Got: ' + port);
+	}
 	 
 	//Control the servos angle
 	ext.setServo = function(servo, angle){
@@ -677,6 +681,7 @@
 		['h', 'Evento S2', 'eventS2'],
 		['h', 'Evento S3', 'eventS3'],
 		['h', 'Evento S4', 'eventS4'],
+		['h', 'Teste %m.ports', 'eventTest', 'S1'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
