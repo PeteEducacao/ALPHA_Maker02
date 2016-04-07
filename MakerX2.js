@@ -136,11 +136,13 @@
 				return true;
 			if(eventS1Type == menus['eventTypes'][1] && vS1 <= eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][2] && vS1 == eventS1Value)
+			if(eventS1Type == menus['eventTypes'][2] && vS1 > eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][3] && vS1 > eventS1Value)
+			if(eventS1Type == menus['eventTypes'][3] && vS1 >= eventS1Value)
 				return true;
-			if(eventS1Type == menus['eventTypes'][4] && vS1 >= eventS1Value)
+			if(eventS1Type == menus['eventTypes'][4] && vS1 == eventS1Value)
+				return true;
+			if(eventS1Type == menus['eventTypes'][5] && vS1 != eventS1Value)
 				return true;
 		}
 		return false;
@@ -154,11 +156,13 @@
 				return true;
 			if(eventS2Type == menus['eventTypes'][1] && vS2 <= eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][2] && vS2 == eventS2Value)
+			if(eventS2Type == menus['eventTypes'][2] && vS2 > eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][3] && vS2 > eventS2Value)
+			if(eventS2Type == menus['eventTypes'][3] && vS2 >= eventS2Value)
 				return true;
-			if(eventS2Type == menus['eventTypes'][4] && vS2 >= eventS2Value)
+			if(eventS2Type == menus['eventTypes'][4] && vS2 == eventS2Value)
+				return true;
+			if(eventS2Type == menus['eventTypes'][5] && vS2 != eventS2Value)
 				return true;
 		}
 		return false;
@@ -172,11 +176,13 @@
 				return true;
 			if(eventS3Type == menus['eventTypes'][1] && vS3 <= eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][2] && vS3 == eventS3Value)
+			if(eventS3Type == menus['eventTypes'][2] && vS3 > eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][3] && vS3 > eventS3Value)
+			if(eventS3Type == menus['eventTypes'][3] && vS3 >= eventS3Value)
 				return true;
-			if(eventS3Type == menus['eventTypes'][4] && vS3 >= eventS3Value)
+			if(eventS3Type == menus['eventTypes'][4] && vS3 == eventS3Value)
+				return true;
+			if(eventS3Type == menus['eventTypes'][5] && vS3 != eventS3Value)
 				return true;
 		}
 		return false;
@@ -190,11 +196,13 @@
 				return true;
 			if(eventS4Type == menus['eventTypes'][1] && vS4 <= eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][2] && vS4 == eventS4Value)
+			if(eventS4Type == menus['eventTypes'][2] && vS4 > eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][3] && vS4 > eventS4Value)
+			if(eventS4Type == menus['eventTypes'][3] && vS4 >= eventS4Value)
 				return true;
-			if(eventS4Type == menus['eventTypes'][4] && vS4 >= eventS4Value)
+			if(eventS4Type == menus['eventTypes'][4] && vS4 == eventS4Value)
+				return true;
+			if(eventS4Type == menus['eventTypes'][5] && vS4 != eventS4Value)
 				return true;
 		}
 		return false;
@@ -655,7 +663,7 @@
 			'Sensor de Distância (cm)', 'Sensor Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		eventOptions: ['Habilitar', 'Desabilitar'],
-		eventTypes: ['<', '<=', '=', '>', '>='],
+		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
 		servo: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
 		directions: ['frente', 'ré', 'pare'],
