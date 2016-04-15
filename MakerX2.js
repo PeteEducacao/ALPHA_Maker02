@@ -59,38 +59,37 @@
 	 			break;
 	 	}
 	 	
-	 	//'Contato', 'Proximidade', 'Faixa', 'Digital Genérico', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
+	 	//'Contato', 'Proximidade', 'Faixa', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
 		//'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'
 	 	switch(selectedSensor){
 	 		//Digital
 		 	case menus['sensors'][0]:
 		 	case menus['sensors'][1]:
 		 	case menus['sensors'][2]:
-		 	case menus['sensors'][3]:
 		 		return retVal
 		 	//Color
-		 	case menus['sensors'][4]:
+		 	case menus['sensors'][3]:
 		 		return convertToColor(retVal);
 		 	//Light
-		 	case menus['sensors'][5]:
+		 	case menus['sensors'][4]:
 		 		return convertToLux(retVal);
 		 	//Sound
-		 	case menus['sensors'][6]:
+		 	case menus['sensors'][5]:
 		 		return convertToDb(retVal);
 		 	//Temperature
-		 	case menus['sensors'][7]:
+		 	case menus['sensors'][6]:
 		 		return convertToCelsius(retVal);
 		 	//Resistance
-		 	case menus['sensors'][8]:
+		 	case menus['sensors'][7]:
 		 		return convertToOhm(retVal);
 		 	//Voltage
-		 	case menus['sensors'][9]:
+		 	case menus['sensors'][8]:
 		 		return convertToVolts(retVal);
 		 	//Distance
-		 	case menus['sensors'][10]:
+		 	case menus['sensors'][9]:
 		 		return convertToCentimeters(retVal);
 		 	//Distance Sharp
-		 	case menus['sensors'][11]:
+		 	case menus['sensors'][10]:
 		 		return convertToCentimetersSharp(retVal);
 		 	default:
 		 		return retVal;
@@ -736,7 +735,7 @@
 	
 	var menus = {
 		ports: ['S1', 'S2', 'S3', 'S4'],
-		sensors: ['Contato', 'Proximidade', 'Faixa', 'Digital Genérico', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
+		sensors: ['Contato', 'Proximidade', 'Faixa', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
 			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		eventOptions: ['Habilite', 'Desabilite'],
