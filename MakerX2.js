@@ -36,6 +36,39 @@
 		}
 	}
 	
+	//Turn on/off the actuator
+	ext.setActuator = function(option, port){
+		var setMessage = new Uint8Array(5);
+		setMessage[0] = 77; //M
+		setMessage[4] = 13; //\r
+		
+		switch(option){
+			case menus['actuatorOptions'][0]:
+				setMessage[1] = 87; //W
+				break;
+			case menus['actuatorOptions'][1]:
+				setMessage[1] = 119; //w
+				break;
+		}
+		
+		switch(port){
+			case menus['ports'][0]:
+				setMessage[2] = '1';
+				break;
+			case menus['ports'][1]:
+				setMessage[2] = '2';
+				break;
+			case menus['ports'][2]:
+				setMessage[2] = '3';
+				break;
+			case menus['ports'][3]:
+				setMessage[2] = '4';
+				break;
+		}
+		
+		device.send(setMessage.buffer);
+	}
+	
 	//Read the port, automatically convert the value using the selected sensor
 	ext.readPort = function(port){
 		var retVal, selectedSensor;
@@ -715,6 +748,7 @@
 	//Block and block menu descriptions
 	var blocks = [
 		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', 'S1'],
+		[' ', '%m.actuatorOptions cabo de luz na porta %m.ports', 'setActuator', 'Ligar', 'S1'],
 		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
@@ -739,6 +773,7 @@
 			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		eventOptions: ['Habilite', 'Desabilite'],
+		actuatorOptions: ['Ligar', 'Desligar'],
 		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
 		servo: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
