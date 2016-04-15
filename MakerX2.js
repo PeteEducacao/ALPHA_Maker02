@@ -40,6 +40,7 @@
 	ext.setActuator = function(option, port){
 		var setMessage = new Uint8Array(5);
 		setMessage[0] = 77; //M
+		setMessage[3] = '2';
 		setMessage[4] = 13; //\r
 		
 		switch(option){
