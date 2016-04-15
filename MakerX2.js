@@ -714,7 +714,7 @@
 	//************************************************************
 	//Block and block menu descriptions
 	var blocks = [
-		[' ', 'Conectar Sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', 'S1'],
+		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', 'S1'],
 		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
