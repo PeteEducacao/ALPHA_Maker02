@@ -527,7 +527,7 @@
 					resend[1] = 86; //V
 					resend[2] = 13; //\r
 					device.send(resend.buffer);
-				}, 100);
+				}, 50);
 			
 				//Set a timer to check if the connection is still active
 				active = true;
