@@ -59,34 +59,38 @@
 	 			break;
 	 	}
 	 	
-	 	//['Digital', 'Color', 'Light', 'Sound', 'Temperature', 'Resistance', 'Voltage', 'Distance']
+	 	//'Contato', 'Proximidade', 'Faixa', 'Digital Genérico', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
+		//'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'
 	 	switch(selectedSensor){
 	 		//Digital
 		 	case menus['sensors'][0]:
+		 	case menus['sensors'][1]:
+		 	case menus['sensors'][2]:
+		 	case menus['sensors'][3]:
 		 		return retVal
 		 	//Color
-		 	case menus['sensors'][1]:
+		 	case menus['sensors'][4]:
 		 		return convertToColor(retVal);
 		 	//Light
-		 	case menus['sensors'][2]:
+		 	case menus['sensors'][5]:
 		 		return convertToLux(retVal);
 		 	//Sound
-		 	case menus['sensors'][3]:
+		 	case menus['sensors'][6]:
 		 		return convertToDb(retVal);
 		 	//Temperature
-		 	case menus['sensors'][4]:
+		 	case menus['sensors'][7]:
 		 		return convertToCelsius(retVal);
 		 	//Resistance
-		 	case menus['sensors'][5]:
+		 	case menus['sensors'][8]:
 		 		return convertToOhm(retVal);
 		 	//Voltage
-		 	case menus['sensors'][6]:
+		 	case menus['sensors'][9]:
 		 		return convertToVolts(retVal);
 		 	//Distance
-		 	case menus['sensors'][7]:
+		 	case menus['sensors'][10]:
 		 		return convertToCentimeters(retVal);
 		 	//Distance Sharp
-		 	case menus['sensors'][8]:
+		 	case menus['sensors'][11]:
 		 		return convertToCentimetersSharp(retVal);
 		 	default:
 		 		return retVal;
@@ -711,7 +715,7 @@
 	//************************************************************
 	//Block and block menu descriptions
 	var blocks = [
-		[' ', 'Conectar %m.sensors na porta %m.ports', 'connectSensor', 'Sensor Digital', 'S1'],
+		[' ', 'Conectar Sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', 'S1'],
 		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
@@ -732,9 +736,8 @@
 	
 	var menus = {
 		ports: ['S1', 'S2', 'S3', 'S4'],
-		sensors: ['Sensor Digital', 'Sensor de Cor', 'Sensor de Luz (Lux)', 'Sensor de Som (dB)',
-			'Sensor de Temperatura (°C)', 'Sensor de Resistência (Ohm)', 'Sensor de Tensão (V)',
-			'Sensor de Distância (cm)', 'Sensor Sharp (cm)'],
+		sensors: ['Contato', 'Proximidade', 'Faixa', 'Digital Genérico', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
+			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		eventOptions: ['Habilite', 'Desabilite'],
 		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
