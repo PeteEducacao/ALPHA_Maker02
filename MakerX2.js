@@ -40,7 +40,7 @@
 	ext.setActuator = function(option, port){
 		var setMessage = new Uint8Array(5);
 		setMessage[0] = 77; //M
-		setMessage[3] = '2';
+		setMessage[3] = 50; //2
 		setMessage[4] = 13; //\r
 		
 		switch(option){
@@ -54,19 +54,19 @@
 		
 		switch(port){
 			case menus['ports'][0]:
-				setMessage[2] = '1';
+				setMessage[2] = 49; //1
 				break;
 			case menus['ports'][1]:
-				setMessage[2] = '2';
+				setMessage[2] = 50; //2
 				break;
 			case menus['ports'][2]:
-				setMessage[2] = '3';
+				setMessage[2] = 51; //3
 				break;
 			case menus['ports'][3]:
-				setMessage[2] = '4';
+				setMessage[2] = 52; //4
 				break;
 		}
-		console.log("Sending: " + setMessage);
+		
 		device.send(setMessage.buffer);
 	}
 	
