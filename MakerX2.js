@@ -66,7 +66,7 @@
 				setMessage[2] = '4';
 				break;
 		}
-		console.log("Sending: " + setMessage.buffer);
+		console.log("Sending: " + setMessage);
 		device.send(setMessage.buffer);
 	}
 	
