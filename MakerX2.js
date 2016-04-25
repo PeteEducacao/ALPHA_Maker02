@@ -304,9 +304,10 @@
 	
 	//Set or reset a pin
 	ext.setPin = function(status, port){
-		var setMessage = new Uint8Array(6);
+		var setMessage = new Uint8Array(7);
 		setMessage[0] = 77; //M
 		setMessage[1] = 89; //Y
+		setMessage[6] = 13; //\r
 		
 		if(port > 13)
 			return;
