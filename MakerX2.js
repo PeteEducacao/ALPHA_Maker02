@@ -301,7 +301,42 @@
 		}
 		return false;
 	}
-	 
+	
+	//Set or reset a pin
+	ext.setPin = function(status, port){
+		var setMessage = new Uint8Array(6);
+		setMessage[0] = 77; //M
+		setMessage[1] = 89; //Y
+		
+		if(port > 13)
+			return;
+		
+		port += 100;
+		setMessage[4] = convertToHex((port & 0xF0) >> 4);
+		setMessage[5] = convertToHex((port & 0x0F));
+		
+		switch(status){
+			//On
+			case menus['actuatorOptions'][0]:
+				setMessage[2] = 67;
+				setMessage[3] = 66;
+				break;
+			//Off
+			case menus['actuatorOptions'][1]:
+				setMessage[2] = 67;
+				setMessage[3] = 65;
+				break;
+		}
+		
+		device.send(setMessage.buffer);
+	}
+	
+	convertToHex = function(v){
+		if(v < 10)
+			return v + 48;
+		return v + 65;
+	}
+	
 	//Control the servos angle
 	ext.setServo = function(servo, angle){
 	 	var sendServo = new Uint8Array(7);
@@ -754,11 +789,9 @@
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
 		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
-		/*['h', 'Evento S1', 'eventS1'],
-		['h', 'Evento S2', 'eventS2'],
-		['h', 'Evento S3', 'eventS3'],
-		['h', 'Evento S4', 'eventS4'],*/
 		['h', 'Evento %m.ports', 'event', 'S1'],
+		['-'],
+		[' ', '%m.actuatorOptions pino %m.ports', 'setPin', 'Ligar', '1'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
