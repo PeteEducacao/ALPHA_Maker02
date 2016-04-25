@@ -328,7 +328,7 @@
 				setMessage[3] = 65;
 				break;
 		}
-		console.log(String.fromCharCode.apply(null, setMessage));
+		
 		device.send(setMessage.buffer);
 	}
 	
@@ -527,6 +527,11 @@
 	}
 
 	//************************************************************* 
+	
+	function printLog(msg){
+		console.log(String.fromCharCode.apply(null, msg));
+	}
+	
 	function appendBuffer(buffer1, buffer2){
 		var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
 		tmp.set(new Uint8Array(buffer1), 0);
