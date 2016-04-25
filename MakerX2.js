@@ -224,6 +224,16 @@
 		return false;
 	}
 	
+	ext.setModeAnalog = function(port){
+		if(port > 5)
+			return;
+	}
+	
+	ext.setModePorts = function(port, mode){
+		if(port > 14)
+			return;
+	}
+	
 	//Set or reset a pin
 	ext.digitalWrite = function(status, port){
 		if(port > 14)
@@ -719,6 +729,8 @@
 		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
 		['h', 'Evento %m.ports', 'event', 'S1'],
 		['-'],
+		[' ', 'Configurar pino A%n como entrada analógica', 'setModeAnalog', '0'],
+		[' ', 'Configurar pino P%n como %m.pinModes', 'setModePorts', '0', 'Entrada digital'],
 		[' ', '%m.onoff pino %n', 'digitalWrite', 'Ligar', '0'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
@@ -737,6 +749,7 @@
 		eventOptions: ['Habilite', 'Desabilite'],
 		onoff: ['Ligar', 'Desligar'],
 		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
+		pinModes: ['Entrada digital', 'Saída digital', 'PWM'],
 		servo: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
 		directions: ['frente', 'ré', 'pare'],
