@@ -328,7 +328,7 @@
 				setMessage[3] = 65;
 				break;
 		}
-		
+		console.log(String.fromCharCode.apply(null, setMessage));
 		device.send(setMessage.buffer);
 	}
 	
