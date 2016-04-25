@@ -792,7 +792,7 @@
 		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
 		['h', 'Evento %m.ports', 'event', 'S1'],
 		['-'],
-		[' ', '%m.actuatorOptions pino %n', 'setPin', 'Ligar', '1'],
+		[' ', '%m.actuatorOptions pino %n', 'setPin', 'Ligar', '0'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
