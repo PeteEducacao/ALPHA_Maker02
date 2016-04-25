@@ -264,6 +264,15 @@
 		device.send(setMessage.buffer);
 	}
 	
+	
+	//Set or reset a pin
+	ext.digitalRead = function(port){
+	}
+	
+	//Set or reset a pin
+	ext.analogRead = function(port){
+	}
+	
 	convertToHex = function(v){
 		if(v < 10)
 			return v + 48;
@@ -732,6 +741,8 @@
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', '0'],
 		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', '0', 'entrada'],
 		[' ', '%m.onoff P%n', 'digitalWrite', 'Ligar', '0'],
+		['r', 'Ler P%n', 'digitalRead', '0'],
+		['r', 'Ler A%n', 'analogRead', '0'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
