@@ -44,10 +44,12 @@
 		setMessage[4] = 13; //\r
 		
 		switch(option){
-			case menus['actuatorOptions'][0]:
+			//On
+			case menus['onoff'][0]:
 				setMessage[1] = 87; //W
 				break;
-			case menus['actuatorOptions'][1]:
+			//Off
+			case menus['onoff'][1]:
 				setMessage[1] = 119; //w
 				break;
 		}
@@ -223,7 +225,7 @@
 	}
 	
 	//Set or reset a pin
-	ext.setPin = function(status, port){
+	ext.digitalWrite = function(status, port){
 		if(port > 14)
 			return;
 
@@ -238,12 +240,12 @@
 		
 		switch(status){
 			//On
-			case menus['actuatorOptions'][0]:
+			case menus['onoff'][0]:
 				setMessage[2] = 67;
 				setMessage[3] = 66;
 				break;
 			//Off
-			case menus['actuatorOptions'][1]:
+			case menus['onoff'][1]:
 				setMessage[2] = 67;
 				setMessage[3] = 65;
 				break;
@@ -710,14 +712,14 @@
 	//Block and block menu descriptions
 	var blocks = [
 		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', 'S1'],
-		[' ', '%m.actuatorOptions cabo de luz na porta %m.ports', 'setActuator', 'Ligar', 'S1'],
+		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', 'Ligar', 'S1'],
 		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
 		['r', 'Cor %m.colors', 'getColor', 'Azul'],
 		['-'],
 		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
 		['h', 'Evento %m.ports', 'event', 'S1'],
 		['-'],
-		[' ', '%m.actuatorOptions pino %n', 'setPin', 'Ligar', '0'],
+		[' ', '%m.onoff pino %n', 'digitalWrite', 'Ligar', '0'],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
@@ -733,7 +735,7 @@
 			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		eventOptions: ['Habilite', 'Desabilite'],
-		actuatorOptions: ['Ligar', 'Desligar'],
+		onoff: ['Ligar', 'Desligar'],
 		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
 		servo: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
