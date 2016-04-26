@@ -16,7 +16,11 @@
 	
 	var pinsValues = new Uint16Array(22);
 	 
-	ext.resetAll = function(){}
+	resetVariables = function(){
+		for(var i = 0; i < 4; i++){
+			portsEventActive[i] = false;
+		}
+	}
 	
 	//Connecting a sensor to a port
 	ext.connectSensor = function(sensor, port){
@@ -478,114 +482,6 @@
 
 	//************************************************************* 
 	
-	function printLog(msg){
-		console.log(String.fromCharCode.apply(null, msg));
-	}
-	
-	function appendBuffer(buffer1, buffer2){
-		var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
-		tmp.set(new Uint8Array(buffer1), 0);
-		tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
-		return tmp.buffer;
-	}
-	
-	var potentialDevices = [];
-	ext._deviceConnected = function(dev){
-		potentialDevices.push(dev);
-		if(!device){
-			tryNextDevice();
-		}
-	}
-
-	function checkMaker(bytes){
-		var data = String.fromCharCode.apply(null, bytes);
-		console.log('Data: ' + data);
-		var t_index = data.indexOf('t');
-		var l_index = data.indexOf('l');
-		if(t_index >= 0 && l_index >= 0){
-			t_index ++;
-			l_index ++;
-			var kernelVersion = data.substring(t_index, t_index + 4);
-			var legalVersion = data.substring(l_index, l_index + 4);
-
-			console.log('Kernel: ' + kernelVersion);
-			console.log('Legal: ' + legalVersion);
-
-			if(kernelVersion >= 106 && legalVersion >= 108){
-				notifyConnection = true;
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	//Process the data
-	function processData(){
-		var bytes = new Uint8Array(rawData);
-		
-		if(watchdog){
-			//If recognized as being an ALPHA Maker
-			if(checkMaker(bytes)){
-				rawData = null;
-				
-				//Stop the timers
-				clearTimeout(watchdog);
-				watchdog = null;
-				clearInterval(poller);
-				poller = null;
-				
-				//Start the data acquisition
-				var startAcquisition = new Uint8Array(5);
-				startAcquisition[0] = 77; //M
-				startAcquisition[1] = 115; //s
-				startAcquisition[2] = 49; //1
-				startAcquisition[3] = 48; //0
-				startAcquisition[4] = 13; //\r
-				
-				console.log('Starting acquisition');
-				device.send(startAcquisition.buffer);
-				
-				//Set a timer to request the data
-				comPoller = setInterval(function(){
-					var resend =new Uint8Array(3);
-					resend[0] = 77; //M
-					resend[1] = 86; //V
-					resend[2] = 13; //\r
-					if(device)
-						device.send(resend.buffer);
-				}, 1000);//50);
-			
-				//Set a timer to check if the connection is still active
-				active = true;
-				comWatchdog = setInterval(function(){
-					if(active)
-						active = false
-					else{
-						clearInterval(comPoller);
-						comPoller = null;
-						
-						clearInterval(comWatchdog);
-						comWatchdog = null;
-						
-						device.set_receive_handler(null);
-						device.close();
-						device = null;
-						tryNextDevice();
-					}
-				}, 1000);
-			}
-		}
-		
-		//If is in acquisition mode
-		if(comPoller && comWatchdog){
-			//Decode the received message
-			if(decodeMessage(bytes)){
-				rawData = null;
-				active = true;
-			}
-		}
-	}
-	
 	//Decode the received message
 	function decodeMessage(bytes){
 	 	var data = String.fromCharCode.apply(null, bytes);
@@ -656,7 +552,110 @@
 		}
 		return true;
 	}
+	
+	function printLog(msg){
+		console.log(String.fromCharCode.apply(null, msg));
+	}
+	
+	function appendBuffer(buffer1, buffer2){
+		var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+		tmp.set(new Uint8Array(buffer1), 0);
+		tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
+		return tmp.buffer;
+	}
 
+	function checkMaker(bytes){
+		var data = String.fromCharCode.apply(null, bytes);
+		
+		console.log('Data: ' + data);
+		
+		var t_index = data.indexOf('t');
+		var l_index = data.indexOf('l');
+		if(t_index >= 0 && l_index >= 0){
+			t_index ++;
+			l_index ++;
+			var kernelVersion = data.substring(t_index, t_index + 4);
+			var legalVersion = data.substring(l_index, l_index + 4);
+
+			console.log('Kernel: ' + kernelVersion);
+			console.log('Legal: ' + legalVersion);
+
+			if(kernelVersion >= 106 && legalVersion >= 108){
+				notifyConnection = true;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//Process the data
+	function processData(){
+		var bytes = new Uint8Array(rawData);
+		
+		if(watchdog){
+			//If recognized as being an ALPHA Maker
+			if(checkMaker(bytes)){
+				resetVariables();
+				
+				rawData = null;
+				
+				//Stop the timers
+				clearTimeout(watchdog);
+				watchdog = null;
+				clearInterval(poller);
+				poller = null;
+				
+				//Start the data acquisition
+				var startAcquisition = new Uint8Array(5);
+				startAcquisition[0] = 77; //M
+				startAcquisition[1] = 115; //s
+				startAcquisition[2] = 49; //1
+				startAcquisition[3] = 48; //0
+				startAcquisition[4] = 13; //\r
+				
+				console.log('Starting acquisition');
+				device.send(startAcquisition.buffer);
+				
+				//Set a timer to request the data
+				comPoller = setInterval(function(){
+					var resend =new Uint8Array(3);
+					resend[0] = 77; //M
+					resend[1] = 86; //V
+					resend[2] = 13; //\r
+					if(device)
+						device.send(resend.buffer);
+				}, 100);
+			
+				//Set a timer to check if the connection is still active
+				active = true;
+				comWatchdog = setInterval(function(){
+					if(active)
+						active = false
+					else{
+						clearInterval(comPoller);
+						comPoller = null;
+						
+						clearInterval(comWatchdog);
+						comWatchdog = null;
+						
+						device.set_receive_handler(null);
+						device.close();
+						device = null;
+						tryNextDevice();
+					}
+				}, 1000);
+			}
+		}
+		
+		//If is in acquisition mode
+		if(comPoller && comWatchdog){
+			//Decode the received message
+			if(decodeMessage(bytes)){
+				rawData = null;
+				active = true;
+			}
+		}
+	}
 
 	var poller = null;
 	var watchdog = null;
@@ -700,7 +699,16 @@
 		}, 2000);
 	}
 
-	 //*************************************************************
+	 //************************************************************* 
+	
+	var potentialDevices = [];
+	ext._deviceConnected = function(dev){
+		potentialDevices.push(dev);
+		if(!device){
+			tryNextDevice();
+		}
+	}
+	
 	ext._deviceRemoved = function(dev){
 		console.log('_deviceRemoved');
 		if(device != dev)
