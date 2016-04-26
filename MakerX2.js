@@ -74,6 +74,7 @@
 	
 	//Read the port, automatically convert the value using the selected sensor
 	ext.readPort = function(port){
+		console.log('Port: ' + port);
 		switch(port){
 			case menus['ports'][0]:
 				port = 0;
