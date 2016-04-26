@@ -254,9 +254,6 @@
 		
 		port += 103;
 		setMessage[2] = port;
-		
-		device.send(setMessage.buffer);
-		printLog(setMessage);
 			
 		switch(mode){
 			//On
@@ -268,6 +265,9 @@
 				setMessage[3] = 110; //n
 				break;
 		}
+		
+		device.send(setMessage.buffer);
+		printLog(setMessage);
 	}
 	
 	//Set or reset a pin
