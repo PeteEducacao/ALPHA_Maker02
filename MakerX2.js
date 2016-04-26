@@ -240,7 +240,6 @@
 		setMessage[2] = port;
 		
 		device.send(setMessage.buffer);
-		printLog(setMessage);
 	}
 	
 	ext.setModePorts = function(port, mode){
@@ -267,7 +266,6 @@
 		}
 		
 		device.send(setMessage.buffer);
-		printLog(setMessage);
 	}
 	
 	//Set or reset a pin
@@ -625,7 +623,7 @@
 	 	if(data.indexOf('K') == -1)
 	 		return false;
 	 		
-	 	console.log(data);
+	 	//console.log(data);
 	 	
 	 	//IDs
 		var idS1_index = data.indexOf('A');
@@ -768,8 +766,8 @@
 
 	ext._getStatus = function(){
 		if(!device)
-			return{status: 0, msg: 'Maker disconnected'};
-		if(watchdog)
+			//return{status: 0, msg: 'Maker disconnected'};
+		//if(watchdog)
 			return{status: 1, msg: 'Searching for Maker'};
 		return{status: 2, msg: 'Maker connected'};
 	}
