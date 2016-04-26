@@ -306,9 +306,9 @@
 		sendServo[4] = (angle % 100) / 10 + 48;
 		sendServo[5] = angle % 10 + 48;
 		
-		if(servo == menus['servo'][0])
+		if(servo == menus['servos'][0])
 			sendServo[1] = 111; //o
-		if(servo == menus['servo'][1])
+		if(servo == menus['servos'][1])
 			sendServo[1] = 112; //p
 			
 		device.send(sendServo.buffer);
@@ -542,12 +542,9 @@
 			if(pIndex == -1)
 				break;
 			var port = data.charCodeAt(++pIndex);
-			console.log('Got: ' + port);
 			port -= 97;
-			console.log('Converted: ' + port);
 			index = data.indexOf('\r', ++pIndex);
 			pinsValues[port] = data.substring(pIndex, index);
-			console.log(pinsValues[port]);
 		}
 		return true;
 	}
@@ -750,25 +747,25 @@
 	//************************************************************
 	//Block and block menu descriptions
 	var blocks = [
-		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', 'S1'],
-		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', 'Ligar', 'S1'],
-		['r', 'Ler porta %m.ports', 'readPort', 'S1'],
-		['r', 'Cor %m.colors', 'getColor', 'Azul'],
+		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', menus['ports'][0]],
+		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', menus['onoff'][0], menus['ports'][0]],
+		['r', 'Ler porta %m.ports', 'readPort', menus['ports'][0]],
+		['r', 'Cor %m.colors', 'getColor', menus['colors'][0]],
 		['-'],
-		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
-		['h', 'Evento %m.ports', 'event', 'S1'],
+		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', menus['ports'][0], '=', '0'],
+		['h', 'Evento %m.ports', 'event', menus['ports'][0]],
 		['-'],
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
-		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, 'entrada'],
-		[' ', '%m.onoff P%n', 'digitalWrite', 'Ligar', 0],
-		['r', 'Ler P%n', 'digitalRead', 0],
+		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, menus['pinModes'][0]],
 		['r', 'Ler A%n', 'analogRead', 0],
+		['r', 'Ler P%n', 'digitalRead', 0],
+		[' ', '%m.onoff P%n', 'digitalWrite', menus['onoff'][0], 0],
 		['-'],
-		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', 0],
-		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', 0],
+		[' ', 'Servo %m.servo %n °', 'setServo', menus['servos'][0], 0],
+		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', menus['motor'][0], menus['directions'][0], 0],
 		['-'],
-		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', 1],
-		[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
+		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
+		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
 		[' ', 'Mudo', 'mute']
 	];
 	
@@ -781,7 +778,7 @@
 		onoff: ['Ligar', 'Desligar'],
 		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
 		pinModes: ['entrada', 'saída'],
-		servo: ['SV1', 'SV2'],
+		servos: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
 		directions: ['frente', 'ré', 'pare'],
 		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
