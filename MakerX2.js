@@ -233,7 +233,7 @@
 		var setMessage = new Uint8Array(5);
 		setMessage[0] = 77; //M
 		setMessage[1] = 88; //X
-		setMessage[3] = 65; //A
+		setMessage[3] = 97; //a
 		setMessage[4] = 13; //\r
 		
 		port += 97;
