@@ -240,6 +240,7 @@
 		setMessage[2] = port;
 		
 		device.send(setMessage.buffer);
+		printLog(setMessage);
 	}
 	
 	ext.setModePorts = function(port, mode){
