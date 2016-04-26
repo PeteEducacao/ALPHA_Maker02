@@ -659,7 +659,6 @@
 				index = data.indexOf('\r', ++pIndex);
 				portsValues[port] = data.substring(pIndex, index);
 				console.log(portsValues[port]);
-				}
 			}
 		
 			/*console.log('A: ' + idS1);
