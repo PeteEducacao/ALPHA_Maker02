@@ -249,6 +249,7 @@
 		var setMessage = new Uint8Array(7);
 		setMessage[0] = 77; //M
 		setMessage[1] = 89; //Y
+		setMessage[2] = 67; //C
 		setMessage[6] = 13; //\r
 		
 		port += 100;
@@ -258,13 +259,11 @@
 		switch(status){
 			//On
 			case menus['onoff'][0]:
-				setMessage[2] = 67;
-				setMessage[3] = 66;
+				setMessage[3] = 66; //B
 				break;
 			//Off
 			case menus['onoff'][1]:
-				setMessage[2] = 67;
-				setMessage[3] = 65;
+				setMessage[3] = 65;//A
 				break;
 		}
 		
