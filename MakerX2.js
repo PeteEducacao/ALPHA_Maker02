@@ -746,6 +746,21 @@
 	
 	//************************************************************
 	//Block and block menu descriptions
+	var menus = {
+		ports: ['S1', 'S2', 'S3', 'S4'],
+		sensors: ['Contato', 'Proximidade', 'Faixa', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
+			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
+		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
+		eventOptions: ['Habilite', 'Desabilite'],
+		onoff: ['Ligar', 'Desligar'],
+		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
+		pinModes: ['entrada', 'saída'],
+		servos: ['SV1', 'SV2'],
+		motor: ['ME', 'MD'],
+		directions: ['frente', 'ré', 'pare'],
+		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
+	};
+	
 	var blocks = [
 		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', menus['ports'][0]],
 		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', menus['onoff'][0], menus['ports'][0]],
@@ -769,20 +784,6 @@
 		[' ', 'Mudo', 'mute']
 	];
 	
-	var menus = {
-		ports: ['S1', 'S2', 'S3', 'S4'],
-		sensors: ['Contato', 'Proximidade', 'Faixa', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
-			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
-		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
-		eventOptions: ['Habilite', 'Desabilite'],
-		onoff: ['Ligar', 'Desligar'],
-		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
-		pinModes: ['entrada', 'saída'],
-		servos: ['SV1', 'SV2'],
-		motor: ['ME', 'MD'],
-		directions: ['frente', 'ré', 'pare'],
-		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
-	};
 	var descriptor = {
 		blocks: blocks,
 		menus: menus
