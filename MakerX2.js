@@ -246,6 +246,28 @@
 	ext.setModePorts = function(port, mode){
 		if(port > 14)
 			return;
+		
+		var setMessage = new Uint8Array(5);
+		setMessage[0] = 77; //M
+		setMessage[1] = 88; //X
+		setMessage[4] = 13; //\r
+		
+		port += 103;
+		setMessage[2] = port;
+		
+		device.send(setMessage.buffer);
+		printLog(setMessage);
+			
+		switch(mode){
+			//On
+			case menus['onoff'][0]:
+				setMessage[3] = 100; //d
+				break;
+			//Off
+			case menus['onoff'][1]:
+				setMessage[3] = 110; //n
+				break;
+		}
 	}
 	
 	//Set or reset a pin
@@ -610,68 +632,55 @@
 		var valS3_index = data.indexOf('c');
 		var valS4_index = data.indexOf('d');
 		
-		//If found everything
-		//if(idS1_index >= 0 && idS2_index >= 0 && idS3_index >= 0 && idS4_index >= 0 && valS1_index >= 0 && valS2_index >= 0 && valS3_index >= 0 && valS4_index >= 0){
-			var index;
-			
-			idS1_index ++;
-			idS2_index ++;
-			idS3_index ++;
-			idS4_index ++;
-			
-			valS1_index ++;
-			valS2_index ++;
-			valS3_index ++;
-			valS4_index ++;
-			
-			//Get S1
-			index = data.indexOf('\r', idS1_index);
-			idS1 = data.substring(idS1_index, index);
-			index = data.indexOf('\r', valS1_index);
-			valS1 = data.substring(valS1_index, index);
-			
-			//Get S2
-			index = data.indexOf('\r', idS2_index);
-			idS2 = data.substring(idS2_index, index);
-			index = data.indexOf('\r', valS2_index);
-			valS2 = data.substring(valS2_index, index);
-			
-			//Get S3
-			index = data.indexOf('\r', idS3_index);
-			idS3 = data.substring(idS3_index, index);
-			index = data.indexOf('\r', valS3_index);
-			valS3 = data.substring(valS3_index, index);
-			
-			//Get S4
-			index = data.indexOf('\r', idS4_index);
-			idS4 = data.substring(idS4_index, index);
-			index = data.indexOf('\r', valS4_index);
-			valS4 = data.substring(valS4_index, index);
-			
-			while(true){
-				var pIndex = data.indexOf('P', pIndex);
-				if(pIndex == -1)
-					break;
-				var port = data.charCodeAt(++pIndex);
-				console.log('Got: ' + port);
-				port -= 97;
-				console.log('Converted: ' + port);
-				index = data.indexOf('\r', ++pIndex);
-				portsValues[port] = data.substring(pIndex, index);
-				console.log(portsValues[port]);
-			}
+		var index;
 		
-			/*console.log('A: ' + idS1);
-			console.log('B: ' + idS2);
-			console.log('C: ' + idS3);
-			console.log('D: ' + idS4);
-			console.log('a: ' + valS1);
-			console.log('b: ' + valS2);
-			console.log('c: ' + valS3);
-			console.log('d: ' + valS4);*/
-			return true;
-		//}
-		//return false;
+		idS1_index ++;
+		idS2_index ++;
+		idS3_index ++;
+		idS4_index ++;
+		
+		valS1_index ++;
+		valS2_index ++;
+		valS3_index ++;
+		valS4_index ++;
+		
+		//Get S1
+		index = data.indexOf('\r', idS1_index);
+		idS1 = data.substring(idS1_index, index);
+		index = data.indexOf('\r', valS1_index);
+		valS1 = data.substring(valS1_index, index);
+		
+		//Get S2
+		index = data.indexOf('\r', idS2_index);
+		idS2 = data.substring(idS2_index, index);
+		index = data.indexOf('\r', valS2_index);
+		valS2 = data.substring(valS2_index, index);
+		
+		//Get S3
+		index = data.indexOf('\r', idS3_index);
+		idS3 = data.substring(idS3_index, index);
+		index = data.indexOf('\r', valS3_index);
+		valS3 = data.substring(valS3_index, index);
+		
+		//Get S4
+		index = data.indexOf('\r', idS4_index);
+		idS4 = data.substring(idS4_index, index);
+		index = data.indexOf('\r', valS4_index);
+		valS4 = data.substring(valS4_index, index);
+		
+		while(true){
+			var pIndex = data.indexOf('P', pIndex);
+			if(pIndex == -1)
+				break;
+			var port = data.charCodeAt(++pIndex);
+			console.log('Got: ' + port);
+			port -= 97;
+			console.log('Converted: ' + port);
+			index = data.indexOf('\r', ++pIndex);
+			portsValues[port] = data.substring(pIndex, index);
+			console.log(portsValues[port]);
+		}
+		return true;
 	}
 
 
