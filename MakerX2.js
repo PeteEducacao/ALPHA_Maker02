@@ -304,14 +304,14 @@
 	//Set or reset a pin
 	ext.digitalRead = function(port){
 		if(port > 15)
-			return;
+			return -1;
 		return portsValues[port + 6];
 	}
 	
 	//Set or reset a pin
 	ext.analogRead = function(port){
 		if(port > 5)
-			return;
+			return -1;
 		return portsValues[port];
 	}
 	
@@ -785,16 +785,16 @@
 		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', 'S1', '=', '0'],
 		['h', 'Evento %m.ports', 'event', 'S1'],
 		['-'],
-		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', '0'],
-		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', '0', 'entrada'],
+		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
+		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, 'entrada'],
 		[' ', '%m.onoff P%n', 'digitalWrite', 'Ligar', '0'],
-		['r', 'Ler P%n', 'digitalRead', '0'],
-		['r', 'Ler A%n', 'analogRead', '0'],
+		['r', 'Ler P%n', 'digitalRead', 0],
+		['r', 'Ler A%n', 'analogRead', 0],
 		['-'],
-		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', '0'],
-		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', '0'],
+		[' ', 'Servo %m.servo %n °', 'setServo', 'SV1', 0],
+		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', 'ME', 'frente', 0],
 		['-'],
-		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', '1'],
+		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', 'Dó', 1],
 		[' ', 'Tocar nota %m.notes', 'playNote', 'Dó'],
 		[' ', 'Mudo', 'mute']
 	];
