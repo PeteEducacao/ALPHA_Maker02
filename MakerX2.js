@@ -7,7 +7,7 @@
 	var comWatchdog = null;
 	var comPoller = null;
 	
-	var portsValue = new Uint16Array(4);
+	var portsValue = new Array(4);
 	var portsID = new Uint8Array(4);
 	var portsSelectedSensor = new Array(4);
 	var portsEventActive = [false, false, false, false];
