@@ -594,10 +594,10 @@
 	function decodeMessage(bytes){
 	 	var data = String.fromCharCode.apply(null, bytes);
 	 	
-	 	console.log(data);
-	 	
 	 	if(data.indexOf('K') == -1)
 	 		return false;
+	 		
+	 	console.log(data);
 	 	
 	 	//IDs
 		var idS1_index = data.indexOf('A');
