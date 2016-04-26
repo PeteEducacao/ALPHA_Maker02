@@ -614,7 +614,7 @@
 				
 				//Set a timer to request the data
 				comPoller = setInterval(function(){
-					var resend =new Uint8Array(3);
+					var resend = new Uint8Array(3);
 					resend[0] = 77; //M
 					resend[1] = 86; //V
 					resend[2] = 13; //\r
