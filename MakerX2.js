@@ -152,7 +152,7 @@
 		if(option == menus['eventOptions'][0]){
 			portsEventActive[port] = true;
 			portsEventType[port] = type;
-			portsEventValye[port] = value;
+			portsEventValue[port] = value;
 		}
 		//Disable
 		else{
