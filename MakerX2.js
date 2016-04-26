@@ -649,11 +649,13 @@
 			valS4 = data.substring(valS4_index, index);
 			
 			while(true){
-				var pIndex = data.indexOf('P', index);
+				var pIndex = data.indexOf('P', pIndex);
 				if(pIndex == -1)
 					break;
 				var port = data.charAt(++pIndex);
+				console.log('Got: ' + port);
 				port -= 97;
+				console.log('Converted: ' + port);
 				if(port == 0){
 					index = data.indexOf('\r', ++pIndex);
 					A0 = data.substring(pIndex, index);
