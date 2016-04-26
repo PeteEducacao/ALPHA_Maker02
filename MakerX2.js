@@ -244,7 +244,7 @@
 	}
 	
 	ext.setModePorts = function(port, mode){
-		if(port > 14)
+		if(port > 15)
 			return;
 		
 		var setMessage = new Uint8Array(5);
@@ -272,7 +272,7 @@
 	
 	//Set or reset a pin
 	ext.digitalWrite = function(status, port){
-		if(port > 14)
+		if(port > 15)
 			return;
 
 		var setMessage = new Uint8Array(7);
@@ -303,10 +303,16 @@
 	
 	//Set or reset a pin
 	ext.digitalRead = function(port){
+		if(port > 15)
+			return;
+		return portsValues[port + 6];
 	}
 	
 	//Set or reset a pin
 	ext.analogRead = function(port){
+		if(port > 5)
+			return;
+		return portsValues[port];
 	}
 	
 	convertToHex = function(v){
