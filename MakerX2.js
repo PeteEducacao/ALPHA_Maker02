@@ -257,11 +257,11 @@
 			
 		switch(mode){
 			//On
-			case menus['onoff'][0]:
+			case menus['pinModes'][0]:
 				setMessage[3] = 100; //d
 				break;
 			//Off
-			case menus['onoff'][1]:
+			case menus['pinModes'][1]:
 				setMessage[3] = 110; //n
 				break;
 		}
