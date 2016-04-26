@@ -161,6 +161,8 @@
 	}
 	
 	ext.event = function(port){
+		var value = ext.readPort(port);
+		
 		switch(port){
 			case menus['ports'][0]:
 				port = 0;
@@ -175,8 +177,6 @@
 				port = 3;
 				break;
 		}
-		
-		var value = ext.readPort(port);
 		
 		if(portsEventActive[port]){
 			if(portsEventType[port] == menus['eventTypes'][0] && value < portsEventValue[port])
