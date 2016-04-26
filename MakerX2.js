@@ -15,6 +15,8 @@
 	var eventS1Active = false, eventS2Active = false, eventS3Active = false, eventS4Active = false;
 	var eventS1Type = 0, eventS2Type = 0, eventS3Type = 0, eventS4Type = 0;
 	var eventS1Value = 0, eventS2Value = 0, eventS3Value = 0, eventS4Value = 0;
+	
+	var A0;
 	 
 	ext.resetAll = function(){}
 	
@@ -543,7 +545,7 @@
 					resend[1] = 86; //V
 					resend[2] = 13; //\r
 					device.send(resend.buffer);
-				}, 50);
+				}, 1000);//50);
 			
 				//Set a timer to check if the connection is still active
 				active = true;
@@ -580,6 +582,11 @@
 	function decodeMessage(bytes){
 	 	var data = String.fromCharCode.apply(null, bytes);
 	 	
+	 	console.log(data);
+	 	
+	 	if(data.indexOf('K') == -1)
+	 		return false;
+	 	
 	 	//IDs
 		var idS1_index = data.indexOf('A');
 		var idS2_index = data.indexOf('B');
@@ -592,7 +599,7 @@
 		var valS4_index = data.indexOf('d');
 		
 		//If found everything
-		if(idS1_index >= 0 && idS2_index >= 0 && idS3_index >= 0 && idS4_index >= 0 && valS1_index >= 0 && valS2_index >= 0 && valS3_index >= 0 && valS4_index >= 0){
+		//if(idS1_index >= 0 && idS2_index >= 0 && idS3_index >= 0 && idS4_index >= 0 && valS1_index >= 0 && valS2_index >= 0 && valS3_index >= 0 && valS4_index >= 0){
 			var index;
 			
 			idS1_index ++;
@@ -628,6 +635,19 @@
 			idS4 = data.substring(idS4_index, index);
 			index = data.indexOf('\r', valS4_index);
 			valS4 = data.substring(valS4_index, index);
+			
+			while(true){
+				var pIndex = data.indexOf('P', index);
+				if(pIndex == -1)
+					break;
+				var port = data.charAt(++pIndex);
+				port -= 97;
+				if(port == 0){
+					index = data.indexOf('\r', ++pIndex);
+					A0 = data.substring(pIndex, index);
+					console.log('A0: ' + A0);
+				}
+			}
 		
 			/*console.log('A: ' + idS1);
 			console.log('B: ' + idS2);
@@ -638,8 +658,8 @@
 			console.log('c: ' + valS3);
 			console.log('d: ' + valS4);*/
 			return true;
-		}
-		return false;
+		//}
+		//return false;
 	}
 
 
