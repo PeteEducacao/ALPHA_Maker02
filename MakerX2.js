@@ -787,7 +787,7 @@
 		['-'],
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
 		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, 'entrada'],
-		[' ', '%m.onoff P%n', 'digitalWrite', 'Ligar', '0'],
+		[' ', '%m.onoff P%n', 'digitalWrite', 'Ligar', 0],
 		['r', 'Ler P%n', 'digitalRead', 0],
 		['r', 'Ler A%n', 'analogRead', 0],
 		['-'],
