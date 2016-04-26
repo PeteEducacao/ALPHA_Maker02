@@ -652,7 +652,7 @@
 				var pIndex = data.indexOf('P', pIndex);
 				if(pIndex == -1)
 					break;
-				var port = data.charAt(++pIndex);
+				var port = data.charCodeAt(++pIndex);
 				console.log('Got: ' + port);
 				port -= 97;
 				console.log('Converted: ' + port);
