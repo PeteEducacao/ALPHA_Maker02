@@ -6,34 +6,32 @@
 	var active = true;
 	var comWatchdog = null;
 	var comPoller = null;
-	 
-	var valS1 = 0, idS1 = 0, selectedSensorS1 = 0;
-	var valS2 = 0, idS2 = 0, selectedSensorS2 = 0;
-	var valS3 = 0, idS3 = 0, selectedSensorS3 = 0;
-	var valS4 = 0, idS4 = 0, selectedSensorS4 = 0;
 	
-	var eventS1Active = false, eventS2Active = false, eventS3Active = false, eventS4Active = false;
-	var eventS1Type = 0, eventS2Type = 0, eventS3Type = 0, eventS4Type = 0;
-	var eventS1Value = 0, eventS2Value = 0, eventS3Value = 0, eventS4Value = 0;
+	var portsValue = new Uint16Array(4);
+	var portsID = new Uint16Array(4);
+	var portsSelectedSensor = new Uint16Array(4);
+	var portsEventActive = [false, false, false, false];
+	var portsEventType = new Uint16Array(4);
+	var portsEventValue = new Uint16Array(4);
 	
-	var portsValues = new Uint16Array(22);
+	var pinsValues = new Uint16Array(22);
 	 
 	ext.resetAll = function(){}
 	
 	//Connecting a sensor to a port
 	ext.connectSensor = function(sensor, port){
 		switch(port){
-			case 'S1':
-				selectedSensorS1 = sensor;
+			case menus['ports'][0]:
+				portsSelectedSensor[0] = sensor;
 				break;
-			case 'S2':
-				selectedSensorS2 = sensor;
+			case menus['ports'][1]:
+				portsSelectedSensor[1] = sensor;
 				break;
-			case 'S3':
-				selectedSensorS3 = sensor;
+			case menus['ports'][2]:
+				portsSelectedSensor[2] = sensor;
 				break;
-			case 'S4':
-				selectedSensorS4 = sensor;
+			case menus['ports'][3]:
+				portsSelectedSensor[3] = sensor;
 				break;
 		}
 	}
@@ -76,61 +74,55 @@
 	
 	//Read the port, automatically convert the value using the selected sensor
 	ext.readPort = function(port){
-		var retVal, selectedSensor;
-		
 		switch(port){
-			case 'S1':
-		 		retVal = valS1;
-		 		selectedSensor = selectedSensorS1;
+			case menus['ports'][0]:
+				port = 0;
 				break;
-			case 'S2':
-		 		retVal = valS2;
-		 		selectedSensor = selectedSensorS2;
+			case menus['ports'][1]:
+				port = 1;
 				break;
-			case 'S3':
-		 		retVal = valS3;
-		 		selectedSensor = selectedSensorS3;
+			case menus['ports'][2]:
+				port = 2;
 				break;
-			case 'S4':
-		 		retVal = valS4;
-		 		selectedSensor = selectedSensorS4;
+			case menus['ports'][3]:
+				port = 3;
 	 			break;
 	 	}
 	 	
 	 	//'Contato', 'Proximidade', 'Faixa', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
 		//'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'
-	 	switch(selectedSensor){
+	 	switch(portsSelectedSensor[port]){
 	 		//Digital
 		 	case menus['sensors'][0]:
 		 	case menus['sensors'][1]:
 		 	case menus['sensors'][2]:
-		 		return retVal
+		 		return portsValue[port];
 		 	//Color
 		 	case menus['sensors'][3]:
-		 		return convertToColor(retVal);
+		 		return convertToColor(portsValue[port]);
 		 	//Light
 		 	case menus['sensors'][4]:
-		 		return convertToLux(retVal);
+		 		return convertToLux(portsValue[port]);
 		 	//Sound
 		 	case menus['sensors'][5]:
-		 		return convertToDb(retVal);
+		 		return convertToDb(portsValue[port]);
 		 	//Temperature
 		 	case menus['sensors'][6]:
-		 		return convertToCelsius(retVal);
+		 		return convertToCelsius(portsValue[port]);
 		 	//Resistance
 		 	case menus['sensors'][7]:
-		 		return convertToOhm(retVal);
+		 		return convertToOhm(portsValue[port]);
 		 	//Voltage
 		 	case menus['sensors'][8]:
-		 		return convertToVolts(retVal);
+		 		return convertToVolts(portsValue[port]);
 		 	//Distance
 		 	case menus['sensors'][9]:
-		 		return convertToCentimeters(retVal);
+		 		return convertToCentimeters(portsValue[port]);
 		 	//Distance Sharp
 		 	case menus['sensors'][10]:
-		 		return convertToCentimetersSharp(retVal);
+		 		return convertToCentimetersSharp(portsValue[port]);
 		 	default:
-		 		return retVal;
+		 		return portsValue[port];
 	 	}
 	}
 	
@@ -140,87 +132,62 @@
 	}
 	
 	ext.setEvent = function(option, port, type, value){
+		switch(port){
+			case menus['ports'][0]:
+				port = 0;
+				break;
+			case menus['ports'][1]:
+				port = 1;
+				break;
+			case menus['ports'][2]:
+				port = 2;
+				break;
+			case menus['ports'][3]:
+				port = 3;
+				break;
+		}
+		
 		//Enable
 		if(option == menus['eventOptions'][0]){
-			switch(port){
-				case menus['ports'][0]:
-					eventS1Active = true;
-					eventS1Type = type;
-					eventS1Value = value;
-					break;
-				case menus['ports'][1]:
-					eventS2Active = true;
-					eventS2Type = type;
-					eventS2Value = value;
-					break;
-				case menus['ports'][2]:
-					eventS3Active = true;
-					eventS3Type = type;
-					eventS3Value = value;
-					break;
-				case menus['ports'][3]:
-					eventS4Active = true;
-					eventS4Type = type;
-					eventS4Value = value;
-					break;
-			}
+			portsEventActive[port] = true;
+			portsEventType[port] = type;
+			portsEventValye[port] = value;
 		}
+		//Disable
 		else{
-			switch(port){
-				case menus['ports'][0]:
-					eventS1Active = false;
-					break;
-				case menus['ports'][1]:
-					eventS2Active = false;
-					break;
-				case menus['ports'][2]:
-					eventS3Active = false;
-					break;
-				case menus['ports'][3]:
-					eventS4Active = false;
-					break;
-			}
+			portsEventActive[port] = false;
 		}
 	}
 	
 	ext.event = function(port){
 		var value = ext.readPort(port);
-		var eventActive, eventType, eventValue;
 		
 		switch(port){
 			case menus['ports'][0]:
-				eventActive = eventS1Active;
-				eventType = eventS1Type;
-				eventValue = eventS1Value;
+				port = 0;
 				break;
 			case menus['ports'][1]:
-				eventActive = eventS2Active;
-				eventType = eventS2Type;
-				eventValue = eventS2Value;
+				port = 1;
 				break;
 			case menus['ports'][2]:
-				eventActive = eventS3Active;
-				eventType = eventS3Type;
-				eventValue = eventS3Value;
+				port = 2;
 				break;
 			case menus['ports'][3]:
-				eventActive = eventS4Active;
-				eventType = eventS4Type;
-				eventValue = eventS4Value;
+				port = 3;
 				break;
 		}
-		if(eventActive){
-			if(eventType == menus['eventTypes'][0] && value < eventValue)
+		if(portsEventActive[port]){
+			if(portsEventType[port] == menus['eventTypes'][0] && value < portsEventValue[port])
 				return true;
-			if(eventType == menus['eventTypes'][1] && value <= eventValue)
+			if(portsEventType[port] == menus['eventTypes'][1] && value <= portsEventValue[port])
 				return true;
-			if(eventType == menus['eventTypes'][2] && value > eventValue)
+			if(portsEventType[port] == menus['eventTypes'][2] && value > portsEventValue[port])
 				return true;
-			if(eventType == menus['eventTypes'][3] && value >= eventValue)
+			if(portsEventType[port] == menus['eventTypes'][3] && value >= portsEventValue[port])
 				return true;
-			if(eventType == menus['eventTypes'][4] && value == eventValue)
+			if(portsEventType[port] == menus['eventTypes'][4] && value == portsEventValue[port])
 				return true;
-			if(eventType == menus['eventTypes'][5] && value != eventValue)
+			if(portsEventType[port] == menus['eventTypes'][5] && value != portsEventValue[port])
 				return true;
 		}
 		return false;
@@ -303,14 +270,14 @@
 	ext.digitalRead = function(port){
 		if(port > 15)
 			return -1;
-		return portsValues[port + 6];
+		return pinsValues[port + 6];
 	}
 	
 	//Set or reset a pin
 	ext.analogRead = function(port){
 		if(port > 5)
 			return -1;
-		return portsValues[port];
+		return pinsValues[port];
 	}
 	
 	convertToHex = function(v){
@@ -682,8 +649,8 @@
 			port -= 97;
 			console.log('Converted: ' + port);
 			index = data.indexOf('\r', ++pIndex);
-			portsValues[port] = data.substring(pIndex, index);
-			console.log(portsValues[port]);
+			pinsValues[port] = data.substring(pIndex, index);
+			console.log(pinsValues[port]);
 		}
 		return true;
 	}
