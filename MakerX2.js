@@ -229,6 +229,17 @@
 	ext.setModeAnalog = function(port){
 		if(port > 5)
 			return;
+			
+		var setMessage = new Uint8Array(5);
+		setMessage[0] = 77; //M
+		setMessage[1] = 88; //X
+		setMessage[3] = 65; //A
+		setMessage[4] = 13; //\r
+		
+		port += 97;
+		setMessage[2] = port;
+		
+		device.send(setMessage.buffer);
 	}
 	
 	ext.setModePorts = function(port, mode){
