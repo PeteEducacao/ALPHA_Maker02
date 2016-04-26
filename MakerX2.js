@@ -16,7 +16,7 @@
 	var eventS1Type = 0, eventS2Type = 0, eventS3Type = 0, eventS4Type = 0;
 	var eventS1Value = 0, eventS2Value = 0, eventS3Value = 0, eventS4Value = 0;
 	
-	var A0;
+	var portsValues = new Uint16Array(22);
 	 
 	ext.resetAll = function(){}
 	
@@ -656,10 +656,9 @@
 				console.log('Got: ' + port);
 				port -= 97;
 				console.log('Converted: ' + port);
-				if(port == 0){
-					index = data.indexOf('\r', ++pIndex);
-					A0 = data.substring(pIndex, index);
-					console.log('A0: ' + A0);
+				index = data.indexOf('\r', ++pIndex);
+				portsValues[port] = data.substring(pIndex, index);
+				console.log(portsValues[port]);
 				}
 			}
 		
