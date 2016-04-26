@@ -8,10 +8,10 @@
 	var comPoller = null;
 	
 	var portsValue = new Uint16Array(4);
-	var portsID = new Uint16Array(4);
+	var portsID = new Uint8Array(4);
 	var portsSelectedSensor = new Array(4);
 	var portsEventActive = [false, false, false, false];
-	var portsEventType = new Uint16Array(4);
+	var portsEventType = new Array(4);
 	var portsEventValue = new Uint16Array(4);
 	
 	var pinsValues = new Uint16Array(22);
@@ -618,27 +618,27 @@
 		
 		//Get S1
 		index = data.indexOf('\r', idS1_index);
-		idS1 = data.substring(idS1_index, index);
+		portsID[0] = data.substring(idS1_index, index);
 		index = data.indexOf('\r', valS1_index);
-		valS1 = data.substring(valS1_index, index);
+		portsValue[0] = data.substring(valS1_index, index);
 		
 		//Get S2
 		index = data.indexOf('\r', idS2_index);
-		idS2 = data.substring(idS2_index, index);
+		portsID[1] = data.substring(idS2_index, index);
 		index = data.indexOf('\r', valS2_index);
-		valS2 = data.substring(valS2_index, index);
+		portsValue[1] = data.substring(valS2_index, index);
 		
 		//Get S3
 		index = data.indexOf('\r', idS3_index);
-		idS3 = data.substring(idS3_index, index);
+		portsID[2] = data.substring(idS3_index, index);
 		index = data.indexOf('\r', valS3_index);
-		valS3 = data.substring(valS3_index, index);
+		portsValue[2] = data.substring(valS3_index, index);
 		
 		//Get S4
 		index = data.indexOf('\r', idS4_index);
-		idS4 = data.substring(idS4_index, index);
+		portsID[3] = data.substring(idS4_index, index);
 		index = data.indexOf('\r', valS4_index);
-		valS4 = data.substring(valS4_index, index);
+		portsValue[3] = data.substring(valS4_index, index);
 		
 		while(true){
 			var pIndex = data.indexOf('P', pIndex);
