@@ -132,6 +132,8 @@
 	}
 	
 	ext.setModeAnalog = function(pin){
+		pin = Math.round(pin);
+		
 		if(pin > 5)
 			return;
 			
@@ -148,6 +150,8 @@
 	}
 	
 	ext.setModePorts = function(pin, mode){
+		pin = Math.round(pin);
+		
 		if(pin > 15)
 			return;
 		
@@ -174,13 +178,15 @@
 	}
 	
 	ext.setPullUp = function(mode, pin){
+		pin = Math.round(pin);
+		
 		if(pin > 15)
 			return;
 			
 		var setMessage = new Uint8Array(6);
 		setMessage[0] = 77; //M
 		setMessage[1] = 89; //Y
-		setMessage[2] = 89; //Y
+		setMessage[2] = 121; //y
 		setMessage[5] = 13; //\r
 		
 		//Enable
@@ -191,14 +197,17 @@
 			pin = pin + 200;
 		}
 		
-		setMessage[3] = convertToHex((pin & 0xF0) >> 4);
-		setMessage[4] = convertToHex((pin & 0x0F));
+		setMessage[3] = convertToHex(pin/16);
+		setMessage[4] = convertToHex(pin%16);
 		
 		device.send(setMessage.buffer);
+		printLog(setMessage);
 	}
 	
 	//Set or reset a pin
 	ext.digitalWrite = function(status, pin){
+		pin = Math.round(pin);
+		
 		if(pin > 15)
 			return;
 
@@ -226,28 +235,28 @@
 	}
 	
 	
-	//Set or reset a pin
+	//Read digital pin
 	ext.digitalRead = function(pin){
+		pin = Math.round(pin);
+		
 		if(pin > 15)
 			return -1;
 		return pinsValues[pin + 6];
 	}
 	
-	//Set or reset a pin
+	//Read analog pin
 	ext.analogRead = function(pin){
+		pin = Math.round(pin);
+		
 		if(pin > 5)
 			return -1;
 		return pinsValues[pin];
 	}
 	
-	convertToHex = function(v){
-		if(v < 10)
-			return v + 48;
-		return v + 65;
-	}
-	
 	//Control the servos angle
 	ext.setServo = function(servo, angle){
+		angle = Math.round(angle);
+		
 	 	var sendServo = new Uint8Array(7);
 		sendServo[0] = 77; //M
 		sendServo[2] = 13; //\r
@@ -271,6 +280,8 @@
 	
 	//Control the motors direction and power
 	ext.setMotor = function(motor, direction, power){
+		power = Math.round(power);
+		
 	 	var sendMotor = new Uint8Array(7);
 		sendMotor[0] = 77; //M
 		sendMotor[2] = 13; //\r
@@ -374,6 +385,13 @@
 	}
 	
 	//Convertion functions
+	
+	//Convert a number from 0 to 15 to hex
+	convertToHex = function(v){
+		if(v < 10)
+			return v + 48;
+		return v + 65;
+	}
 	
 	//Convert the value to a color
 	function convertToColor(val){
