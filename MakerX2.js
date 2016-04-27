@@ -78,7 +78,6 @@
 	
 	//Read the port, automatically convert the value using the selected sensor
 	ext.readPort = function(port){
-		console.log('Port: ' + port);
 		switch(port){
 			case menus['ports'][0]:
 				port = 0;
@@ -711,7 +710,7 @@
 		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', menus['onoff'][0], menus['ports'][0]],
 		['r', 'Ler porta %m.ports', 'readPort', menus['ports'][0]],
 		['r', 'Cor %m.colors', 'getColor', menus['colors'][0]],
-		['-'],
+		['-', teste],
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
 		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, menus['pinModes'][0]],
 		['r', 'Ler A%n', 'analogRead', 0],
