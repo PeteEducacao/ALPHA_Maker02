@@ -10,17 +10,7 @@
 	var portsValue = new Array(4);
 	var portsID = new Array(4);
 	var portsSelectedSensor = new Array(4);
-	var portsEventActive = [false, false, false, false];
-	var portsEventType = new Array(4);
-	var portsEventValue = new Array(4);
-	
 	var pinsValues = new Uint16Array(22);
-	 
-	resetVariables = function(){
-		for(var i = 0; i < 4; i++){
-			portsEventActive[i] = false;
-		}
-	}
 	
 	//Connecting a sensor to a port
 	ext.connectSensor = function(sensor, port){
@@ -170,11 +160,11 @@
 		setMessage[2] = port;
 			
 		switch(mode){
-			//On
+			//Input
 			case menus['pinModes'][0]:
 				setMessage[3] = 100; //d
 				break;
-			//Off
+			//Output
 			case menus['pinModes'][1]:
 				setMessage[3] = 110; //n
 				break;
@@ -533,8 +523,6 @@
 		if(watchdog){
 			//If recognized as being an ALPHA Maker
 			if(checkMaker(bytes)){
-				resetVariables();
-				
 				rawData = null;
 				
 				//Stop the timers
