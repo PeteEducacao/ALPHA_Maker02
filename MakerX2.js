@@ -39,11 +39,11 @@
 		
 		switch(option){
 			//On
-			case menus['onoff'][0]:
+			case menus['on_off'][0]:
 				setMessage[1] = 87; //W
 				break;
 			//Off
-			case menus['onoff'][1]:
+			case menus['on_off'][1]:
 				setMessage[1] = 119; //w
 				break;
 		}
@@ -131,8 +131,8 @@
 		return false;
 	}
 	
-	ext.setModeAnalog = function(port){
-		if(port > 5)
+	ext.setModeAnalog = function(pin){
+		if(pin > 5)
 			return;
 			
 		var setMessage = new Uint8Array(5);
@@ -141,14 +141,14 @@
 		setMessage[3] = 97; //a
 		setMessage[4] = 13; //\r
 		
-		port += 97;
-		setMessage[2] = port;
+		pin += 97;
+		setMessage[2] = pin;
 		
 		device.send(setMessage.buffer);
 	}
 	
-	ext.setModePorts = function(port, mode){
-		if(port > 15)
+	ext.setModePorts = function(pin, mode){
+		if(pin > 15)
 			return;
 		
 		var setMessage = new Uint8Array(5);
@@ -156,8 +156,8 @@
 		setMessage[1] = 88; //X
 		setMessage[4] = 13; //\r
 		
-		port += 103;
-		setMessage[2] = port;
+		pin += 103;
+		setMessage[2] = pin;
 			
 		switch(mode){
 			//Input
@@ -173,29 +173,52 @@
 		device.send(setMessage.buffer);
 	}
 	
-	//Set or reset a pin
-	ext.digitalWrite = function(status, port){
-		if(port > 15)
+	ext.setPullUp = function(mode, pin){
+		if(pin > 15)
 			return;
-
-		var setMessage = new Uint8Array(7);
+			
+		var setMessage = new Uint8Array(6);
 		setMessage[0] = 77; //M
 		setMessage[1] = 89; //Y
-		setMessage[2] = 67; //C
-		setMessage[6] = 13; //\r
+		setMessage[2] = 89; //Y
+		setMessage[5] = 13; //\r
 		
-		port += 100;
-		setMessage[4] = convertToHex((port & 0xF0) >> 4);
-		setMessage[5] = convertToHex((port & 0x0F));
+		//Enable
+		if(mode == menus['enable_disable'][0]){
+			pin = pin + 100;
+		}
+		else{
+			pin = pin + 200;
+		}
+		
+		setMessage[3] = convertToHex((pin & 0xF0) >> 4);
+		setMessage[4] = convertToHex((pin & 0x0F));
+		
+		device.send(setMessage.buffer);
+	}
+	
+	//Set or reset a pin
+	ext.digitalWrite = function(status, pin){
+		if(pin > 15)
+			return;
+
+		var setMessage = new Uint8Array(6);
+		setMessage[0] = 77; //M
+		setMessage[1] = 89; //Y
+		setMessage[5] = 13; //\r
+		
+		pin += 100;
+		setMessage[3] = convertToHex((pin & 0xF0) >> 4);
+		setMessage[4] = convertToHex((pin & 0x0F));
 		
 		switch(status){
 			//On
-			case menus['onoff'][0]:
-				setMessage[3] = 66; //B
+			case menus['on_off'][0]:
+				setMessage[2] = 203;
 				break;
 			//Off
-			case menus['onoff'][1]:
-				setMessage[3] = 65;//A
+			case menus['on_off'][1]:
+				setMessage[2] = 202;
 				break;
 		}
 		
@@ -204,17 +227,17 @@
 	
 	
 	//Set or reset a pin
-	ext.digitalRead = function(port){
-		if(port > 15)
+	ext.digitalRead = function(pin){
+		if(pin > 15)
 			return -1;
-		return pinsValues[port + 6];
+		return pinsValues[pin + 6];
 	}
 	
 	//Set or reset a pin
-	ext.analogRead = function(port){
-		if(port > 5)
+	ext.analogRead = function(pin){
+		if(pin > 5)
 			return -1;
-		return pinsValues[port];
+		return pinsValues[pin];
 	}
 	
 	convertToHex = function(v){
@@ -682,8 +705,8 @@
 		sensors: ['Contato', 'Proximidade', 'Faixa', 'Cor', 'Luz (Lux)', 'Som (dB)', 'Temperatura (°C)',
 			'Resistência (Ohm)', 'Tensão (V)', 'Distância (cm)', 'Distância Sharp (cm)'],
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
-		eventOptions: ['Habilite', 'Desabilite'],
-		onoff: ['Ligar', 'Desligar'],
+		enable_disable: ['Habilite', 'Desabilite'],
+		on_off: ['Ligar', 'Desligar'],
 		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
 		pinModes: ['entrada', 'saída'],
 		servos: ['SV1', 'SV2'],
@@ -695,15 +718,16 @@
 	var blocks = [
 		['h', 'Evento %b', 'event', 0],
 		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', menus['ports'][0]],
-		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', menus['onoff'][0], menus['ports'][0]],
+		[' ', '%m.on_off cabo de luz na porta %m.ports', 'setActuator', menus['on_off'][0], menus['ports'][0]],
 		['r', 'Ler porta %m.ports', 'readPort', menus['ports'][0]],
 		['r', 'Cor %m.colors', 'getColor', menus['colors'][0]],
 		['-'],
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
 		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, menus['pinModes'][0]],
+		[' ', '%m.enable_disable pull-up na porta P%n', 'setPullUp', menus['enable_disable'][0], 0],
 		['r', 'Ler A%n', 'analogRead', 0],
 		['r', 'Ler P%n', 'digitalRead', 0],
-		[' ', '%m.onoff P%n', 'digitalWrite', menus['onoff'][0], 0],
+		[' ', '%m.on_off P%n', 'digitalWrite', menus['on_off'][0], 0],
 		['-'],
 		[' ', 'Servo %m.servo %n °', 'setServo', menus['servos'][0], 0],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', menus['motor'][0], menus['directions'][0], 0],
