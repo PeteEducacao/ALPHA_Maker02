@@ -1,7 +1,6 @@
 (function(ext){
 	var device = null;
 	var rawData = null;
-	var notifyConnection = false;
 	 
 	var active = true;
 	var comWatchdog = null;
@@ -554,7 +553,6 @@
 			console.log('Legal: ' + legalVersion);
 
 			if(kernelVersion >= 106 && legalVersion >= 108){
-				notifyConnection = true;
 				return true;
 			}
 		}
@@ -691,7 +689,6 @@
 		if(comWatchdog)
 			comWatchdog = clearInterval(comWatchdog);
 		device = null;
-		notifyConnection = false;
 	}
 
 	ext._shutdown = function(){
