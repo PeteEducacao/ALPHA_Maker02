@@ -136,66 +136,9 @@
 		return color;
 	}
 	
-	ext.setEvent = function(option, port, type, value){
-		switch(port){
-			case menus['ports'][0]:
-				port = 0;
-				break;
-			case menus['ports'][1]:
-				port = 1;
-				break;
-			case menus['ports'][2]:
-				port = 2;
-				break;
-			case menus['ports'][3]:
-				port = 3;
-				break;
-		}
-		
-		//Enable
-		if(option == menus['eventOptions'][0]){
-			portsEventActive[port] = true;
-			portsEventType[port] = type;
-			portsEventValue[port] = value;
-		}
-		//Disable
-		else{
-			portsEventActive[port] = false;
-		}
-	}
-	
-	ext.event = function(port){
-		var value = ext.readPort(port);
-		
-		switch(port){
-			case menus['ports'][0]:
-				port = 0;
-				break;
-			case menus['ports'][1]:
-				port = 1;
-				break;
-			case menus['ports'][2]:
-				port = 2;
-				break;
-			case menus['ports'][3]:
-				port = 3;
-				break;
-		}
-		
-		if(portsEventActive[port]){
-			if(portsEventType[port] == menus['eventTypes'][0] && value < portsEventValue[port])
-				return true;
-			if(portsEventType[port] == menus['eventTypes'][1] && value <= portsEventValue[port])
-				return true;
-			if(portsEventType[port] == menus['eventTypes'][2] && value > portsEventValue[port])
-				return true;
-			if(portsEventType[port] == menus['eventTypes'][3] && value >= portsEventValue[port])
-				return true;
-			if(portsEventType[port] == menus['eventTypes'][4] && value == portsEventValue[port])
-				return true;
-			if(portsEventType[port] == menus['eventTypes'][5] && value != portsEventValue[port])
-				return true;
-		}
+	ext.event = function(condition){
+		if(condition)
+			return true;
 		return false;
 	}
 	
@@ -745,6 +688,7 @@
 	}
 	
 	//************************************************************
+	
 	//Block and block menu descriptions
 	var menus = {
 		ports: ['S1', 'S2', 'S3', 'S4'],
@@ -762,13 +706,11 @@
 	};
 	
 	var blocks = [
+		['h', 'Evento %b', 'event', 0],
 		[' ', 'Conectar sensor de %m.sensors na porta %m.ports', 'connectSensor', ' ', menus['ports'][0]],
 		[' ', '%m.onoff cabo de luz na porta %m.ports', 'setActuator', menus['onoff'][0], menus['ports'][0]],
 		['r', 'Ler porta %m.ports', 'readPort', menus['ports'][0]],
 		['r', 'Cor %m.colors', 'getColor', menus['colors'][0]],
-		['-'],
-		[' ', '%m.eventOptions evento %m.ports %m.eventTypes %s', 'setEvent', 'Habilite', menus['ports'][0], '=', '0'],
-		['h', 'Evento %m.ports', 'event', menus['ports'][0]],
 		['-'],
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
 		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, menus['pinModes'][0]],
