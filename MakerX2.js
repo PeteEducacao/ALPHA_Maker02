@@ -296,11 +296,27 @@
 			power = 100;
 		if(direction == menus['directions'][1])
 			power = power + 128;
-		if(direction == menus['directions'][2])
-			power = 0;
 		sendMotor[3] = power / 100 + 48;
 		sendMotor[4] = (power % 100) / 10 + 48;
 		sendMotor[5] = power % 10 + 48;
+			
+		if(motor == menus['motor'][0])
+			sendMotor[1] = 101 //e
+		if(motor == menus['motor'][1])
+			sendMotor[1] = 100 //d
+		
+		device.send(sendMotor.buffer);
+	}
+	
+	//Stop the motor
+	ext.stopMotor = function(motor){
+		var sendMotor = new Uint8Array(7);
+		sendMotor[0] = 77; //M
+		sendMotor[2] = 13; //\r
+		sendMotor[3] = 48; //0
+		sendMotor[4] = 48; //0
+		sendMotor[5] = 48; //0
+		sendMotor[6] = 13; //\r
 			
 		if(motor == menus['motor'][0])
 			sendMotor[1] = 101 //e
@@ -730,7 +746,7 @@
 		pinModes: ['entrada', 'saída'],
 		servos: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
-		directions: ['frente', 'ré', 'pare'],
+		directions: ['frente', 'ré'],
 		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
 	};
 	
@@ -748,8 +764,9 @@
 		['r', 'Ler P%n', 'digitalRead', 0],
 		[' ', '%m.on_off P%n', 'digitalWrite', menus['on_off'][0], 0],
 		['-'],
-		[' ', 'Servo %m.servo %n °', 'setServo', menus['servos'][0], 0],
+		[' ', 'Servo %m.servos %n °', 'setServo', menus['servos'][0], 0],
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', menus['motor'][0], menus['directions'][0], 0],
+		[' ', 'Pare motor %m.motor', 'stopMotor', menus['motor'][0]],
 		['-'],
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
 		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
