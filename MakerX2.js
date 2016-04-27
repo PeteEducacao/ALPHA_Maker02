@@ -12,7 +12,15 @@
 	var portsSelectedSensor = new Array(4);
 	var pinsValues = new Uint16Array(22);
 	
-	//Connecting a sensor to a port
+	
+	//Event block, can be used with any condition
+	ext.event = function(condition){
+		if(condition)
+			return true;
+		return false;
+	}
+	
+	//Connect a sensor to a port
 	ext.connectSensor = function(sensor, port){
 		switch(port){
 			case menus['ports'][0]:
@@ -125,12 +133,7 @@
 		return color;
 	}
 	
-	ext.event = function(condition){
-		if(condition)
-			return true;
-		return false;
-	}
-	
+	//Set pin mode to analog input. Enables the analog readings report
 	ext.setModeAnalog = function(pin){
 		pin = Math.round(pin);
 		
@@ -149,6 +152,16 @@
 		device.send(setMessage.buffer);
 	}
 	
+	//Read analog pin
+	ext.analogRead = function(pin){
+		pin = Math.round(pin);
+		
+		if(pin > 5)
+			return -1;
+		return pinsValues[pin];
+	}
+	
+	//Set pin mode as input or output
 	ext.setModePorts = function(pin, mode){
 		pin = Math.round(pin);
 		
@@ -164,11 +177,11 @@
 		setMessage[2] = pin;
 			
 		switch(mode){
-			//Input
+			//Input. Enable reading report
 			case menus['pinModes'][0]:
 				setMessage[3] = 100; //d
 				break;
-			//Output
+			//Output. Disable reading report
 			case menus['pinModes'][1]:
 				setMessage[3] = 110; //n
 				break;
@@ -177,6 +190,7 @@
 		device.send(setMessage.buffer);
 	}
 	
+	//Enable or disable pin pull-up
 	ext.setPullUp = function(mode, pin){
 		pin = Math.round(pin);
 		
@@ -202,6 +216,15 @@
 		
 		device.send(setMessage.buffer);
 		printLog(setMessage);
+	}
+	
+	//Read digital pin
+	ext.digitalRead = function(pin){
+		pin = Math.round(pin);
+		
+		if(pin > 15)
+			return -1;
+		return pinsValues[pin + 6];
 	}
 	
 	//Set or reset a pin
@@ -232,25 +255,6 @@
 		}
 		
 		device.send(setMessage.buffer);
-	}
-	
-	
-	//Read digital pin
-	ext.digitalRead = function(pin){
-		pin = Math.round(pin);
-		
-		if(pin > 15)
-			return -1;
-		return pinsValues[pin + 6];
-	}
-	
-	//Read analog pin
-	ext.analogRead = function(pin){
-		pin = Math.round(pin);
-		
-		if(pin > 5)
-			return -1;
-		return pinsValues[pin];
 	}
 	
 	//Control the servos angle
@@ -741,9 +745,9 @@
 		['r', 'Cor %m.colors', 'getColor', menus['colors'][0]],
 		['-'],
 		[' ', 'Configurar A%n como entrada analógica', 'setModeAnalog', 0],
+		['r', 'Ler A%n', 'analogRead', 0],
 		[' ', 'Configurar P%n como %m.pinModes digital', 'setModePorts', 0, menus['pinModes'][0]],
 		[' ', '%m.enable_disable pull-up na porta P%n', 'setPullUp', menus['enable_disable'][0], 0],
-		['r', 'Ler A%n', 'analogRead', 0],
 		['r', 'Ler P%n', 'digitalRead', 0],
 		[' ', '%m.on_off P%n', 'digitalWrite', menus['on_off'][0], 0],
 		['-'],
