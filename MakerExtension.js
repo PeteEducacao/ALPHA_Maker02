@@ -508,10 +508,8 @@
 
 	ext._getStatus = function(){
 		if(!device)
-			return{status: 0, msg: 'Maker disconnected'};
-		if(watchdog)
-			return{status: 1, msg: 'Searching for Maker'};
-		return{status: 2, msg: 'Maker connected'};
+			return{status: 1, msg: 'Procurando'};
+		return{status: 2, msg: 'Conectado'};
 	}
 	
 	//************************************************************
