@@ -742,7 +742,6 @@
 		colors: ['Azul', 'Vermelha', 'Amarela', 'Verde', 'Branca', 'Preta', 'Indefinida'],
 		enable_disable: ['Habilite', 'Desabilite'],
 		on_off: ['Ligar', 'Desligar'],
-		eventTypes: ['<', '<=', '>', '>=', '=', '!='],
 		pinModes: ['entrada', 'saída'],
 		servos: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
