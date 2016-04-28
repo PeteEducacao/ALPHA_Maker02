@@ -628,7 +628,7 @@
 						device = null;
 						tryNextDevice();
 					}
-				}, 1000);
+				}, 1500);
 			}
 		}
 		
