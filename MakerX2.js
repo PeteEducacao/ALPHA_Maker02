@@ -210,8 +210,8 @@
 			pin = pin + 200;
 		}
 		
-		setMessage[3] = convertToHex(pin/16);
-		setMessage[4] = convertToHex(pin%16);
+		setMessage[3] = convertToHex((pin & 0xF0) >> 4);
+		setMessage[4] = convertToHex((pin & 0x0F));
 		
 		device.send(setMessage.buffer);
 		printLog(setMessage);
@@ -332,7 +332,7 @@
 		window.setTimeout(function(){
 			ext.mute();
 			callback();
-		}, time*1000);
+		}, time * 1000);
 	}
 	
 	//Play a note
