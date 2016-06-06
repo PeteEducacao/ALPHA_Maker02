@@ -275,12 +275,12 @@
 	}
 
 	function checkMaker(bytes){
-		alert("testando");
 		var data = String.fromCharCode.apply(null, bytes);
 		console.log('Data: ' + data);
 		var t_index = data.indexOf('t');
 		var l_index = data.indexOf('l');
-		if(t_index >= 0 && l_index >= 0){
+		var mnf_index = data.indexOf('Mnf');
+		if(t_index > 0 && l_index > 0 && mnf_index > 0){
 			t_index ++;
 			l_index ++;
 			var kernelVersion = data.substring(t_index, t_index + 4);
@@ -289,7 +289,7 @@
 			console.log('Kernel: ' + kernelVersion);
 			console.log('Legal: ' + legalVersion);
 
-			if(kernelVersion >= 106){
+			if(Math.round(kernelVersion) >= 106){
 				return true;
 			}
 			else{
