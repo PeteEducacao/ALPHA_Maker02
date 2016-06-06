@@ -1,7 +1,6 @@
 (function(ext){
 	var device = null;
 	var rawData = null;
-	var notifyConnection = false;
 	 
 	var active = true;
 	var comWatchdog = null;
@@ -143,7 +142,7 @@
 		window.setTimeout(function(){
 			ext.mute();
 			callback();
-		}, time*1000);
+		}, time * 1000);
 	}
 	
 	//Play a note
@@ -261,7 +260,6 @@
 
 	//************************************************************* 
 	function appendBuffer(buffer1, buffer2){
-	  console.log('Appending');
 		var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
 		tmp.set(new Uint8Array(buffer1), 0);
 		tmp.set(new Uint8Array(buffer2), buffer1.byteLength);
@@ -277,6 +275,7 @@
 	}
 
 	function checkMaker(bytes){
+		alert("testando");
 		var data = String.fromCharCode.apply(null, bytes);
 		console.log('Data: ' + data);
 		var t_index = data.indexOf('t');
@@ -290,9 +289,11 @@
 			console.log('Kernel: ' + kernelVersion);
 			console.log('Legal: ' + legalVersion);
 
-			if(kernelVersion >= 106 && legalVersion >= 108){
-				notifyConnection = true;
+			if(kernelVersion >= 106){
 				return true;
+			}
+			else{
+				alert("Necessário atualizar o firmware da sua placa ALPHA Maker");
 			}
 		}
 		return false;
@@ -485,7 +486,6 @@
 		if(comWatchdog)
 			comWatchdog = clearInterval(comWatchdog);
 		device = null;
-		notifyConnection = false;
 	}
 
 	ext._shutdown = function(){
