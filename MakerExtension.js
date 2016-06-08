@@ -435,11 +435,13 @@
 	var poller = null;
 	var watchdog = null;
 	function tryNextDevice(){
+		console.log('Trying new device');
 		//If potentialDevices is empty, device will be undefined.
 		//That will get us back here next time a device is connected.
 		device = potentialDevices.shift();
 		if(!device)
 			return;
+		console.log('Device found');
 		device.open({stopBits: 0, bitRate: 9600, ctsFlowControl: 0});
 		
 		device.set_receive_handler(function(data){
