@@ -415,7 +415,7 @@
 	}
 	
 	//Fuja luz
-	ext.sigaLuz = function(){
+	ext.fujaLuz = function(){
 		var sendSLuz = new Uint8Array(4);
 		sendSLuz[0] = 77; //M
 		sendSLuz[1] = 71; //G
@@ -424,6 +424,21 @@
 		
 		device.send(sendSLuz.buffer);
 	}
+	
+	ext.sigaFujaFaixa = function(comportamento){
+		var sendSLuz = new Uint8Array(4);
+		sendSLuz[0] = 77; //M
+		sendSLuz[1] = 71; //G
+		sendSLuz[3] = 13; //\r
+		
+		if(comportamento == menus['comportamentoLuz'][0])  // Siga Luz
+			sendSLuz[2] = 76; //L	
+		if(comportamento == menus['comportamentoLuz'][1])  // Fuja Luz
+			sendSLuz[2] = 108; //l
+		
+		device.send(sendSLuz.buffer);
+	}
+	
 	
 	//Siga Faixa
 	ext.sigaFaixa = function(tipoFaixa){
@@ -795,7 +810,8 @@
 		motor: ['ME', 'MD'],
 		directions: ['frente', 'ré'],
 		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si'],
-		corFaixa: ['clara','escura']
+		corFaixa: ['clara','escura'],
+		comportamentoLuz: ['Siga','Fuja']
 	};
 	
 	var blocks = [
@@ -821,6 +837,7 @@
 		[' ', 'Mudo', 'mute'],
 		[' ', 'Siga Luz', 'sigaLuz'],
 		[' ', 'Fuja Luz', 'fujaLuz'],
+		[' ', '%m.comportamentoLuz Luz', 'sigaFujaFaixa',menus['comportamentoLuz'][0]],
 		[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixa',menus['corFaixa'][0]],	
 		[' ', 'Pare', 'paraMotores']
 	];
