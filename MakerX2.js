@@ -817,7 +817,7 @@
 		[' ', 'Mudo', 'mute'],
 		[' ', 'Siga Luz', 'sigaLuz'],
 		[' ', 'Fuja Luz', 'fujaLuz'],
-		[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixaEscura',menus['corFaixa'][0],0],	
+	//	[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixaEscura',menus['corFaixa'][0],0],	
 		[' ', 'Pare', 'paraMotores'],
 	];
 	
