@@ -790,7 +790,8 @@
 		servos: ['SV1', 'SV2'],
 		motor: ['ME', 'MD'],
 		directions: ['frente', 'ré'],
-		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si']
+		notes: ['Dó', 'Réb', 'Ré', 'Mib', 'Mi', 'Fá', 'Solb', 'Sol', 'Láb', 'Lá', 'Síb', 'Si'],
+		corFaixa['clara','escura']
 	};
 	
 	var blocks = [
@@ -816,7 +817,7 @@
 		[' ', 'Mudo', 'mute'],
 		[' ', 'Siga Luz', 'sigaLuz'],
 		[' ', 'Fuja Luz', 'fujaLuz'],
-		[' ', 'Siga Faixa Luz', 'sigaFaixaEscura'],	
+		[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixaEscura',menus['corFaixa'][0],0],	
 		[' ', 'Pare', 'paraMotores'],
 	];
 	
