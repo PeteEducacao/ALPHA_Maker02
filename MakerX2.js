@@ -408,7 +408,7 @@
 		var sendSLuz = new Uint8Array(4);
 		sendSLuz[0] = 77; //M
 		sendSLuz[1] = 71; //G
-		sendSLuz[2] = 76; //G
+		sendSLuz[2] = 76; //L
 		sendSLuz[3] = 13; //\r
 		
 		device.send(sendSLuz.buffer);
@@ -782,8 +782,8 @@
 		['-'],
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
 		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
-		[' ', 'MudoX', 'mute'],
-		[' ', 'Siga Luz', 'mute']
+		[' ', 'Mudo', 'mute'],
+		[' ', 'Siga Luz', 'sigaLuz']
 	];
 	
 	var descriptor = {
