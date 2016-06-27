@@ -403,7 +403,10 @@
 		device.send(sendMute.buffer);
 	}
 	
-
+	//Siga luz
+	ext.sigaLuz = function(){
+		
+	}
 	
 	
 	//Convertion functions
@@ -771,7 +774,7 @@
 		[' ', 'Pare motor %m.motor', 'stopMotor', menus['motor'][0]],
 		['-'],
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
-		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]]
+		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
 		[' ', 'Mudo', 'mute']
 	];
 	
