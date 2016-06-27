@@ -782,8 +782,7 @@
 		['-'],
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
 		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
-		[' ', 'MudoY', 'mute'],
-		[' ', 'Siga Luz', 'sigaLuz']
+		[' ', 'MudoY', 'mute']
 	];
 	
 	var descriptor = {
