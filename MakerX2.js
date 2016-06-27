@@ -402,29 +402,7 @@
 		
 		device.send(sendMute.buffer);
 	}
-	
-	//Siga luz
-	ext.sigaLuz = function(){
-		var sendSLuz = new Uint8Array(4);
-		sendSLuz[0] = 77; //M
-		sendSLuz[1] = 71; //G
-		sendSLuz[2] = 76; //L
-		sendSLuz[3] = 13; //\r
-		
-		device.send(sendSLuz.buffer);
-	}
-	
-	//Fuja luz
-	ext.fujaLuz = function(){
-		var sendSLuz = new Uint8Array(4);
-		sendSLuz[0] = 77; //M
-		sendSLuz[1] = 71; //G
-		sendSLuz[2] = 108; //l
-		sendSLuz[3] = 13; //\r
-		
-		device.send(sendSLuz.buffer);
-	}
-	
+
 	ext.sigaFujaFaixa = function(comportamento){
 		var sendSLuz = new Uint8Array(4);
 		sendSLuz[0] = 77; //M
@@ -438,7 +416,6 @@
 		
 		device.send(sendSLuz.buffer);
 	}
-	
 	
 	//Siga Faixa
 	ext.sigaFaixa = function(tipoFaixa){
@@ -835,8 +812,6 @@
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
 		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
 		[' ', 'Mudo', 'mute'],
-		[' ', 'Siga Luz', 'sigaLuz'],
-		[' ', 'Fuja Luz', 'fujaLuz'],
 		[' ', '%m.comportamentoLuz Luz', 'sigaFujaFaixa',menus['comportamentoLuz'][0]],
 		[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixa',menus['corFaixa'][0]],	
 		[' ', 'Pare', 'paraMotores']
