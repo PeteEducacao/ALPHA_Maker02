@@ -609,7 +609,7 @@
 					resend[2] = 13; //\r
 					if(device)
 						device.send(resend.buffer);
-				}, 150);
+				}, 100);
 			
 				//Set a timer to check if the connection is still active
 				active = true;
