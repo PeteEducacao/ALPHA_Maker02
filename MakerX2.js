@@ -415,7 +415,17 @@
 		
 	}
 	
-	
+	//Para os motores e sai dos comandos siga.
+	ext.paraMotores = function(){
+		var sendSLuz = new Uint8Array(4);
+		sendSLuz[0] = 77; //M
+		sendSLuz[1] = 71; //G
+		sendSLuz[2] = 112; //p
+		sendSLuz[3] = 13; //\r
+		
+		device.send(sendSLuz.buffer);
+	}
+
 	//Convertion functions
 	
 	//Convert a number from 0 to 15 to hex
@@ -783,7 +793,8 @@
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
 		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
 		[' ', 'Mudo', 'mute'],
-		[' ', 'Siga Luz', 'sigaLuz']
+		[' ', 'Siga Luz', 'sigaLuz'],
+		[' ', 'Pare', 'paraMotores'],
 	];
 	
 	var descriptor = {
