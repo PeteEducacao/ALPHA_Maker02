@@ -779,10 +779,10 @@
 		[' ', 'Motor %m.motor %m.directions %n %', 'setMotor', menus['motor'][0], menus['directions'][0], 0],
 		[' ', 'Pare motor %m.motor', 'stopMotor', menus['motor'][0]],
 		['-'],
-		[' ', 'Mudo', 'mute']
-		[' ', 'Siga Luz', 'sigaLuz']
+		[' ', 'Mudo', 'mute'],
+		[' ', 'Siga Luz', 'sigaLuz'],
 		['w', 'Tocar nota %m.notes por %n segundos', 'playNoteTime', menus['notes'][0], 1],
-		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
+		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]]
 		
 	];
 	
