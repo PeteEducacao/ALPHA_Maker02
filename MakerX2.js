@@ -412,7 +412,28 @@
 		sendSLuz[3] = 13; //\r
 		
 		device.send(sendSLuz.buffer);
+	}
+	
+	//Fuja luz
+	ext.sigaLuz = function(){
+		var sendSLuz = new Uint8Array(4);
+		sendSLuz[0] = 77; //M
+		sendSLuz[1] = 71; //G
+		sendSLuz[2] = 108; //l
+		sendSLuz[3] = 13; //\r
 		
+		device.send(sendSLuz.buffer);
+	}
+	
+	//Fuja luz
+	ext.sigaFaixaEscura = function(){
+		var sendSLuz = new Uint8Array(4);
+		sendSLuz[0] = 77; //M
+		sendSLuz[1] = 71; //G
+		sendSLuz[2] = 70; //F
+		sendSLuz[3] = 13; //\r
+		
+		device.send(sendSLuz.buffer);
 	}
 	
 	//Para os motores e sai dos comandos siga.
@@ -794,6 +815,8 @@
 		[' ', 'Tocar nota %m.notes', 'playNote', menus['notes'][0]],
 		[' ', 'Mudo', 'mute'],
 		[' ', 'Siga Luz', 'sigaLuz'],
+		[' ', 'Fuja Luz', 'fujaLuz'],
+		[' ', 'Siga Faixa Luz', 'sigaFaixaEscura'],	
 		[' ', 'Pare', 'paraMotores'],
 	];
 	
