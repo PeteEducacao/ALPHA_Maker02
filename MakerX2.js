@@ -425,17 +425,17 @@
 		device.send(sendSLuz.buffer);
 	}
 	
-	//Fuja Faixa
-	ext.siga = function(tipoFaixa){
+	//Siga Faixa
+	ext.sigaFaixa = function(tipoFaixa){
 		var sendSLuz = new Uint8Array(4);
 		sendSLuz[0] = 77; //M
 		sendSLuz[1] = 71; //G
 		sendSLuz[3] = 13; //\r
 		
 		if(tipoFaixa == menus['corFaixa'][0])  // clara
-			sendSLuz[2] = 102; //f
+			sendSLuz[2] = 70 //F	
 		if(tipoFaixa == menus['corFaixa'][1])  // escura
-			sendSLuz[2] = 70; //F
+			sendSLuz[2] = 102 //f
 		
 		device.send(sendSLuz.buffer);
 	}
@@ -821,7 +821,7 @@
 		[' ', 'Mudo', 'mute'],
 		[' ', 'Siga Luz', 'sigaLuz'],
 		[' ', 'Fuja Luz', 'fujaLuz'],
-		[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixaEscura',menus['corFaixa'][0]],	
+		[' ', 'Siga Faixa %m.corFaixa', 'sigaFaixa',menus['corFaixa'][0]],	
 		[' ', 'Pare', 'paraMotores']
 	];
 	
