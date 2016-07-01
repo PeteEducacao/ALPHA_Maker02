@@ -705,6 +705,13 @@
 
 		//Envia Mn
 		var getDeviceInformation = new Uint8Array(3);
+		
+		var sendFinish = new Uint8Array(3);
+		sendFinish[0] = 77; //M
+		sendFinish[1] = 102; //f
+		sendFinish[2] = 13; //\r
+		device.send(sendFinish.buffer);
+		
 		getDeviceInformation[0]= 77; //M;
 		getDeviceInformation[1]= 110; //n;
 		getDeviceInformation[2] = 13; //\r
