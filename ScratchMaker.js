@@ -772,7 +772,7 @@
 
 	ext._getStatus = function(){
 		if(!device) return{status: 1, msg: 'Procurando'};
-		if(watchdog) return {status: 1, msg: 'Probing for PicoBoard'};
+		if(watchdog) return {status: 0, msg: 'Probing for PicoBoard'};
 		return{status: 2, msg: 'Conectado'};
 	}
 	
