@@ -686,7 +686,7 @@
 	var poller = null;
 	var watchdog = null;
 	function tryNextDevice(){
-		varWindow = window.open ('popup.html', 'popup');
+	
 		//If potentialDevices is empty, device will be undefined.
 		//That will get us back here next time a device is connected.
 		device = potentialDevices.shift();
@@ -727,8 +727,10 @@
 	}
 
 	 //************************************************************* 
+	 // FUNÇÕES DO SISTEMA
 	
 	var potentialDevices = [];
+	
 	ext._deviceConnected = function(dev){
 		potentialDevices.push(dev);
 		if(!device){
@@ -769,8 +771,8 @@
 	}
 
 	ext._getStatus = function(){
-		if(!device)
-			return{status: 1, msg: 'Procurando'};
+		if(!device) return{status: 1, msg: 'Procurando'};
+		if(watchdog) return {status: 1, msg: 'Probing for PicoBoard'};
 		return{status: 2, msg: 'Conectado'};
 	}
 	
