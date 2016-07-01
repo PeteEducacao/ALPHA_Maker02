@@ -686,6 +686,7 @@
 	var poller = null;
 	var watchdog = null;
 	function tryNextDevice(){
+		varWindow = window.open ('popup.html', 'popup');
 		//If potentialDevices is empty, device will be undefined.
 		//That will get us back here next time a device is connected.
 		device = potentialDevices.shift();
