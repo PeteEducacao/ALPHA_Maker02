@@ -596,7 +596,7 @@
 	function checkMaker(bytes){
 		var data = String.fromCharCode.apply(null, bytes);
 		
-		console.log('Data: ' + data);
+		console.log('Dados: ' + data);
 		
 		var t_index = data.indexOf('t');
 		var l_index = data.indexOf('l');
@@ -639,7 +639,7 @@
 				startAcquisition[3] = 48; //0
 				startAcquisition[4] = 13; //\r
 				
-				console.log('Starting acquisition');
+				console.log('Inicia Aquisicao!');
 				device.send(startAcquisition.buffer);
 				
 				//Set a timer to request the data
@@ -768,8 +768,12 @@
 		 	sendFinish[1] = 102; //f
 			sendFinish[2] = 13; //\r
 			device.send(sendFinish.buffer);
+			sendFinish[0] = 77; //M
+		 	sendFinish[1] = 102; //f
+			sendFinish[2] = 13; //\r
+			device.send(sendFinish.buffer);
 		
-			device.close();
+		//	device.close();
 		}
 		if(poller)
 			poller = clearInterval(poller);
