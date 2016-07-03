@@ -689,7 +689,7 @@
 	
 		//If potentialDevices is empty, device will be undefined.
 		//That will get us back here next time a device is connected.
-		console.log("tryNextDevice");
+		console.log("Executando: tryNextDevice");
 		
 		device = potentialDevices.shift();
 		if(!device)
@@ -718,12 +718,12 @@
 		getDeviceInformation[1]= 110; //n;
 		getDeviceInformation[2] = 13; //\r
 		poller = setTimeout(function(){
-			console.log('Sending Mn');
+			console.log('Enviando Mn');
 			device.send(getDeviceInformation.buffer);
 		}, 500);
 		
 		watchdog = setTimeout(function(){
-			console.log('Watchdog triggered');
+			console.log('Executando: Watchdog');
 			//This device didn't get good data in time, so give up on it. Clean up and then move on.
 			//If we get good data then we'll terminate this watchdog.
 			clearInterval(poller);
@@ -748,7 +748,7 @@
 	}
 	
 	ext._deviceRemoved = function(dev){
-		console.log('_deviceRemoved');
+		console.log('Executando: _deviceRemoved');
 		if(device != dev)
 			return;
 		if(poller)
@@ -761,6 +761,7 @@
 	}
 
 	ext._shutdown = function(){
+		console.log('Executando: _shutdown');
 		if(device){
 		 	var sendFinish = new Uint8Array(3);
 			sendFinish[0] = 77; //M
@@ -780,6 +781,7 @@
 	}
 
 	ext._getStatus = function(){
+		console.log('Executando:_getStatus');
 		if(!device) return{status: 1, msg: 'Procurando'};
 		if(watchdog) return {status: 0, msg: 'Probing for PicoBoard'};
 		return{status: 2, msg: 'Conectado'};
