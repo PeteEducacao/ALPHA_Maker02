@@ -773,7 +773,7 @@
 			sendFinish[2] = 13; //\r
 			device.send(sendFinish.buffer);
 		
-		//	device.close();
+			device.close();
 		}
 		if(poller)
 			poller = clearInterval(poller);
@@ -788,6 +788,7 @@
 		console.log('Executando:_getStatus');
 		if(!device) return{status: 1, msg: 'Procurando'};
 		if(watchdog) return {status: 0, msg: 'Probing for PicoBoard'};
+		console.log(device.port);
 		return{status: 2, msg: 'Conectado'};
 	}
 	
