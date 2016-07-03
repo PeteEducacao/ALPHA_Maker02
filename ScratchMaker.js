@@ -689,7 +689,8 @@
 	
 		//If potentialDevices is empty, device will be undefined.
 		//That will get us back here next time a device is connected.
-		console.log("ola!!!");
+		console.log("tryNextDevice");
+		
 		device = potentialDevices.shift();
 		if(!device)
 			return;
